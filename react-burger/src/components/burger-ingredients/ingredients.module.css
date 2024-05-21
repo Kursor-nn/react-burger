@@ -1,0 +1,20 @@
+.column {
+    position: relative;
+    width: 600px;
+    height: 650px;
+}
+
+.scrollzone {
+    overflow: auto;
+    height: 95%;
+}
+
+.scrollzone::-webkit-scrollbar {
+    background-color: #2F2F37;
+    width: 10px;
+    height: 8px;
+}
+
+.scrollzone::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}

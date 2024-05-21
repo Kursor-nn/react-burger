@@ -1,19 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+
+//Components
+import Header from './components/header/header';
+import BurgerConstructor from './components/burger-constructor/constructor';
+import BurgerIngredients from './components/burger-ingredients/ingredients';
+
+//Styles
+import styles from './index.module.css';
+
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <main className={styles.main_rect}>
+      <Header />
+      <div className={styles.main_columns}>
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </div>
+    </main>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

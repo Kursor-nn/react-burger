@@ -1,0 +1,43 @@
+.column {
+    position: relative;
+    width: 600px;
+    height: 650px;
+}
+
+.header_box {
+    width: 50px;
+    height: 50px;
+}
+
+.scrollzone {
+    overflow: auto;
+    height: 350px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.scrollzone::-webkit-scrollbar {
+    background-color: #2F2F37;
+    width: 10px;
+    height: 8px;
+}
+
+.scrollzone::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.column_list {
+    composes: scrollzone;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.total {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+}
