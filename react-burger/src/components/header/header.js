@@ -11,7 +11,7 @@ import {
 //Styles
 import styles from "./header.module.css";
 
-const Header = () => {
+function Header(props) {
 
   return (
     <header className={`pt-5 ${styles.header}`}>

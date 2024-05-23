@@ -10,44 +10,42 @@ import styles from './constructor.module.css';
 import data from '../../mock/mock-data.json';
 
 
-class BurgerConstructor extends React.Component {
-    render() {
-        const bun = data.find(item => item.type === 'bun');
+function BurgerConstructor (props) {
+    const bun = data.find(item => item.type === 'bun');
 
-        return (
-            <div className={`pt-20 ${styles.column}`}>
-                <div className={styles.header_box} />
+    return (
+        <div className={`pt-20 ${styles.column}`}>
+            <div className={styles.header_box} />
 
-                <div className="pl-6">
-                    <ConstructorElement key={bun._id} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />
-                </div>
-
-                <div className={styles.column_list}>
-                    {
-                        data.map((itm, index) => {
-                            return (
-                                <div key={index} className={styles.ingredient}>
-                                    <DragIcon type="primary"/>
-                                    <ConstructorElement key={itm._id} text={itm.name} price={itm.price} thumbnail={itm.image} />
-                                </div>
-                            )
-                        })}
-                </div>
-
-                
-                <div className="pl-6">
-                    <ConstructorElement key={bun._id} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />
-                </div>
-
-
-                <div className={styles.total}>
-                    <p className="text text_type_digits-medium">610</p>
-                    <CurrencyIcon type="primary"/>
-                    <Button htmlType="button" type="primary" size="medium">Оформить заказ</Button>
-                </div>
+            <div className="pl-6">
+                <ConstructorElement key={bun._id} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />
             </div>
-        );
-    }
+
+            <div className={styles.column_list}>
+                {
+                    data.map((itm, index) => {
+                        return (
+                            <div key={index} className={styles.ingredient}>
+                                <DragIcon type="primary"/>
+                                <ConstructorElement key={itm._id} text={itm.name} price={itm.price} thumbnail={itm.image} />
+                            </div>
+                        )
+                    })}
+            </div>
+
+            
+            <div className="pl-6">
+                <ConstructorElement key={bun._id} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />
+            </div>
+
+
+            <div className={styles.total}>
+                <p className="text text_type_digits-medium">610</p>
+                <CurrencyIcon type="primary"/>
+                <Button htmlType="button" type="primary" size="medium">Оформить заказ</Button>
+            </div>
+        </div>
+    );
 }
 
 export default BurgerConstructor;

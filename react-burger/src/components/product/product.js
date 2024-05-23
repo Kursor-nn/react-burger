@@ -11,21 +11,19 @@ import styles from './product.module.css';
 //Type Check
 import PropTypes from 'prop-types';
 
-class Product extends React.Component {
-    render() {
-        return (
-            <div className={styles.product}>
-                <img src={this.props.image} alt={this.props.name} />
-                <div className={styles.price}>
-                    <span>{this.props.price}</span>
-                    <CurrencyIcon type="primary" />
-                </div>
-                <span className={`text text_type_main-small ${styles.name}`}>
-                    {this.props.name}
-                </span>
+function Product(props) {
+    return (
+        <div className={styles.product}>
+            <img src={props.image} alt={props.name} />
+            <div className={styles.price}>
+                <span>{props.price}</span>
+                <CurrencyIcon type="primary" />
             </div>
-        )
-    }
+            <span className={`text text_type_main-small ${styles.name}`}>
+                {props.name}
+            </span>
+        </div>
+    )
 }
 
 Product.propTypes = {

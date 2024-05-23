@@ -11,15 +11,13 @@ import styles from './app.module.css';
 
 import reportWebVitals from '../../reportWebVitals';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className={styles.main_columns}>
-        <BurgerIngredients />
-        <BurgerConstructor />
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className={styles.main_columns}>
+      <BurgerIngredients />
+      <BurgerConstructor />
+    </div>
+  );
 }
 
 export default App;

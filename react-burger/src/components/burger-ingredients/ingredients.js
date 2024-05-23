@@ -11,6 +11,7 @@ import ProductList from '../product-list/product-list';
 
 function BurgerIngredients() {
     const [current, setCurrent] = React.useState('bun')
+
     return (
         <div className={`pl-5 pt-20 ${styles.column}`}>
             <p className="text text_type_main-large">Соберите бургер</p>
