@@ -10,22 +10,21 @@ import styles from './ingredients.module.css';
 import ProductList from '../product-list/product-list';
 
 function BurgerIngredients() {
-    const [current, setCurrent] = React.useState('1')
+    const [current, setCurrent] = React.useState('bun')
     return (
-        <div className={`pl-10 pt-20 ${styles.column}`}>
-            <p className="text text_type_main-large"> Соберите бургер </p>
-            <div style={{ display: 'flex' }}>
-                <Tab value="1" active={current === '1'} onClick={setCurrent}>Булки</Tab>
-                <Tab value="2" active={current === '2'} onClick={setCurrent}>Соусы</Tab>
-                <Tab value="3" active={current === '3'} onClick={setCurrent}>Начинки</Tab>
+        <div className={`pl-5 pt-20 ${styles.column}`}>
+            <p className="text text_type_main-large">Соберите бургер</p>
+            <div className={styles.source_head}>
+                <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>Булки</Tab>
+                <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>Соусы</Tab>
+                <Tab value="main" active={current === 'main'} onClick={setCurrent}>Начинки</Tab>
             </div>
 
             <div className={styles.scrollzone}>
                 <ProductList listType={'bun'} />
-                <ProductList listType={'main'} />
                 <ProductList listType={'sauce'} />
+                <ProductList listType={'main'} />
             </div>
-
         </div>
     );
 }

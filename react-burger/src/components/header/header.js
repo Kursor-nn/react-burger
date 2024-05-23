@@ -14,7 +14,7 @@ import styles from "./header.module.css";
 const Header = () => {
 
   return (
-    <header className={`pl-5 pt-5 ${styles.header}`}>
+    <header className={`pt-5 ${styles.header}`}>
       <div className={styles.wrapper}>
         <nav>
           <ul className={styles.list}>

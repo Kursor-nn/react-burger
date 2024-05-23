@@ -14,18 +14,18 @@ class ProductList extends React.Component {
     render() {
         return (
             <>
+                <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[this.props.listType]}</p>
                 <div className={styles.list}>
-                    {data.map((itm) => {
-                        return <Product key={itm._id} image={itm.image} name={itm.name} price={itm.price} />
-                    })}
+                    {data.filter((itm) => itm.type == this.props.listType)
+                    .map((itm) => <Product key={itm._id} image={itm.image} name={itm.name} price={itm.price} /> )}
                 </div>
             </>
         )
     }
 }
 
-Product.propTypes = {
-    listType: PropTypes.oneOf(parts.keys).isRequired
+ProductList.propTypes = {
+    listType: PropTypes.oneOf(Object.keys(parts)).isRequired
 };
 
 export default ProductList;

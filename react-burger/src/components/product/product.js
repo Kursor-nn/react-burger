@@ -20,7 +20,7 @@ class Product extends React.Component {
                     <span>{this.props.price}</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <span className={styles.name}>
+                <span className={`text text_type_main-small ${styles.name}`}>
                     {this.props.name}
                 </span>
             </div>
