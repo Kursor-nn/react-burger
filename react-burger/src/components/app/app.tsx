@@ -14,15 +14,10 @@ import reportWebVitals from '../../reportWebVitals';
 class App extends React.Component {
   render() {
     return (
-      <React.StrictMode>
-        <main className={styles.main_rect}>
-          <Header />
-          <div className={styles.main_columns}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </div>
-        </main>
-      </React.StrictMode>
+      <div className={styles.main_columns}>
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </div>
     );
   }
 }

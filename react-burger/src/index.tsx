@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 //Components
 import App from './components/app/app';
+import Header from './components/header/header';
 
 //Styles
 import styles from './index.module.css';
@@ -14,7 +15,12 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <App/>
+  <React.StrictMode>
+    <main className={styles.main_rect}>
+      <Header />
+      <App />
+    </main>
+  </React.StrictMode>
 );
 
 reportWebVitals();
