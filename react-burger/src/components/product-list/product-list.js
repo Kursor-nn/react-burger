@@ -19,14 +19,17 @@ function ProductList({ ingredients, showDetails, listType }) {
                 price={product.price} />);
     }
 
+    const filteredIngredients = ingredients.filter((itm) => itm.type == listType)
     return (
-        <>
+        (filteredIngredients && filteredIngredients.length) ? <>
             <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[listType]}</p>
             <div className={styles.list}>
-                {ingredients.filter((itm) => itm.type == listType)
+                {filteredIngredients
                     .map((itm, index) => buildProduct(itm, index))}
             </div>
         </>
+            : <></>
+
     )
 }
 
