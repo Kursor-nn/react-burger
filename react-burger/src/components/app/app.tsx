@@ -42,7 +42,7 @@ function App() {
           <IngredientDetails card={choosedIng} />
         </Modal>
         <Modal title="Детали заказа" isOpen={orderIsDone} onClose={() => { displayOrderIsDone(false) }}>
-          <OrderDetails />
+          <OrderDetails orderId="666666" />
         </Modal>
       </div>
     </>

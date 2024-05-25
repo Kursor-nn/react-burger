@@ -34,7 +34,9 @@ function ProductList({ ingredients, showDetails, listType }) {
 }
 
 ProductList.propTypes = {
-    listType: PropTypes.oneOf(Object.keys(parts)).isRequired
+    listType: PropTypes.oneOf(Object.keys(parts)).isRequired,
+    ingredients: PropTypes.arrayOf(Product),
+    showDetails: PropTypes.func
 };
 
 export default ProductList;
