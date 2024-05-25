@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <main key="1" className={styles.main_rect}>
+    <main className={styles.main_rect}>
       <Header />
       <App />
     </main>
