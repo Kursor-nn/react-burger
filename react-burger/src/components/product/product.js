@@ -1,8 +1,7 @@
-import React from 'react';
 
 //KIT Components
 import {
-    CurrencyIcon
+    CurrencyIcon, Counter
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 //Styles
@@ -13,7 +12,8 @@ import PropTypes from 'prop-types';
 
 function Product(props) {
     return (
-        <div className={styles.product}>
+        <div className={styles.product} onClick={props.showDetails}>
+            {props.count ? <Counter count={props.count} size="default" /> : <></>}
             <img src={props.image} alt={props.name} />
             <div className={styles.price}>
                 <span>{props.price}</span>
@@ -27,9 +27,10 @@ function Product(props) {
 }
 
 Product.propTypes = {
-    name: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired,
 };
 
 export default Product;

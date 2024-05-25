@@ -11,12 +11,22 @@ const parts = {
 };
 
 function ProductList(props) {
+    function buildProduct(product, index) {
+        return (
+            <Product showDetails={() => props.showDetails(product)}
+                count={index == 0 ? 1 : 0}
+                key={product._id}
+                image={product.image}
+                name={product.name}
+                price={product.price} />);
+    }
+
     return (
         <>
             <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[props.listType]}</p>
             <div className={styles.list}>
                 {data.filter((itm) => itm.type == props.listType)
-                    .map((itm) => <Product key={itm._id} image={itm.image} name={itm.name} price={itm.price} />)}
+                    .map((itm, index) => buildProduct(itm, index))}
             </div>
         </>
     )

@@ -1,5 +1,3 @@
-import React from "react";
-
 // KIT Components
 import {
   BurgerIcon,
@@ -15,7 +13,7 @@ function Header(props) {
 
   return (
     <header className={`pt-5 ${styles.header}`}>
-      <div className={styles.wrapper}>
+      <div className={styles.container}>
         <nav>
           <ul className={styles.list}>
             <li>
@@ -33,7 +31,7 @@ function Header(props) {
           </ul>
         </nav>
       </div>
-      <div className={styles.wrapper}>
+      <div className={styles.container}>
         <Logo />
       </div>
       <div className={styles.profile_link}>

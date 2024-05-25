@@ -9,7 +9,7 @@ import styles from './ingredients.module.css';
 //Components
 import ProductList from '../product-list/product-list';
 
-function BurgerIngredients() {
+function BurgerIngredients({ showIngredDetails }) {
     const [current, setCurrent] = React.useState('bun')
 
     return (
@@ -22,9 +22,9 @@ function BurgerIngredients() {
             </div>
 
             <div className={styles.scrollzone}>
-                <ProductList listType={'bun'} />
-                <ProductList listType={'sauce'} />
-                <ProductList listType={'main'} />
+                <ProductList listType={'bun'} showDetails={showIngredDetails} />
+                <ProductList listType={'sauce'} showDetails={showIngredDetails} />
+                <ProductList listType={'main'} showDetails={showIngredDetails} />
             </div>
         </div>
     );

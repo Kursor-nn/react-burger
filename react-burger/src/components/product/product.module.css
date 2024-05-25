@@ -3,13 +3,12 @@
     flex-direction: column;
     align-items: center;
     padding: 0px;
-
     height: 208px;
     width: 280px;
     font-family: 'Jet Brains Mono';
+    position: relative;
+    cursor: pointer;
 }
-
-.name {}
 
 .price {
     display: flex;

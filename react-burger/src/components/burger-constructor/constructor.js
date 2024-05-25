@@ -10,7 +10,7 @@ import styles from './constructor.module.css';
 import data from '../../mock/mock-data.json';
 
 
-function BurgerConstructor (props) {
+function BurgerConstructor({ doOrder }) {
     const bun = data.find(item => item.type === 'bun');
 
     return (
@@ -26,23 +26,21 @@ function BurgerConstructor (props) {
                     data.map((itm, index) => {
                         return (
                             <div key={index} className={styles.ingredient}>
-                                <DragIcon type="primary"/>
+                                <DragIcon type="primary" />
                                 <ConstructorElement key={itm._id} text={itm.name} price={itm.price} thumbnail={itm.image} />
                             </div>
                         )
                     })}
             </div>
 
-            
             <div className="pl-6">
                 <ConstructorElement key={bun._id} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />
             </div>
 
-
             <div className={styles.total}>
                 <p className="text text_type_digits-medium">610</p>
-                <CurrencyIcon type="primary"/>
-                <Button htmlType="button" type="primary" size="medium">Оформить заказ</Button>
+                <CurrencyIcon type="primary" />
+                <Button htmlType="button" type="primary" size="medium" onClick={doOrder}>Оформить заказ</Button>
             </div>
         </div>
     );
