@@ -1,5 +1,3 @@
-import React from 'react';
-import data from '../../mock/mock-data.json';
 import styles from './product-list.module.css';
 import Product from "../product/product";
 import PropTypes from 'prop-types';
@@ -10,10 +8,10 @@ const parts = {
     'main': 'Начинки'
 };
 
-function ProductList(props) {
+function ProductList({ ingredients, showDetails, listType }) {
     function buildProduct(product, index) {
         return (
-            <Product showDetails={() => props.showDetails(product)}
+            <Product showDetails={() => showDetails(product)}
                 count={index == 0 ? 1 : 0}
                 key={product._id}
                 image={product.image}
@@ -23,9 +21,9 @@ function ProductList(props) {
 
     return (
         <>
-            <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[props.listType]}</p>
+            <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[listType]}</p>
             <div className={styles.list}>
-                {data.filter((itm) => itm.type == props.listType)
+                {ingredients.filter((itm) => itm.type == listType)
                     .map((itm, index) => buildProduct(itm, index))}
             </div>
         </>
