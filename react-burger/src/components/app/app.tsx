@@ -8,6 +8,7 @@ import BurgerIngredients from '../burger-ingredients/ingredients';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details'
+import ErrorDetails from '../error-details/error-details'
 
 import { URL } from "../utils/constants.js";
 
@@ -19,6 +20,7 @@ function App() {
   const [orderIsDone, displayOrderIsDone] = useState(false);
 
   const [ingredients, setIngredients] = useState([])
+  const [someErrorHaveWe, setSomeErrorHaveWe] = useState('')
 
 
   useEffect(() => {
@@ -29,6 +31,7 @@ function App() {
       })
       .catch((error) => {
         console.log("Error", error);
+        setSomeErrorHaveWe("У нас лапки.")
       });
   }, []);
 
@@ -46,6 +49,11 @@ function App() {
         {
           orderIsDone && <Modal title="Детали заказа" onClose={() => { displayOrderIsDone(false) }}>
             <OrderDetails orderId="666666" />
+          </Modal>
+        }
+        {
+          someErrorHaveWe && <Modal title="Ужасная ошибка." onClose={() => { }}>
+            <ErrorDetails message={someErrorHaveWe} />
           </Modal>
         }
       </div>
