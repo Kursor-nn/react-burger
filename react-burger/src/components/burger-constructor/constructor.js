@@ -9,6 +9,9 @@ import styles from './constructor.module.css';
 // Mock Data
 //import data from '../../mock/mock-data.json';
 
+//Type Check
+import PropTypes from 'prop-types';
+import Product from '../product/product';
 
 function BurgerConstructor({ doOrder, ingredients }) {
     const bun = ingredients.find(item => item.type === 'bun');
@@ -50,5 +53,10 @@ function BurgerConstructor({ doOrder, ingredients }) {
         </div>
     );
 }
+
+BurgerConstructor.propTypes = {
+    doOrder: PropTypes.func,
+    ingredients: PropTypes.arrayOf(Product)
+};
 
 export default BurgerConstructor;

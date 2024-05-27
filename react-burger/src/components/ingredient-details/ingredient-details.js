@@ -1,4 +1,5 @@
 //Styles
+import Product from '../product/product';
 import styles from './ingredient-details.module.css'
 
 //Type Check
@@ -38,9 +39,15 @@ function IngredientDetails({ card }) {
     )
 }
 
-
 IngredientDetails.propTypes = {
-    name: PropTypes.string
+    card: PropTypes.objectOf({
+        calories: PropTypes.number.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        image_large: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    })
 };
 
 export default IngredientDetails;

@@ -8,6 +8,9 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 //Styles
 import styles from "./modal.module.css";
 
+//Type Check
+import PropTypes from 'prop-types';
+
 function Modal({ children, onClose, isOpen, title }) {
     const modals = document.getElementById("modal-overlay");
 
@@ -27,5 +30,12 @@ function Modal({ children, onClose, isOpen, title }) {
         : <></>;
 
 }
+
+Modal.propTypes = {
+    children: PropTypes.element,
+    onClose: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool,
+    title: PropTypes.string.isRequired
+};
 
 export default Modal;

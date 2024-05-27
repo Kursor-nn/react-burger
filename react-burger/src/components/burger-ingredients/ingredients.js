@@ -8,6 +8,10 @@ import styles from './ingredients.module.css';
 
 //Components
 import ProductList from '../product-list/product-list';
+import Product from '../product/product'
+
+//Type Check
+import PropTypes from 'prop-types';
 
 function BurgerIngredients({ showIngredDetails, ingredients }) {
     const [current, setCurrent] = React.useState('bun')
@@ -29,5 +33,10 @@ function BurgerIngredients({ showIngredDetails, ingredients }) {
         </div>
     );
 }
+
+BurgerIngredients.propTypes = {
+    showIngredDetails: PropTypes.func,
+    ingredients: PropTypes.arrayOf(Product)
+};
 
 export default BurgerIngredients;

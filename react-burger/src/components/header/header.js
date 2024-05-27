@@ -9,7 +9,7 @@ import {
 //Styles
 import styles from "./header.module.css";
 
-function Header(props) {
+function Header() {
 
   return (
     <header className={`pt-5 ${styles.header}`}>
