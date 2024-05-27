@@ -6,28 +6,20 @@ import styles from "./modal-overlay.module.css";
 //Type Check
 import PropTypes from 'prop-types';
 
-function ModalOverlay({ isOpen, onClose }) {
-    const closeByEsc = (evt) => {
-        if (evt.key === "Escape") {
-            onClose();
-        }
-    };
-
+function ModalOverlay({ onClick }) {
     useEffect(() => {
-        if (isOpen) {
-            document.addEventListener("keydown", closeByEsc);
-        }
-        return () => {
-            document.removeEventListener("keydown", closeByEsc);
-        };
-    }, [isOpen]);
+        document.addEventListener("keydown", onClick);
 
-    return <div onClick={(evt) => { onClose(); }} className={styles.overlay} />;
+        return () => {
+            document.removeEventListener("keydown", onClick);
+        };
+    }, []);
+
+    return <div onClick={(evt) => { onClick(); }} className={styles.overlay} />;
 };
 
 ModalOverlay.propTypes = {
-    onClose: PropTypes.func,
-    isOpen: PropTypes.bool
+    onClick: PropTypes.func
 };
 
 export default ModalOverlay;

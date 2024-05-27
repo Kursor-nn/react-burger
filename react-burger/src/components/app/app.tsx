@@ -38,12 +38,16 @@ function App() {
         <BurgerIngredients showIngredDetails={setChoosedIng} ingredients={ingredients} />
         <BurgerConstructor doOrder={displayOrderIsDone} ingredients={ingredients} />
 
-        <Modal title="Детали ингредиента" isOpen={choosedIng} onClose={() => setChoosedIng(null)}>
-          <IngredientDetails card={choosedIng} />
-        </Modal>
-        <Modal title="Детали заказа" isOpen={orderIsDone} onClose={() => { displayOrderIsDone(false) }}>
-          <OrderDetails orderId="666666" />
-        </Modal>
+        {
+          choosedIng && <Modal title="Детали ингредиента" onClose={() => setChoosedIng(null)}>
+            <IngredientDetails card={choosedIng} />
+          </Modal>
+        }
+        {
+          orderIsDone && <Modal title="Детали заказа" onClose={() => { displayOrderIsDone(false) }}>
+            <OrderDetails orderId="666666" />
+          </Modal>
+        }
       </div>
     </>
   );
