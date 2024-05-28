@@ -40,7 +40,7 @@ function IngredientDetails({ card }) {
 }
 
 IngredientDetails.propTypes = {
-    card: PropTypes.objectOf({
+    card: PropTypes.shape({
         calories: PropTypes.number.isRequired,
         proteins: PropTypes.number.isRequired,
         fat: PropTypes.number.isRequired,
