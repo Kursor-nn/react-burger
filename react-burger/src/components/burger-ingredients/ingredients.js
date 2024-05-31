@@ -8,8 +8,12 @@ import styles from './ingredients.module.css';
 
 //Components
 import ProductList from '../product-list/product-list';
+import Product from '../product/product'
 
-function BurgerIngredients() {
+//Type Check
+import PropTypes from 'prop-types';
+
+function BurgerIngredients({ showIngredDetails, ingredients }) {
     const [current, setCurrent] = React.useState('bun')
 
     return (
@@ -22,12 +26,17 @@ function BurgerIngredients() {
             </div>
 
             <div className={styles.scrollzone}>
-                <ProductList listType={'bun'} />
-                <ProductList listType={'sauce'} />
-                <ProductList listType={'main'} />
+                <ProductList ingredients={ingredients} listType={'bun'} showDetails={showIngredDetails} />
+                <ProductList ingredients={ingredients} listType={'sauce'} showDetails={showIngredDetails} />
+                <ProductList ingredients={ingredients} listType={'main'} showDetails={showIngredDetails} />
             </div>
         </div>
     );
 }
+
+BurgerIngredients.propTypes = {
+    showIngredDetails: PropTypes.func,
+    ingredients: PropTypes.arrayOf(Product)
+};
 
 export default BurgerIngredients;
