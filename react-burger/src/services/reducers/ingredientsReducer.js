@@ -1,6 +1,6 @@
 const initialState = {
     ingredients: [],
-    tab: null
+    tab: "bun"
 }
 
 export const ingredientsReducer = (state = initialState, action) => {
