@@ -1,11 +1,15 @@
+// Redux
+import { useSelector } from 'react-redux';
+
 //Styles
-import Product from '../product/product';
 import styles from './ingredient-details.module.css'
 
 //Type Check
 import PropTypes from 'prop-types';
 
-function IngredientDetails({ card }) {
+function IngredientDetails() {
+    const card = useSelector((state) => state.card.currentCard);
+
     const info = [
         { title: "Калории,ккал", value: card.calories },
         { title: "Белки, г", value: card.proteins },

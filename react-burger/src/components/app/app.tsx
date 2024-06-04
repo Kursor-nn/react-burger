@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 //Components
-import Header from '../header/header';
 import BurgerConstructor from '../burger-constructor/constructor';
 import BurgerIngredients from '../burger-ingredients/ingredients';
 
@@ -15,45 +14,60 @@ import { URL } from "../utils/constants.js";
 //Styles
 import styles from './app.module.css';
 
-function App() {
-  const [choosedIng, setChoosedIng] = useState(null);
-  const [orderIsDone, displayOrderIsDone] = useState(false);
+//Redux
+import { useDispatch } from 'react-redux';
+import { deleteCard } from "../../services/actions/cardActions";
+import { displayOrder } from "../../services/actions/orderActions";
+import { fillIngredientList } from "../../services/actions/ingredientsActions";
+import { setErrorMessage } from "../../services/actions/errorActions"
 
-  const [ingredients, setIngredients] = useState([])
-  const [someErrorHaveWe, setSomeErrorHaveWe] = useState('')
+import { connect, ConnectedProps } from "react-redux";
 
+const mapStateToProps = (state: any) => ({
+  showCardDetails: state.card.show,
+  showOrderDetails: state.order.show,
+  ingredients: state.ingredients.ingredients,
+  errorMessage: state.error.message
+});
+
+const connector = connect(mapStateToProps);
+type AppModalProps = {} & ConnectedProps<typeof connector>;
+
+function App(props: AppModalProps) {
+  const { showCardDetails, showOrderDetails, ingredients, errorMessage } = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetch(URL)
       .then((res) => res.json())
       .then((data) => {
-        setIngredients(data.data);
+        dispatch(fillIngredientList(data.data));
       })
       .catch((error) => {
         console.log("Error", error);
-        setSomeErrorHaveWe("У нас лапки.")
+        dispatch(setErrorMessage("У нас лапки."))
       });
   }, []);
 
   return (
     <>
       <div className={styles.main_columns}>
-        <BurgerIngredients showIngredDetails={setChoosedIng} ingredients={ingredients} />
-        <BurgerConstructor doOrder={displayOrderIsDone} ingredients={ingredients} />
+        <BurgerIngredients />
+        <BurgerConstructor doOrder={() => dispatch(displayOrder(true))} ingredients={ingredients} />
 
         {
-          choosedIng && <Modal title="Детали ингредиента" onClose={() => setChoosedIng(null)}>
-            <IngredientDetails card={choosedIng} />
+          showCardDetails && <Modal title="Детали ингредиента" onClose={() => dispatch(deleteCard())}>
+            <IngredientDetails />
           </Modal>
         }
         {
-          orderIsDone && <Modal title="Детали заказа" onClose={() => { displayOrderIsDone(false) }}>
+          showOrderDetails && <Modal title="Детали заказа" onClose={() => dispatch(displayOrder(false))}>
             <OrderDetails orderId="666666" />
           </Modal>
         }
         {
-          someErrorHaveWe && <Modal title="Ужасная ошибка." onClose={() => { }}>
-            <ErrorDetails message={someErrorHaveWe} />
+          errorMessage && <Modal title="Ужасная ошибка." onClose={() => { }}>
+            <ErrorDetails message={errorMessage} />
           </Modal>
         }
       </div>
@@ -61,4 +75,6 @@ function App() {
   );
 }
 
-export default App;
+export default connector(App);
+
+
