@@ -17,10 +17,9 @@ import styles from './app.module.css';
 //Redux
 import { useDispatch } from 'react-redux';
 import { deleteCard } from "../../services/actions/cardActions";
-import { displayOrder } from "../../services/actions/orderActions";
+import { displayOrder, clearOrder } from "../../services/actions/orderActions";
 import { fillIngredientList } from "../../services/actions/ingredientsActions";
 import { setErrorMessage } from "../../services/actions/errorActions"
-
 import { connect, ConnectedProps } from "react-redux";
 
 import { DndProvider } from "react-dnd";
@@ -67,7 +66,10 @@ function App(props: AppModalProps) {
           </Modal>
         }
         {
-          showOrderDetails && <Modal title="Детали заказа" onClose={() => dispatch(displayOrder(false))}>
+          showOrderDetails && <Modal title="Детали заказа" onClose={() => {
+            dispatch(displayOrder(false));
+            dispatch(clearOrder());
+          }}>
             <OrderDetails orderId="666666" />
           </Modal>
         }

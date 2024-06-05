@@ -28,7 +28,7 @@ export const orderReducer = (state = initialState, action) => {
         };
         case "CLEAR_ORDER": {
             return {
-                ...state, order: []
+                ...state, order: [], bun: null
             };
         }
         case "DISPLAY_ORDER": {
