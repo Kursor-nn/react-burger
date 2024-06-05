@@ -13,6 +13,13 @@ export function addIngredient(ingredient) {
     }
 }
 
+export function setBun(bun) {
+    return {
+        type: "SET_BUN",
+        payload: bun
+    }
+}
+
 export function displayOrder(state) {
     return {
         type: "DISPLAY_ORDER",

@@ -1,5 +1,6 @@
 const initialState = {
     order: [],
+    bun: null,
     show: false
 }
 
@@ -14,7 +15,13 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 ...state, order: [...state.order, action.payload]
             };
-        }
+        };
+
+        case "SET_BUN": {
+            return {
+                ...state, bun: action.payload
+            };
+        };
         case "CLEAR_ORDER": {
             return {
                 ...state, order: []

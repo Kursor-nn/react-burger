@@ -15,11 +15,13 @@ function ProductList({ listType }) {
     const dispatch = useDispatch();
     const selectedTab = useSelector((state) => state.ingredients.tab)
     const ingredients = useSelector((state) => state.ingredients.ingredients)
+    const order = useSelector((state) => state.order.order)
 
     function buildProduct(value, index) {
+        const countOfIngr = order.filter(it => it._id === value._id).length
         return (
             <Product showDetails={() => dispatch(setCard(value))}
-                count={index == 0 ? 1 : 0}
+                count={countOfIngr}
                 key={value._id}
                 id={value._id}
                 image={value.image}
