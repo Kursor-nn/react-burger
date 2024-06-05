@@ -24,7 +24,7 @@ function BurgerConstructor({ doOrder }) {
     const orderIngredients = useSelector((store) => store.order.order);
     const bun = ingredients.find(item => item.type === 'bun');
 
-    const [{ isHover }, dropTargerRef] = useDrop({
+    const [{ }, dropTargerRef] = useDrop({
         accept: "ingredient",
         collect: (monitor) => ({}),
         drop(item) {
@@ -32,6 +32,8 @@ function BurgerConstructor({ doOrder }) {
             dispatch(addIngredient(newIngr))
         },
     });
+
+    const orderCost = orderIngredients.map(it => it.price).reduce((a, b) => a + b, 0)
 
     return (
         <div className={`pt-20 ${styles.column}`}>
@@ -63,7 +65,7 @@ function BurgerConstructor({ doOrder }) {
             }
 
             <div className={styles.total}>
-                <p className="text text_type_digits-medium">610</p>
+                <p className="text text_type_digits-medium">{orderCost}</p>
                 <CurrencyIcon type="primary" />
                 <Button htmlType="button" type="primary" size="medium" onClick={doOrder}>Оформить заказ</Button>
             </div>
