@@ -1,6 +1,5 @@
 
 export function setCard(card) {
-    console.log(card);
     return {
         type: "SET_CARD",
         payload: card

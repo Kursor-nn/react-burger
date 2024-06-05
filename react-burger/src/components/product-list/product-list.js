@@ -11,18 +11,22 @@ const parts = {
     'main': 'Начинки'
 };
 
-function ProductList({ ingredients, listType }) {
+function ProductList({ listType }) {
     const dispatch = useDispatch();
     const selectedTab = useSelector((state) => state.ingredients.tab)
+    const ingredients = useSelector((state) => state.ingredients.ingredients)
 
-    function buildProduct(product, index) {
+    function buildProduct(value, index) {
         return (
-            <Product showDetails={() => dispatch(setCard(product))}
+            <Product showDetails={() => dispatch(setCard(value))}
                 count={index == 0 ? 1 : 0}
-                key={product._id}
-                image={product.image}
-                name={product.name}
-                price={product.price} />);
+                key={value._id}
+                id={value._id}
+                image={value.image}
+                name={value.name}
+                price={value.price}
+            />
+        );
     }
 
     const filteredIngredients = ingredients.filter((itm) => itm.type == listType)
@@ -40,8 +44,7 @@ function ProductList({ ingredients, listType }) {
 }
 
 ProductList.propTypes = {
-    listType: PropTypes.oneOf(Object.keys(parts)).isRequired,
-    ingredients: PropTypes.arrayOf(Product)
+    listType: PropTypes.oneOf(Object.keys(parts)).isRequired
 };
 
 export default ProductList;

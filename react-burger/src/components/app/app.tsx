@@ -23,6 +23,9 @@ import { setErrorMessage } from "../../services/actions/errorActions"
 
 import { connect, ConnectedProps } from "react-redux";
 
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 const mapStateToProps = (state: any) => ({
   showCardDetails: state.card.show,
   showOrderDetails: state.order.show,
@@ -47,13 +50,16 @@ function App(props: AppModalProps) {
         console.log("Error", error);
         dispatch(setErrorMessage("У нас лапки."))
       });
+
   }, []);
 
   return (
     <>
       <div className={styles.main_columns}>
-        <BurgerIngredients />
-        <BurgerConstructor doOrder={() => dispatch(displayOrder(true))} ingredients={ingredients} />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor doOrder={() => dispatch(displayOrder(true))} />
+        </DndProvider>
 
         {
           showCardDetails && <Modal title="Детали ингредиента" onClose={() => dispatch(deleteCard())}>
@@ -76,5 +82,3 @@ function App(props: AppModalProps) {
 }
 
 export default connector(App);
-
-

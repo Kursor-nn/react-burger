@@ -14,35 +14,31 @@ import Product from '../product/product'
 import PropTypes from 'prop-types';
 import { setTab } from '../../services/actions/ingredientsActions';
 
-import { useDispatch, connect, ConnectedProps } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
 
-const mapStateToProps = (state: any) => ({
-    ingredients: state.ingredients.ingredients,
-    current: state.ingredients.tab
-});
-
-const connector = connect(mapStateToProps);
-type IngredientModalProps = {} & ConnectedProps<typeof connector>;
-
-function BurgerIngredients({ ingredients, current }: IngredientModalProps) {
+function BurgerIngredients() {
     const dispatch = useDispatch();
+
+    const ingredients = useSelector((state: any) => state.ingredients.ingredients);
+    const currentTub = useSelector((state: any) => state.ingredients.tab);
 
     return (
         <div className={`pl-5 pt-20 ${styles.column}`}>
             <p className="text text_type_main-large">Соберите бургер</p>
             <div className={styles.source_head}>
-                <Tab value="bun" active={current === 'bun'} onClick={(value) => dispatch(setTab(value))}>Булки</Tab>
-                <Tab value="sauce" active={current === 'sauce'} onClick={(value) => dispatch(setTab(value))}>Соусы</Tab>
-                <Tab value="main" active={current === 'main'} onClick={(value) => dispatch(setTab(value))}>Начинки</Tab>
+                <Tab key="bun" value="bun" active={currentTub === 'bun'} onClick={(value) => dispatch(setTab(value))}>Булки</Tab>
+                <Tab key="sauce" value="sauce" active={currentTub === 'sauce'} onClick={(value) => dispatch(setTab(value))}>Соусы</Tab>
+                <Tab key="main" value="main" active={currentTub === 'main'} onClick={(value) => dispatch(setTab(value))}>Начинки</Tab>
             </div>
 
             <div className={styles.scrollzone}>
-                <ProductList ingredients={ingredients} listType={'bun'} />
-                <ProductList ingredients={ingredients} listType={'sauce'} />
-                <ProductList ingredients={ingredients} listType={'main'} />
+                <ProductList listType={'bun'} />
+                <ProductList listType={'sauce'} />
+                <ProductList listType={'main'} />
             </div>
         </div>
     );
 }
 
-export default connector(BurgerIngredients);
+export default BurgerIngredients;

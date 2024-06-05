@@ -13,8 +13,21 @@ import styles from './constructor.module.css';
 import PropTypes from 'prop-types';
 import Product from '../product/product';
 
-function BurgerConstructor({ doOrder, ingredients }) {
+import { useDrop } from 'react-dnd';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+function BurgerConstructor({ doOrder }) {
+    const ingredients = useSelector((store) => store.ingredients.ingredients);
     const bun = ingredients.find(item => item.type === 'bun');
+
+    const [{ isHover }, dropTargerRef] = useDrop({
+        accept: "ingredient",
+        collect: (monitor) => ({}),
+        drop(item) {
+            console.log("drop item event")
+        },
+    });
 
     return (
         <div className={`pt-20 ${styles.column}`}>
@@ -26,7 +39,7 @@ function BurgerConstructor({ doOrder, ingredients }) {
                         <div className="pl-6">
                             <ConstructorElement key={bun._id} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />
                         </div>
-                        <div className={styles.column_list}>
+                        <div className={styles.column_list} ref={dropTargerRef}>
                             {
                                 ingredients.map((itm, index) => {
                                     return (
