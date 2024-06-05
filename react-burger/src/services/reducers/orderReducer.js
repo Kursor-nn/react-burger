@@ -10,6 +10,11 @@ export const orderReducer = (state = initialState, action) => {
                 ...state, order: action.payload
             };
         }
+        case "ADD_INGREDIENT": {
+            return {
+                ...state, order: [...state.order, action.payload]
+            };
+        }
         case "CLEAR_ORDER": {
             return {
                 ...state, order: []

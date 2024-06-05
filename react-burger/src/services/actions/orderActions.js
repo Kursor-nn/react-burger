@@ -6,6 +6,13 @@ export function updateOrder(ingredient) {
     }
 }
 
+export function addIngredient(ingredient) {
+    return {
+        type: "ADD_INGREDIENT",
+        payload: ingredient
+    }
+}
+
 export function displayOrder(state) {
     return {
         type: "DISPLAY_ORDER",

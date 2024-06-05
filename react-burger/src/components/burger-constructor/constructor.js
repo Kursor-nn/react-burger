@@ -16,16 +16,20 @@ import Product from '../product/product';
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { addIngredient } from '../../services/actions/orderActions';
 
 function BurgerConstructor({ doOrder }) {
+    const dispatch = useDispatch();
     const ingredients = useSelector((store) => store.ingredients.ingredients);
+    const orderIngredients = useSelector((store) => store.order.order);
     const bun = ingredients.find(item => item.type === 'bun');
 
     const [{ isHover }, dropTargerRef] = useDrop({
         accept: "ingredient",
         collect: (monitor) => ({}),
         drop(item) {
-            console.log("drop item event")
+            const newIngr = ingredients.filter(it => it._id == item.id)[0]
+            dispatch(addIngredient(newIngr))
         },
     });
 
@@ -33,7 +37,7 @@ function BurgerConstructor({ doOrder }) {
         <div className={`pt-20 ${styles.column}`}>
 
             {
-                (bun && ingredients.lenght != 0) ?
+                (bun && orderIngredients.lenght != 0) ?
                     <>
                         <div className={styles.header_box} />
                         <div className="pl-6">
@@ -41,7 +45,7 @@ function BurgerConstructor({ doOrder }) {
                         </div>
                         <div className={styles.column_list} ref={dropTargerRef}>
                             {
-                                ingredients.map((itm, index) => {
+                                orderIngredients.map((itm, index) => {
                                     return (
                                         <div key={index} className={styles.ingredient}>
                                             <DragIcon type="primary" />
