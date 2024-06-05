@@ -13,12 +13,9 @@ import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 
 function Product({ showDetails, id, count, image, name, price }) {
-    // opacity - возвращается из функции collect
     const [{ opacity }, dragRef] = useDrag({
         type: "ingredient",
-        // данные, которые dnd будет передавать в качестве аргумента во внутренние колбэки
         item: { id: id },
-        // Метод collect агрегириует информацию, полученную из мониторов и возвращает ее в объекте, первым аргументом нашего хукка
         collect: (monitor) => ({
         }),
     });
