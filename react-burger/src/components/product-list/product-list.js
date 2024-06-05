@@ -11,9 +11,8 @@ const parts = {
     'main': 'Начинки'
 };
 
-function ProductList({ listType }) {
+function ProductList({ listType, refs }) {
     const dispatch = useDispatch();
-    const selectedTab = useSelector((state) => state.ingredients.tab)
     const ingredients = useSelector((state) => state.ingredients.ingredients)
     const order = useSelector((state) => state.order.order)
 
@@ -35,7 +34,7 @@ function ProductList({ listType }) {
     return (
         (filteredIngredients && filteredIngredients.length) ? <>
             <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[listType]}</p>
-            <div className={styles.list}>
+            <div id={listType} className={styles.list} ref={refs}>
                 {filteredIngredients
                     .map((itm, index) => buildProduct(itm, index))}
             </div>
@@ -46,7 +45,8 @@ function ProductList({ listType }) {
 }
 
 ProductList.propTypes = {
-    listType: PropTypes.oneOf(Object.keys(parts)).isRequired
+    listType: PropTypes.oneOf(Object.keys(parts)).isRequired,
+    refs: PropTypes.any
 };
 
 export default ProductList;
