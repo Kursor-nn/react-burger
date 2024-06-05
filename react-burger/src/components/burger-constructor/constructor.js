@@ -14,11 +14,13 @@ import { doOrderFrom } from '../api/backend-api';
 //Type Check
 import PropTypes from 'prop-types';
 import Product from '../product/product';
+import { useDrag } from 'react-dnd';
 
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, deleteIngredientByPosition, setBun } from '../../services/actions/orderActions';
+import ConstructorItem from './item';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
@@ -42,6 +44,12 @@ function BurgerConstructor() {
 
     const orderCost = orderIngredients.map(it => it.price).reduce((a, b) => a + b, 0) + (bun == null ? 0 : 2 * bun.price)
 
+    function buildRow(value, index) {
+        return (
+            <ConstructorItem key={index} value={value} index={index} />
+        )
+    }
+
     return (
         <div className={`pt-20 ${styles.column}`}>
             {
@@ -52,20 +60,7 @@ function BurgerConstructor() {
                             {bun && <ConstructorElement key={bun._id} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />}
                         </div>
                         <div className={styles.column_list} ref={dropTargerRef}>
-                            {
-                                middleIngredients.map((itm, index) => {
-                                    return (
-                                        <div key={index} className={styles.ingredient}>
-                                            <DragIcon type="primary" />
-                                            <ConstructorElement key={itm._id} text={itm.name} price={itm.price} thumbnail={itm.image}
-                                                handleClose={
-                                                    (value) => {
-                                                        dispatch(deleteIngredientByPosition(index))
-                                                    }
-                                                } />
-                                        </div>
-                                    )
-                                })}
+                            {middleIngredients.map((itm, index) => buildRow(itm, index))}
                         </div>
 
                         <div className="pl-6">
@@ -79,7 +74,10 @@ function BurgerConstructor() {
                 <p className="text text_type_digits-medium">{orderCost}</p>
                 <CurrencyIcon type="primary" />
                 <Button htmlType="button" type="primary" size="medium" onClick={() => {
-                    doOrderFrom(dispatch, [bun._id, ...orderIngredients.map(it => it._id), bun._id])
+                    if (orderIngredients && orderIngredients.length != 0) {
+                        const orderList = [bun._id, ...orderIngredients.map(it => it._id), bun._id];
+                        doOrderFrom(dispatch, [bun._id, ...orderIngredients.map(it => it._id), bun._id])
+                    }
                 }}>Оформить заказ</Button>
             </div>
         </div>
