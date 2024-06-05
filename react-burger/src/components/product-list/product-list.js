@@ -33,7 +33,7 @@ function ProductList({ listType }) {
 
     const filteredIngredients = ingredients.filter((itm) => itm.type == listType)
     return (
-        ((selectedTab == null || selectedTab === listType) && filteredIngredients && filteredIngredients.length) ? <>
+        (filteredIngredients && filteredIngredients.length) ? <>
             <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[listType]}</p>
             <div className={styles.list}>
                 {filteredIngredients

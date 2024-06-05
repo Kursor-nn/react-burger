@@ -9,6 +9,8 @@ import styles from './constructor.module.css';
 // Mock Data
 //import data from '../../mock/mock-data.json';
 
+import { doOrderFrom } from '../api/backend-api';
+
 //Type Check
 import PropTypes from 'prop-types';
 import Product from '../product/product';
@@ -18,7 +20,7 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, deleteIngredientByPosition, setBun } from '../../services/actions/orderActions';
 
-function BurgerConstructor({ doOrder }) {
+function BurgerConstructor() {
     const dispatch = useDispatch();
     const ingredients = useSelector((store) => store.ingredients.ingredients);
     const orderIngredients = useSelector((store) => store.order.order);
@@ -77,16 +79,11 @@ function BurgerConstructor({ doOrder }) {
                 <p className="text text_type_digits-medium">{orderCost}</p>
                 <CurrencyIcon type="primary" />
                 <Button htmlType="button" type="primary" size="medium" onClick={() => {
-                    doOrder([bun._id, ...orderIngredients.map(it => it._id), bun._id])
+                    doOrderFrom(dispatch, [bun._id, ...orderIngredients.map(it => it._id), bun._id])
                 }}>Оформить заказ</Button>
             </div>
         </div>
     );
 }
-
-BurgerConstructor.propTypes = {
-    doOrder: PropTypes.func,
-    ingredients: PropTypes.arrayOf(Product)
-};
 
 export default BurgerConstructor;

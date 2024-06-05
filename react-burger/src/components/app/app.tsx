@@ -9,8 +9,6 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details'
 import ErrorDetails from '../error-details/error-details'
 
-import { MAKE_ORDER_URL, URL } from "../utils/constants.js";
-
 //Styles
 import styles from './app.module.css';
 
@@ -18,13 +16,12 @@ import styles from './app.module.css';
 import { useDispatch } from 'react-redux';
 import { deleteCard } from "../../services/actions/cardActions";
 import { displayOrder, clearOrder } from "../../services/actions/orderActions";
-import { fillIngredientList } from "../../services/actions/ingredientsActions";
-import { setErrorMessage } from "../../services/actions/errorActions"
 import { connect, ConnectedProps } from "react-redux";
-import { setOrderName, setOrderNumber } from "../../services/actions/orderActions";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+
+import { loadIngredients } from "../api/backend-api"
 
 const mapStateToProps = (state: any) => ({
   showCardDetails: state.card.show,
@@ -40,53 +37,14 @@ function App(props: AppModalProps) {
   const { showCardDetails, showOrderDetails, ingredients, errorMessage } = props;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetch(URL)
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(fillIngredientList(data.data));
-      })
-      .catch((error) => {
-        console.log("Error", error);
-        dispatch(setErrorMessage("У нас лапки."))
-      });
-
-  }, []);
-
-  const doOrderFrom = ((orderIngred: []) => {
-    fetch(MAKE_ORDER_URL, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ "ingredients": orderIngred })
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data: ", data)
-        if (data.success) {
-          dispatch(setOrderName(data.name))
-          dispatch(setOrderNumber(data.order.number))
-          dispatch(displayOrder(true));
-        } else {
-          dispatch(setErrorMessage("У нас лапки."))
-        }
-      })
-      .catch((error) => {
-        console.log("Error", error);
-        dispatch(setErrorMessage("У нас лапки."))
-      });
-  })
+  useEffect(() => loadIngredients(dispatch), []);
 
   return (
     <>
       <div className={styles.main_columns}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
-          <BurgerConstructor doOrder={(orderIngred) => {
-            doOrderFrom(orderIngred);
-          }} />
+          <BurgerConstructor />
         </DndProvider>
 
         {
