@@ -1,7 +1,9 @@
 const initialState = {
     order: [],
     bun: null,
-    show: false
+    show: false,
+    orderNumber: null,
+    orderName: null
 }
 
 export const orderReducer = (state = initialState, action) => {
@@ -28,12 +30,22 @@ export const orderReducer = (state = initialState, action) => {
         };
         case "CLEAR_ORDER": {
             return {
-                ...state, order: [], bun: null
+                ...state, order: [], bun: null, orderName: null, orderNumber: null
             };
         }
         case "DISPLAY_ORDER": {
             return {
                 ...state, show: action.state
+            };
+        }
+        case "SET_ORDER_NUMBER": {
+            return {
+                ...state, orderNumber: action.payload
+            };
+        }
+        case "SET_ORDER_NAME": {
+            return {
+                ...state, orderName: action.payload
             };
         }
         default: {

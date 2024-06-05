@@ -6,6 +6,20 @@ export function updateOrder(ingredient) {
     }
 }
 
+export function setOrderNumber(orderNumber) {
+    return {
+        type: "SET_ORDER_NUMBER",
+        payload: orderNumber
+    }
+}
+
+export function setOrderName(orderName) {
+    return {
+        type: "SET_ORDER_NAME",
+        payload: orderName
+    }
+}
+
 export function addIngredient(ingredient) {
     return {
         type: "ADD_INGREDIENT",

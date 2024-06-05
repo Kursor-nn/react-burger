@@ -76,7 +76,9 @@ function BurgerConstructor({ doOrder }) {
             <div className={styles.total}>
                 <p className="text text_type_digits-medium">{orderCost}</p>
                 <CurrencyIcon type="primary" />
-                <Button htmlType="button" type="primary" size="medium" onClick={doOrder}>Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="medium" onClick={() => {
+                    doOrder([bun._id, ...orderIngredients.map(it => it._id), bun._id])
+                }}>Оформить заказ</Button>
             </div>
         </div>
     );
