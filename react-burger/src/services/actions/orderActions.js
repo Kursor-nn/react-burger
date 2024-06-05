@@ -13,6 +13,13 @@ export function addIngredient(ingredient) {
     }
 }
 
+export function deleteIngredientByPosition(position) {
+    return {
+        type: "DELETE_INGREDIENT_BY_POSITION",
+        payload: position
+    }
+}
+
 export function setBun(bun) {
     return {
         type: "SET_BUN",

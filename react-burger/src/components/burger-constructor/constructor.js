@@ -16,7 +16,7 @@ import Product from '../product/product';
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addIngredient, setBun } from '../../services/actions/orderActions';
+import { addIngredient, deleteIngredientByPosition, setBun } from '../../services/actions/orderActions';
 
 function BurgerConstructor({ doOrder }) {
     const dispatch = useDispatch();
@@ -55,7 +55,12 @@ function BurgerConstructor({ doOrder }) {
                                     return (
                                         <div key={index} className={styles.ingredient}>
                                             <DragIcon type="primary" />
-                                            <ConstructorElement key={itm._id} text={itm.name} price={itm.price} thumbnail={itm.image} />
+                                            <ConstructorElement key={itm._id} text={itm.name} price={itm.price} thumbnail={itm.image}
+                                                handleClose={
+                                                    (value) => {
+                                                        dispatch(deleteIngredientByPosition(index))
+                                                    }
+                                                } />
                                         </div>
                                     )
                                 })}

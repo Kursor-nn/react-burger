@@ -16,10 +16,14 @@ export const orderReducer = (state = initialState, action) => {
                 ...state, order: [...state.order, action.payload]
             };
         };
-
         case "SET_BUN": {
             return {
                 ...state, bun: action.payload
+            };
+        };
+        case "DELETE_INGREDIENT_BY_POSITION": {
+            return {
+                ...state, order: [...state.order.slice(0, action.payload), ...state.order.slice(action.payload + 1, state.order.length)]
             };
         };
         case "CLEAR_ORDER": {
