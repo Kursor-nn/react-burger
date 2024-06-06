@@ -5,6 +5,8 @@ import { orderReducer } from "./reducers/orderReducer";
 import { ingredientsReducer } from "./reducers/ingredientsReducer";
 import errorReducer from "./reducers/errorReducer";
 
+import { thunk } from "redux-thunk";
+
 const rootReducer = combineReducers({
   card: currentCardReducer,
   order: orderReducer,
@@ -14,7 +16,9 @@ const rootReducer = combineReducers({
 
 const store = configureStore({
   reducer: rootReducer,
-  devTools: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  devTools: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  middlewares: [thunk]
+
 });
 
 export default store
