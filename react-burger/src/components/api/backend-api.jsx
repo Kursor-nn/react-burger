@@ -1,4 +1,4 @@
-import { URL, MAKE_ORDER_URL } from "../utils/constants";
+import { INGREDIENTS_URL, MAKE_ORDER_URL } from "../utils/constants";
 import { displayOrder, setOrderName, setOrderNumber } from "../../services/actions/orderActions";
 import { setErrorMessage } from "../../services/actions/errorActions";
 import { fillIngredientList } from "../../services/actions/ingredientsActions";
@@ -30,7 +30,7 @@ export const doOrderFrom = ((dispatch, orderIngred) => {
 
 export const loadIngredients = (dispatch) => {
 
-  fetch(URL)
+  fetch(INGREDIENTS_URL)
     .then((res) => (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`))
     .then((data) => {
       dispatch(fillIngredientList(data.data));
