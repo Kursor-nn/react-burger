@@ -6,8 +6,6 @@ import { ingredientsReducer } from "./reducers/ingredientsReducer";
 import errorReducer from "./reducers/errorReducer";
 
 import { thunk } from "redux-thunk";
-import { configureStore } from '@reduxjs/toolkit';
-
 
 const rootReducer = combineReducers({
   card: currentCardReducer,
@@ -20,9 +18,6 @@ const composeEnhancers =
   typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
-
-
-
 
 const enhancer = composeEnhancers(
   applyMiddleware(thunk)
