@@ -1,5 +1,3 @@
-import React from 'react';
-
 // KIT Components 
 import { Button, ConstructorElement, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -11,15 +9,12 @@ import styles from './constructor.module.css';
 
 import { doOrderFrom } from '../api/backend-api';
 
-//Type Check
-import PropTypes from 'prop-types';
-import Product from '../product/product';
-import { useDrag } from 'react-dnd';
-
+// React
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrder, addIngredient, deleteIngredientByPosition, setBun } from '../../services/actions/orderActions';
+
+import { setOrder, addIngredient, setBun } from '../../services/actions/orderActions';
 import ConstructorItem from './item';
 
 function BurgerConstructor() {
@@ -87,9 +82,9 @@ function BurgerConstructor() {
                 <p className="text text_type_digits-medium">{orderCost}</p>
                 <CurrencyIcon type="primary" />
                 <Button htmlType="button" type="primary" size="medium" onClick={() => {
-                    if (orderIngredients && orderIngredients.length != 0) {
+                    if (bun && orderIngredients && orderIngredients.length != 0) {
                         const orderList = [bun._id, ...orderIngredients.map(it => it._id), bun._id];
-                        doOrderFrom(dispatch, [bun._id, ...orderIngredients.map(it => it._id), bun._id])
+                        doOrderFrom(dispatch, orderList)
                     }
                 }}>Оформить заказ</Button>
             </div>

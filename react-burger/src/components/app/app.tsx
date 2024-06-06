@@ -26,7 +26,6 @@ import { loadIngredients } from "../api/backend-api"
 const mapStateToProps = (state: any) => ({
   showCardDetails: state.card.show,
   showOrderDetails: state.order.show,
-  ingredients: state.ingredients.ingredients,
   errorMessage: state.error.message
 });
 
@@ -34,7 +33,7 @@ const connector = connect(mapStateToProps);
 type AppModalProps = {} & ConnectedProps<typeof connector>;
 
 function App(props: AppModalProps) {
-  const { showCardDetails, showOrderDetails, ingredients, errorMessage } = props;
+  const { showCardDetails, showOrderDetails, errorMessage } = props;
   const dispatch = useDispatch();
 
   useEffect(() => loadIngredients(dispatch), []);

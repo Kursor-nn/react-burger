@@ -10,14 +10,13 @@ import styles from './product.module.css';
 //Type Check
 import PropTypes from 'prop-types';
 
+// React
 import { useDrag } from 'react-dnd';
 
 function Product({ showDetails, id, count, image, name, price }) {
-    const [{ opacity }, dragRef] = useDrag({
+    const [{ }, dragRef] = useDrag({
         type: "ingredient",
-        item: { id: id },
-        collect: (monitor) => ({
-        }),
+        item: { id: id }
     });
 
     return (

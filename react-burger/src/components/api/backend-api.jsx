@@ -1,11 +1,9 @@
-import { useDispatch } from "react-redux";
-
 import { URL, MAKE_ORDER_URL } from "../utils/constants";
 import { displayOrder, setOrderName, setOrderNumber } from "../../services/actions/orderActions";
 import { setErrorMessage } from "../../services/actions/errorActions";
 import { fillIngredientList } from "../../services/actions/ingredientsActions";
 
-export const doOrderFrom = ((dispatch: any, orderIngred: []) => {
+export const doOrderFrom = ((dispatch, orderIngred) => {
   fetch(MAKE_ORDER_URL, {
     method: 'POST',
     headers: {
@@ -31,7 +29,7 @@ export const doOrderFrom = ((dispatch: any, orderIngred: []) => {
     });
 })
 
-export const loadIngredients = (dispatch: any) => {
+export const loadIngredients = (dispatch) => {
 
   fetch(URL)
     .then((res) => res.json())

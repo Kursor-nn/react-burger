@@ -1,9 +1,14 @@
-import styles from './product-list.module.css';
 import Product from "../product/product";
-import PropTypes from 'prop-types';
-
-import { useDispatch, useSelector } from 'react-redux';
 import { setCard } from '../../services/actions/cardActions';
+
+//Redux
+import { useDispatch, useSelector } from 'react-redux';
+
+//Style
+import styles from './product-list.module.css';
+
+// PropTypesß
+import PropTypes from 'prop-types';
 
 const parts = {
     'bun': 'Булки',

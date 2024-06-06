@@ -1,25 +1,22 @@
-import { useDrag } from "react-dnd";
 import { deleteIngredientByPosition } from "../../services/actions/orderActions";
 
+//React
+import { useDrag, useDrop } from "react-dnd";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
 
+// KIT
 import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
 // Styles
 import styles from './constructor.module.css';
 
-import { useRef } from "react";
-import { useDrop } from "react-dnd";
-
 function ConstructorItem({ value, index, moveCard }) {
     const dispatch = useDispatch();
 
-    const [{ isDragging }, drag] = useDrag({
+    const [{ }, drag] = useDrag({
         type: "component",
-        item: () => ({ id: value._id, index }),
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        })
+        item: () => ({ id: value._id, index })
     });
 
 

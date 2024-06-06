@@ -12,7 +12,7 @@ export function deleteCard(card) {
     }
 }
 
-export function getData(){
+export function getData() {
     return {
         type: "GET_DATA"
     }

@@ -11,7 +11,7 @@ function ErrorDetails({ message }) {
     return (
         <div className={styles.container}>
             <p className="text text_type_main-medium mt-9">{message}</p>
-            <InfoIcon type="error"/>
+            <InfoIcon type="error" />
             <p className="text text_type_main-default mt-6">Ваш заказ не начнут готовить</p>
             <p className="text text_type_main-default text_color_inactive mt-2 pb-20">
                 Не дождитесь готовности на орбитальной станции
