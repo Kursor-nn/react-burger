@@ -42,7 +42,7 @@ function BurgerConstructor() {
 
     function buildRow(value, index, moveCard) {
         return (
-            <ConstructorItem key={index} value={value} index={index} moveCard={moveCard} />
+            <ConstructorItem key={value.uniqueId} value={value} index={index} moveCard={moveCard} />
         )
     }
 
@@ -65,14 +65,14 @@ function BurgerConstructor() {
                     <>
                         <div className={styles.header_box} />
                         <div className="pl-6">
-                            {bun && <ConstructorElement key={bun._id} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />}
+                            {bun && <ConstructorElement key={bun.uniqueId} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />}
                         </div>
                         <div className={styles.column_list} ref={dropTargerRef}>
                             {middleIngredients.map((itm, index) => buildRow(itm, index, moveCard))}
                         </div>
 
                         <div className="pl-6">
-                            {bun && <ConstructorElement key={bun._id} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />}
+                            {bun && <ConstructorElement key={bun.uniqueId} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />}
                         </div>
                     </>
                     : <></>

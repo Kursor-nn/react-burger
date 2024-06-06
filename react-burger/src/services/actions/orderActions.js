@@ -1,3 +1,5 @@
+import { v4 as uuid4 } from 'uuid';
+
 export const SET_ORDER_INGREDIENTS = "SET_ORDER_INGREDIENTS";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const SET_ORDER_NUMBER = "SET_ORDER_NUMBER";
@@ -39,7 +41,10 @@ export function setOrderName(orderName) {
 export function addIngredient(ingredient) {
     return {
         type: ADD_INGREDIENT,
-        payload: ingredient
+        payload: {
+            ...ingredient,
+            uniqueId: uuid4()
+        }
     }
 }
 

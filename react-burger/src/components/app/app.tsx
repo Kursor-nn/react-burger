@@ -34,9 +34,11 @@ type AppModalProps = {} & ConnectedProps<typeof connector>;
 
 function App(props: AppModalProps) {
   const { showCardDetails, showOrderDetails, errorMessage } = props;
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
 
-  useEffect(() => {dispatch(asyncLoadIngredients())}, []);
+  useEffect(() => {
+    dispatch(asyncLoadIngredients())
+  }, []);
 
   return (
     <>
