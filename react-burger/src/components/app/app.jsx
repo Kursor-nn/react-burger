@@ -21,7 +21,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { loadIngredients } from "../api/backend-api"
+import { asyncLoadIngredients } from "../../services/asyncActions/asyncApiActions";
 
 const mapStateToProps = (state: any) => ({
   showCardDetails: state.card.show,
@@ -36,7 +36,7 @@ function App(props: AppModalProps) {
   const { showCardDetails, showOrderDetails, errorMessage } = props;
   const dispatch = useDispatch();
 
-  useEffect(() => loadIngredients(dispatch), []);
+  useEffect(() => {dispatch(asyncLoadIngredients())}, []);
 
   return (
     <>

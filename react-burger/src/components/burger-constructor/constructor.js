@@ -7,7 +7,7 @@ import styles from './constructor.module.css';
 // Mock Data
 //import data from '../../mock/mock-data.json';
 
-import { doOrderFrom } from '../api/backend-api';
+import { asyncDoOrderFrom, asyncGetIngredients } from '../../services/asyncActions/asyncApiActions';
 
 // React
 import { useDrop } from 'react-dnd';
@@ -84,7 +84,7 @@ function BurgerConstructor() {
                 <Button htmlType="button" type="primary" size="medium" onClick={() => {
                     if (bun && orderIngredients && orderIngredients.length != 0) {
                         const orderList = [bun._id, ...orderIngredients.map(it => it._id), bun._id];
-                        doOrderFrom(dispatch, orderList)
+                        dispatch(asyncDoOrderFrom(orderList))
                     }
                 }}>Оформить заказ</Button>
             </div>
