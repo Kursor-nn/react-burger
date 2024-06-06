@@ -17,7 +17,7 @@ function ProductList({ listType, refs }) {
     const order = useSelector((state) => state.order.order)
 
     function buildProduct(value, index) {
-        const countOfIngr = order.filter(it => it._id === value._id).length
+        const countOfIngr = order.filter(it => it != null).filter(it => it._id === value._id).length
         return (
             <Product showDetails={() => dispatch(setCard(value))}
                 count={countOfIngr}

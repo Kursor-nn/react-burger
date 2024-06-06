@@ -1,3 +1,9 @@
+export function setOrder(ingredients) {
+    return {
+        type: "SET_ORDER_INGREDIENTS",
+        payload: ingredients
+    }
+}
 
 export function updateOrder(ingredient) {
     return {

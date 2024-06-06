@@ -10,12 +10,13 @@ export const orderReducer = (state = initialState, action) => {
     switch (action.type) {
         case "UPDATE_ORDER": {
             return {
-                ...state, order: action.payload
+                ...state, order: action.payload.filter(it => it != null)
             };
         }
         case "ADD_INGREDIENT": {
+            const order = [...state.order, action.payload].filter(it => it != null)
             return {
-                ...state, order: [...state.order, action.payload]
+                ...state, order: order
             };
         };
         case "SET_BUN": {
@@ -23,6 +24,13 @@ export const orderReducer = (state = initialState, action) => {
                 ...state, bun: action.payload
             };
         };
+
+        case "SET_ORDER_INGREDIENTS": {
+            return {
+                ...state, order: action.payload.filter(it => it != null)
+            };
+        };
+
         case "DELETE_INGREDIENT_BY_POSITION": {
             return {
                 ...state, order: [...state.order.slice(0, action.payload), ...state.order.slice(action.payload + 1, state.order.length)]

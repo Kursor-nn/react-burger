@@ -19,7 +19,7 @@ import { useDrag } from 'react-dnd';
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addIngredient, deleteIngredientByPosition, setBun } from '../../services/actions/orderActions';
+import { setOrder, addIngredient, deleteIngredientByPosition, setBun } from '../../services/actions/orderActions';
 import ConstructorItem from './item';
 
 function BurgerConstructor() {
@@ -33,10 +33,11 @@ function BurgerConstructor() {
         accept: "ingredient",
         collect: (monitor) => ({}),
         drop(item) {
-            const newIngr = ingredients.filter(it => it._id == item.id)[0]
+            const newIngr = { ...ingredients.find(it => it._id == item.id) }
             if (newIngr.type == 'bun') {
                 dispatch(setBun(newIngr))
             } else {
+                newIngr.index = orderIngredients.length
                 dispatch(addIngredient(newIngr))
             }
         },
@@ -44,11 +45,23 @@ function BurgerConstructor() {
 
     const orderCost = orderIngredients.map(it => it.price).reduce((a, b) => a + b, 0) + (bun == null ? 0 : 2 * bun.price)
 
-    function buildRow(value, index) {
+    function buildRow(value, index, moveCard) {
         return (
-            <ConstructorItem key={index} value={value} index={index} />
+            <ConstructorItem key={index} value={value} index={index} moveCard={moveCard} />
         )
     }
+
+    const moveCard = useCallback(
+        (dragIndex, hoverIndex) => {
+            const dragCard = orderIngredients[dragIndex];
+            const order = [...orderIngredients];
+            order.splice(dragIndex, 1);
+            order.splice(hoverIndex, 0, dragCard);
+
+            dispatch(setOrder(order));
+        },
+        [orderIngredients, dispatch]
+    );
 
     return (
         <div className={`pt-20 ${styles.column}`}>
@@ -60,7 +73,7 @@ function BurgerConstructor() {
                             {bun && <ConstructorElement key={bun._id} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />}
                         </div>
                         <div className={styles.column_list} ref={dropTargerRef}>
-                            {middleIngredients.map((itm, index) => buildRow(itm, index))}
+                            {middleIngredients.map((itm, index) => buildRow(itm, index, moveCard))}
                         </div>
 
                         <div className="pl-6">
