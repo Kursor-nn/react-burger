@@ -1,3 +1,5 @@
+import { SET_TAB, FILL_INGREDIENTS } from "../actions/ingredientsActions";
+
 const initialState = {
     ingredients: [],
     tab: "bun"
@@ -5,12 +7,12 @@ const initialState = {
 
 export const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "FILL_INGREDIENTS": {
+        case FILL_INGREDIENTS: {
             return {
                 ...state, ingredients: action.ingredients
             };
         }
-        case "SET_TAB": {
+        case SET_TAB: {
             const newTab = (state.ingredients.tab === action.tab) ? null : action.tab
             return {
                 ...state, tab: newTab
