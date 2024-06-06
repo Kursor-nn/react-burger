@@ -4,6 +4,7 @@ import { deleteIngredientByPosition } from "../../services/actions/orderActions"
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { PropTypes } from 'prop-types';
 
 // KIT
 import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -64,5 +65,16 @@ function ConstructorItem({ value, index, moveCard }) {
         </div>
     )
 }
+
+ConstructorItem.propTypes = {
+    value: PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.number,
+        image: PropTypes.string,
+    }),
+    index: PropTypes.number,
+    moveCard: PropTypes.func
+};
 
 export default ConstructorItem;
