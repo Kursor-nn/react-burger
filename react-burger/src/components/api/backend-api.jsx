@@ -12,9 +12,8 @@ export const doOrderFrom = ((dispatch, orderIngred) => {
     },
     body: JSON.stringify({ "ingredients": orderIngred })
   })
-    .then((res) => res.json())
+    .then((res) => (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`))
     .then((data) => {
-      console.log("data: ", data)
       if (data.success) {
         dispatch(setOrderName(data.name))
         dispatch(setOrderNumber(data.order.number))
@@ -32,7 +31,7 @@ export const doOrderFrom = ((dispatch, orderIngred) => {
 export const loadIngredients = (dispatch) => {
 
   fetch(URL)
-    .then((res) => res.json())
+    .then((res) => (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`))
     .then((data) => {
       dispatch(fillIngredientList(data.data));
     })
@@ -40,5 +39,4 @@ export const loadIngredients = (dispatch) => {
       console.log("Error", error);
       dispatch(setErrorMessage("У нас лапки."))
     });
-
 }
