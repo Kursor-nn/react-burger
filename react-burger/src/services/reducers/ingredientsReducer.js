@@ -1,8 +1,9 @@
 import { SET_TAB, FILL_INGREDIENTS } from "../actions/ingredientsActions";
+import { BUN_TAB } from "../../components/utils/constants";
 
 const initialState = {
     ingredients: [],
-    tab: "bun"
+    tab: BUN_TAB
 }
 
 export const ingredientsReducer = (state = initialState, action) => {

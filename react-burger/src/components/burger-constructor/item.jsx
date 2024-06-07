@@ -5,6 +5,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { PropTypes } from 'prop-types';
+import { COMPONENT_DND_TYPE } from "../utils/constants";
 
 // KIT
 import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -16,14 +17,14 @@ function ConstructorItem({ value, index, moveCard }) {
     const dispatch = useDispatch();
 
     const [{ }, drag] = useDrag({
-        type: "component",
+        type: COMPONENT_DND_TYPE,
         item: () => ({ id: value._id, index })
     });
 
 
     const ref = useRef(null);
     const [{ }, drop] = useDrop({
-        accept: "component",
+        accept: COMPONENT_DND_TYPE,
         hover(item, monitor) {
             if (!ref.current) {
                 return;

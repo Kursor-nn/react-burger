@@ -57,20 +57,20 @@ export function deleteIngredientByPosition(position) {
 
 export function setBun(bun) {
     return {
-        type: "SET_BUN",
+        type: SET_BUN,
         payload: bun
     }
 }
 
 export function displayOrder(state) {
     return {
-        type: "DISPLAY_ORDER",
+        type: DISPLAY_ORDER,
         state: state
     }
 }
 
 export function clearOrder() {
     return {
-        type: "CLEAR_ORDER"
+        type: CLEAR_ORDER
     }
 }

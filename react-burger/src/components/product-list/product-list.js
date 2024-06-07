@@ -11,9 +11,9 @@ import styles from './product-list.module.css';
 import PropTypes from 'prop-types';
 
 const parts = {
-    'bun': 'Булки',
-    'sauce': 'Соусы',
-    'main': 'Начинки'
+    "bun": 'Булки',
+    "sauce": 'Соусы',
+    "main": 'Начинки'
 };
 
 function ProductList({ listType, refs }) {

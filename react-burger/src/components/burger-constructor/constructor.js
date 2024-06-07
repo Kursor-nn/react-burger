@@ -13,6 +13,7 @@ import { asyncDoOrderFrom, asyncGetIngredients } from '../../services/asyncActio
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { INGREDIENT_DND_TYPE } from '../utils/constants';
 
 import { setOrder, addIngredient, setBun } from '../../services/actions/orderActions';
 import ConstructorItem from './item';
@@ -25,7 +26,7 @@ function BurgerConstructor() {
     const middleIngredients = orderIngredients.filter(item => item.type != 'bun')
 
     const [{ }, dropTargerRef] = useDrop({
-        accept: "ingredient",
+        accept: INGREDIENT_DND_TYPE,
         collect: (monitor) => ({}),
         drop(item) {
             const newIngr = { ...ingredients.find(it => it._id == item.id) }

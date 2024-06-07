@@ -7,31 +7,40 @@ import { ThunkAction } from "redux-thunk"
 import { Action } from "redux"
 import { RootState } from "../init"
 
+import { DEFAULT_HEADERS } from "../../components/utils/constants"
+
 type ThunkActionType = ThunkAction<void, RootState, unknown, Action>;
+
+const errorHandler = (dispatch: any, error: any = null) => {
+    if (error) {
+        console.log("Error", error);
+    }
+    dispatch(setErrorMessage("У нас лапки."))
+}
+
+const checkResponseIsSuccess = (res: any) => {
+    return (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`)
+}
 
 export function asyncDoOrderFrom(orderIngred: any): ThunkActionType {
     return (dispatch: any) => {
         return fetch(MAKE_ORDER_URL, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            headers: DEFAULT_HEADERS,
             body: JSON.stringify({ "ingredients": orderIngred })
         })
-            .then((res) => (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+            .then(checkResponseIsSuccess)
             .then((data) => {
                 if (data.success) {
                     dispatch(setOrderName(data.name))
                     dispatch(setOrderNumber(data.order.number))
                     dispatch(displayOrder(true));
                 } else {
-                    dispatch(setErrorMessage("У нас лапки."))
+                    errorHandler(dispatch)
                 }
             })
             .catch((error) => {
-                console.log("Error", error);
-                dispatch(setErrorMessage("У нас лапки."))
+                errorHandler(dispatch, error)
             });
     }
 }
@@ -39,13 +48,12 @@ export function asyncDoOrderFrom(orderIngred: any): ThunkActionType {
 export const asyncLoadIngredients = () => {
     return function (dispatch: any) {
         fetch(INGREDIENTS_URL)
-            .then((res) => (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+            .then(checkResponseIsSuccess)
             .then((data) => {
                 dispatch(fillIngredientList(data.data));
             })
             .catch((error) => {
-                console.log("Error", error);
-                dispatch(setErrorMessage("У нас лапки."))
+                errorHandler(dispatch, error)
             });
     }
 }

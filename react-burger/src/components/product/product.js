@@ -12,10 +12,11 @@ import PropTypes from 'prop-types';
 
 // React
 import { useDrag } from 'react-dnd';
+import { INGREDIENT_DND_TYPE } from '../utils/constants';
 
 function Product({ showDetails, id, count, image, name, price }) {
     const [{ }, dragRef] = useDrag({
-        type: "ingredient",
+        type: INGREDIENT_DND_TYPE,
         item: { id: id }
     });
 

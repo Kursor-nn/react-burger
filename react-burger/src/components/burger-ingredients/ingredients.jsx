@@ -9,9 +9,9 @@ import styles from './ingredients.module.css';
 
 //Components
 import ProductList from '../product-list/product-list';
-import Product from '../product/product'
 
 import { setTab } from '../../services/actions/ingredientsActions';
+import { BUN_TAB, MAIN_TAB, SAUCE_TAB } from '../utils/constants';
 
 function BurgerIngredients() {
     const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function BurgerIngredients() {
         const mainDist = Math.abs(containerRef.current.getBoundingClientRect().top - mainRef.current.getBoundingClientRect().top)
         const minDist = Math.min(bunDist, sauceDist, mainDist);
 
-        const currentHeader = minDist === bunDist ? 'bun' : minDist === sauceDist ? 'sauce' : 'main';
+        const currentHeader = minDist === bunDist ? BUN_TAB : minDist === sauceDist ? SAUCE_TAB : MAIN_TAB;
 
         if (currentTub != currentHeader) {
             dispatch(setTab(currentHeader))
@@ -46,15 +46,15 @@ function BurgerIngredients() {
         <div className={`pl-5 pt-20 ${styles.column}`} ref={containerRef}>
             <p className="text text_type_main-large">Соберите бургер</p>
             <div className={styles.source_head}>
-                <Tab value="bun" active={currentTub === 'bun'} onClick={(value) => (clickHandler(bunRef, value))}>Булки</Tab>
-                <Tab value="sauce" active={currentTub === 'sauce'} onClick={(value) => (clickHandler(sauseRef, value))}>Соусы</Tab>
-                <Tab value="main" active={currentTub === 'main'} onClick={(value) => (clickHandler(mainRef, value))}>Начинки</Tab>
+                <Tab value="bun" active={currentTub === BUN_TAB} onClick={(value) => (clickHandler(bunRef, value))}>Булки</Tab>
+                <Tab value="sauce" active={currentTub === SAUCE_TAB} onClick={(value) => (clickHandler(sauseRef, value))}>Соусы</Tab>
+                <Tab value="main" active={currentTub === MAIN_TAB} onClick={(value) => (clickHandler(mainRef, value))}>Начинки</Tab>
             </div>
 
             <div className={styles.scrollzone} onScroll={scrollHandler}>
-                <ProductList listType={'bun'} refs={bunRef} />
-                <ProductList listType={'sauce'} refs={sauseRef} />
-                <ProductList listType={'main'} refs={mainRef} />
+                <ProductList listType={BUN_TAB} refs={bunRef} />
+                <ProductList listType={SAUCE_TAB} refs={sauseRef} />
+                <ProductList listType={MAIN_TAB} refs={mainRef} />
             </div>
         </div>
     );
