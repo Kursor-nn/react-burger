@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 //Components
-import Header from '../header/header';
 import BurgerConstructor from '../burger-constructor/constructor';
 import BurgerIngredients from '../burger-ingredients/ingredients';
 
@@ -10,50 +9,61 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details'
 import ErrorDetails from '../error-details/error-details'
 
-import { URL } from "../utils/constants.js";
-
 //Styles
 import styles from './app.module.css';
 
-function App() {
-  const [choosedIng, setChoosedIng] = useState(null);
-  const [orderIsDone, displayOrderIsDone] = useState(false);
+//Redux
+import { useDispatch } from 'react-redux';
+import { deleteCard } from "../../services/actions/cardActions";
+import { displayOrder, clearOrder } from "../../services/actions/orderActions";
+import { connect, ConnectedProps } from "react-redux";
 
-  const [ingredients, setIngredients] = useState([])
-  const [someErrorHaveWe, setSomeErrorHaveWe] = useState('')
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
+import { asyncLoadIngredients } from "../../services/asyncActions/asyncApiActions";
+
+const mapStateToProps = (state: any) => ({
+  showCardDetails: state.card.show,
+  showOrderDetails: state.order.show,
+  errorMessage: state.error.message
+});
+
+const connector = connect(mapStateToProps);
+type AppModalProps = {} & ConnectedProps<typeof connector>;
+
+function App(props: AppModalProps) {
+  const { showCardDetails, showOrderDetails, errorMessage } = props;
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
-    fetch(URL)
-      .then((res) => res.json())
-      .then((data) => {
-        setIngredients(data.data);
-      })
-      .catch((error) => {
-        console.log("Error", error);
-        setSomeErrorHaveWe("У нас лапки.")
-      });
+    dispatch(asyncLoadIngredients())
   }, []);
 
   return (
     <>
       <div className={styles.main_columns}>
-        <BurgerIngredients showIngredDetails={setChoosedIng} ingredients={ingredients} />
-        <BurgerConstructor doOrder={displayOrderIsDone} ingredients={ingredients} />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
 
         {
-          choosedIng && <Modal title="Детали ингредиента" onClose={() => setChoosedIng(null)}>
-            <IngredientDetails card={choosedIng} />
+          showCardDetails && <Modal title="Детали ингредиента" onClose={() => dispatch(deleteCard())}>
+            <IngredientDetails />
           </Modal>
         }
         {
-          orderIsDone && <Modal title="Детали заказа" onClose={() => { displayOrderIsDone(false) }}>
-            <OrderDetails orderId="666666" />
+          showOrderDetails && <Modal title="Детали заказа" onClose={() => {
+            dispatch(displayOrder(false));
+            dispatch(clearOrder());
+          }}>
+            <OrderDetails />
           </Modal>
         }
         {
-          someErrorHaveWe && <Modal title="Ужасная ошибка." onClose={() => { }}>
-            <ErrorDetails message={someErrorHaveWe} />
+          errorMessage && <Modal title="Ужасная ошибка." onClose={() => { }}>
+            <ErrorDetails message={errorMessage} />
           </Modal>
         }
       </div>
@@ -61,4 +71,4 @@ function App() {
   );
 }
 
-export default App;
+export default connector(App);

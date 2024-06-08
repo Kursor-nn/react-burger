@@ -1,29 +1,45 @@
-import styles from './product-list.module.css';
 import Product from "../product/product";
+import { setCard } from '../../services/actions/cardActions';
+
+//Redux
+import { useDispatch, useSelector } from 'react-redux';
+
+//Style
+import styles from './product-list.module.css';
+
+// PropTypesß
 import PropTypes from 'prop-types';
 
 const parts = {
-    'bun': 'Булки',
-    'sauce': 'Соусы',
-    'main': 'Начинки'
+    "bun": 'Булки',
+    "sauce": 'Соусы',
+    "main": 'Начинки'
 };
 
-function ProductList({ ingredients, showDetails, listType }) {
-    function buildProduct(product, index) {
+function ProductList({ listType, refs }) {
+    const dispatch = useDispatch();
+    const ingredients = useSelector((state) => state.ingredients.ingredients)
+    const order = useSelector((state) => state.order.order)
+
+    function buildProduct(value, index) {
+        const countOfIngr = order.filter(it => it != null).filter(it => it._id === value._id).length
         return (
-            <Product showDetails={() => showDetails(product)}
-                count={index == 0 ? 1 : 0}
-                key={product._id}
-                image={product.image}
-                name={product.name}
-                price={product.price} />);
+            <Product showDetails={() => dispatch(setCard(value))}
+                count={countOfIngr}
+                key={value._id}
+                id={value._id}
+                image={value.image}
+                name={value.name}
+                price={value.price}
+            />
+        );
     }
 
     const filteredIngredients = ingredients.filter((itm) => itm.type == listType)
     return (
         (filteredIngredients && filteredIngredients.length) ? <>
             <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[listType]}</p>
-            <div className={styles.list}>
+            <div id={listType} className={styles.list} ref={refs}>
                 {filteredIngredients
                     .map((itm, index) => buildProduct(itm, index))}
             </div>
@@ -35,8 +51,7 @@ function ProductList({ ingredients, showDetails, listType }) {
 
 ProductList.propTypes = {
     listType: PropTypes.oneOf(Object.keys(parts)).isRequired,
-    ingredients: PropTypes.arrayOf(Product),
-    showDetails: PropTypes.func
+    refs: PropTypes.any
 };
 
 export default ProductList;

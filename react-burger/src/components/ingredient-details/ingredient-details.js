@@ -1,11 +1,12 @@
+// Redux
+import { useSelector } from 'react-redux';
+
 //Styles
-import Product from '../product/product';
 import styles from './ingredient-details.module.css'
 
-//Type Check
-import PropTypes from 'prop-types';
+function IngredientDetails() {
+    const card = useSelector((state) => state.card.currentCard);
 
-function IngredientDetails({ card }) {
     const info = [
         { title: "Калории,ккал", value: card.calories },
         { title: "Белки, г", value: card.proteins },
@@ -39,15 +40,6 @@ function IngredientDetails({ card }) {
     )
 }
 
-IngredientDetails.propTypes = {
-    card: PropTypes.shape({
-        calories: PropTypes.number.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        image_large: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
-    })
-};
+IngredientDetails.propTypes = {};
 
 export default IngredientDetails;

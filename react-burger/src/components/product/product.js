@@ -10,9 +10,18 @@ import styles from './product.module.css';
 //Type Check
 import PropTypes from 'prop-types';
 
-function Product({showDetails, count, image, name, price}) {
+// React
+import { useDrag } from 'react-dnd';
+import { INGREDIENT_DND_TYPE } from '../utils/constants';
+
+function Product({ showDetails, id, count, image, name, price }) {
+    const [{ }, dragRef] = useDrag({
+        type: INGREDIENT_DND_TYPE,
+        item: { id: id }
+    });
+
     return (
-        <div className={styles.product} onClick={showDetails}>
+        <div ref={dragRef} className={styles.product} onClick={showDetails}>
             {count ? <Counter count={count} size="default" /> : <></>}
             <img src={image} alt={name} />
             <div className={styles.price}>
@@ -28,6 +37,7 @@ function Product({showDetails, count, image, name, price}) {
 
 Product.propTypes = {
     name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     count: PropTypes.number.isRequired,

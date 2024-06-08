@@ -1,5 +1,3 @@
-import React from 'react';
-
 // KIT Components 
 import { Button, ConstructorElement, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -9,54 +7,90 @@ import styles from './constructor.module.css';
 // Mock Data
 //import data from '../../mock/mock-data.json';
 
-//Type Check
-import PropTypes from 'prop-types';
-import Product from '../product/product';
+import { asyncDoOrderFrom, asyncGetIngredients } from '../../services/asyncActions/asyncApiActions';
 
-function BurgerConstructor({ doOrder, ingredients }) {
-    const bun = ingredients.find(item => item.type === 'bun');
+// React
+import { useDrop } from 'react-dnd';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { INGREDIENT_DND_TYPE } from '../utils/constants';
+
+import { setOrder, addIngredient, setBun } from '../../services/actions/orderActions';
+import ConstructorItem from './item';
+
+function BurgerConstructor() {
+    const dispatch = useDispatch();
+    const ingredients = useSelector((store) => store.ingredients.ingredients);
+    const orderIngredients = useSelector((store) => store.order.order);
+    const bun = useSelector((store) => store.order.bun);
+    const middleIngredients = orderIngredients.filter(item => item.type != 'bun')
+
+    const [{ }, dropTargerRef] = useDrop({
+        accept: INGREDIENT_DND_TYPE,
+        collect: (monitor) => ({}),
+        drop(item) {
+            const newIngr = { ...ingredients.find(it => it._id == item.id) }
+            if (newIngr.type == 'bun') {
+                dispatch(setBun(newIngr))
+            } else {
+                newIngr.index = orderIngredients.length
+                dispatch(addIngredient(newIngr))
+            }
+        },
+    });
+
+    const orderCost = orderIngredients.map(it => it.price).reduce((a, b) => a + b, 0) + (bun == null ? 0 : 2 * bun.price)
+
+    function buildRow(value, index, moveCard) {
+        return (
+            <ConstructorItem key={value.uniqueId} value={value} index={index} moveCard={moveCard} />
+        )
+    }
+
+    const moveCard = useCallback(
+        (dragIndex, hoverIndex) => {
+            const dragCard = orderIngredients[dragIndex];
+            const order = [...orderIngredients];
+            order.splice(dragIndex, 1);
+            order.splice(hoverIndex, 0, dragCard);
+
+            dispatch(setOrder(order));
+        },
+        [orderIngredients, dispatch]
+    );
 
     return (
         <div className={`pt-20 ${styles.column}`}>
-
             {
-                (bun && ingredients.lenght != 0) ?
+                (middleIngredients.lenght != 0) ?
                     <>
                         <div className={styles.header_box} />
                         <div className="pl-6">
-                            <ConstructorElement key={bun._id} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />
+                            {bun && <ConstructorElement key={bun.uniqueId} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />}
                         </div>
-                        <div className={styles.column_list}>
-                            {
-                                ingredients.map((itm, index) => {
-                                    return (
-                                        <div key={index} className={styles.ingredient}>
-                                            <DragIcon type="primary" />
-                                            <ConstructorElement key={itm._id} text={itm.name} price={itm.price} thumbnail={itm.image} />
-                                        </div>
-                                    )
-                                })}
+                        <div className={styles.column_list} ref={dropTargerRef}>
+                            {middleIngredients.map((itm, index) => buildRow(itm, index, moveCard))}
                         </div>
 
                         <div className="pl-6">
-                            <ConstructorElement key={bun._id} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />
+                            {bun && <ConstructorElement key={bun.uniqueId} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />}
                         </div>
                     </>
                     : <></>
             }
 
             <div className={styles.total}>
-                <p className="text text_type_digits-medium">610</p>
+                <p className="text text_type_digits-medium">{orderCost}</p>
                 <CurrencyIcon type="primary" />
-                <Button htmlType="button" type="primary" size="medium" onClick={doOrder}>Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="medium" onClick={() => {
+                    if (bun && orderIngredients && orderIngredients.length != 0) {
+                        const orderList = [bun._id, ...orderIngredients.map(it => it._id), bun._id];
+                        dispatch(asyncDoOrderFrom(orderList))
+                    }
+                }}>Оформить заказ</Button>
             </div>
         </div>
     );
 }
-
-BurgerConstructor.propTypes = {
-    doOrder: PropTypes.func,
-    ingredients: PropTypes.arrayOf(Product)
-};
 
 export default BurgerConstructor;
