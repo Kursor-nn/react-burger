@@ -1,39 +1,26 @@
 import React, { useEffect } from "react";
 
 //Components
-import BurgerConstructor from '../burger-constructor/constructor';
-import BurgerIngredients from '../burger-ingredients/ingredients';
-
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details'
-import ErrorDetails from '../error-details/error-details'
-
-//Styles
-import styles from './app.module.css';
+import { Route, Routes } from "react-router";
 
 //Redux
 import { useDispatch } from 'react-redux';
-import { deleteCard } from "../../services/actions/cardActions";
-import { displayOrder, clearOrder } from "../../services/actions/orderActions";
-import { connect, ConnectedProps } from "react-redux";
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { asyncLoadIngredients } from "../../services/asyncActions/asyncApiActions";
 
-const mapStateToProps = (state: any) => ({
-  showCardDetails: state.card.show,
-  showOrderDetails: state.order.show,
-  errorMessage: state.error.message
-});
 
-const connector = connect(mapStateToProps);
-type AppModalProps = {} & ConnectedProps<typeof connector>;
+//Pages
+import MainPage from "../../pages/main-page/main-page";
+import RegisterPage from "../../pages/register-page/register-page";
+import LoginPage from "../../pages/login-page/login-page";
+import FogotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
+import ResetPasswordPage from "../../pages/reset-password-page/reset-password-page";
+import ProfilePage from "../../pages/profile-page/profile-page";
+import IngredientDetailsPage from "../ingredient-details/ingredient-details";
+import NotFoundPage from "../../pages/not-found-page/not-found-page";
 
-function App(props: AppModalProps) {
-  const { showCardDetails, showOrderDetails, errorMessage } = props;
+function App() {
   const dispatch: any = useDispatch();
 
   useEffect(() => {
@@ -42,33 +29,18 @@ function App(props: AppModalProps) {
 
   return (
     <>
-      <div className={styles.main_columns}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-
-        {
-          showCardDetails && <Modal title="Детали ингредиента" onClose={() => dispatch(deleteCard())}>
-            <IngredientDetails />
-          </Modal>
-        }
-        {
-          showOrderDetails && <Modal title="Детали заказа" onClose={() => {
-            dispatch(displayOrder(false));
-            dispatch(clearOrder());
-          }}>
-            <OrderDetails />
-          </Modal>
-        }
-        {
-          errorMessage && <Modal title="Ужасная ошибка." onClose={() => { }}>
-            <ErrorDetails message={errorMessage} />
-          </Modal>
-        }
-      </div>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<FogotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/ingredients/:id" element={<IngredientDetailsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </>
   );
 }
 
-export default connector(App);
+export default App;

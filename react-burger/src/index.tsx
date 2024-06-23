@@ -14,6 +14,8 @@ import reportWebVitals from './reportWebVitals';
 import store from './services/init'
 import { Provider } from "react-redux";
 
+import { BrowserRouter } from "react-router-dom";
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -22,11 +24,14 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
       <main className={styles.main_rect}>
-        <Header />
-        <App />
+        <BrowserRouter>
+          <Header />
+          <App />
+        </BrowserRouter>
       </main>
     </React.StrictMode>
   </Provider>
+
 );
 
 reportWebVitals();
