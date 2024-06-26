@@ -1,5 +1,5 @@
 // KIT Components 
-import { Button, ConstructorElement, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 // Styles
 import styles from './constructor.module.css';
@@ -7,25 +7,27 @@ import styles from './constructor.module.css';
 // Mock Data
 //import data from '../../mock/mock-data.json';
 
-import { asyncDoOrderFrom, asyncGetIngredients } from '../../services/asyncActions/asyncApiActions';
+import { asyncDoOrderFrom } from '../../services/asyncActions/asyncApiActions';
 
 // React
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { INGREDIENT_DND_TYPE } from '../utils/constants';
+import { INGREDIENT_DND_TYPE, LOGIN_PATH } from '../utils/constants';
 
 import { setOrder, addIngredient, setBun } from '../../services/actions/orderActions';
 import ConstructorItem from './item';
+import { useNavigate } from 'react-router';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const ingredients = useSelector((store) => store.ingredients.ingredients);
     const orderIngredients = useSelector((store) => store.order.order);
     const bun = useSelector((store) => store.order.bun);
     const middleIngredients = orderIngredients.filter(item => item.type != 'bun')
 
-    const [{ }, dropTargerRef] = useDrop({
+    const [{ _ }, dropTargerRef] = useDrop({
         accept: INGREDIENT_DND_TYPE,
         collect: (monitor) => ({}),
         drop(item) {
@@ -85,7 +87,9 @@ function BurgerConstructor() {
                 <Button htmlType="button" type="primary" size="medium" onClick={() => {
                     if (bun && orderIngredients && orderIngredients.length != 0) {
                         const orderList = [bun._id, ...orderIngredients.map(it => it._id), bun._id];
-                        dispatch(asyncDoOrderFrom(orderList))
+                        dispatch(asyncDoOrderFrom(orderList, () => {
+                            navigate(LOGIN_PATH)
+                        }))
                     }
                 }}>Оформить заказ</Button>
             </div>

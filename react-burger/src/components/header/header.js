@@ -20,7 +20,7 @@ function Header() {
         <nav>
           <ul className={styles.list}>
             <li>
-              <div className={styles.list_item} to="/">
+              <div className={styles.list_item} >
                 <Link className={styles.link} to={MAIN_PATH}>
                   <BurgerIcon type={location.pathname === MAIN_PATH || location === undefined ? "primary" : "secondary"} />
                   <p

@@ -45,7 +45,7 @@ function App() {
       <ReactNotifications />
       <Routes location={background || location}>
         <Route path={MAIN_PATH} element={
-          <ProtectedRoute>
+          <ProtectedRoute commonAccess>
             <MainPage />
           </ProtectedRoute>} />
         <Route path={REGISTER_PATH} element={<RegisterPage />} />

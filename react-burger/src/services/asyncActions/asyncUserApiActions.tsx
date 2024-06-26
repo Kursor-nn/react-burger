@@ -44,7 +44,11 @@ export const saveTokens = (refreshToken: string, accessToken: string) => {
 
 export const asyncLoadUser = () => {
     return function (dispatch: any) {
-        const headers: any = getAccessToken() ? {
+        const accessTokenIsExists = (getAccessToken() && getAccessToken() !== "")
+        if(!accessTokenIsExists) return;
+
+
+        const headers: any = accessTokenIsExists ? {
             "Authorization": getAccessToken(),
             "Accept": 'application/json',
             "Content-Type": 'application/json'
