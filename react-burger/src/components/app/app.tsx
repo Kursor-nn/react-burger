@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 //Components
-import { Route, Routes, useLocation, useNavigate, useParams } from "react-router";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 
 //Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { asyncLoadIngredients } from "../../services/asyncActions/asyncApiActions";
 import { ProtectedRoute } from "../../hoc/ProtectedRoute";
@@ -21,13 +21,12 @@ import NotFoundPage from "../../pages/not-found-page/not-found-page";
 import 'react-notifications-component/dist/theme.css'
 import { ReactNotifications } from "react-notifications-component";
 
-import { ERROR_PATH, REGISTER_PATH, LOGIN_PATH, FORGOT_PASSWORD_PATH, RESET_PASSWORD_PATH, PROFILE_PATH, PROFILE_ORDERS_PATH, ORDERS_PATH, INGREDIENT_PATH, MAIN_PATH } from "../utils/constants";
+import { ERROR_PATH, REGISTER_PATH, LOGIN_PATH, FORGOT_PASSWORD_PATH, RESET_PASSWORD_PATH, PROFILE_PATH, PROFILE_ORDERS_PATH, INGREDIENT_PATH, MAIN_PATH } from "../utils/constants";
 import { asyncLoadUser } from "../../services/asyncActions/asyncUserApiActions";
 import OrderPage from "../../pages/order-page/order-page";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { deleteCard } from "../../services/actions/cardActions";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 
 function App() {
   const dispatch: any = useDispatch();
@@ -39,7 +38,7 @@ function App() {
   useEffect(() => {
     dispatch(asyncLoadIngredients())
     dispatch(asyncLoadUser());
-  }, []);
+  });
 
   return (
     <>
@@ -92,10 +91,8 @@ function App() {
             path={INGREDIENT_PATH}
             element={
               <Modal onClose={() => {
-                {
-                  dispatch(deleteCard())
-                  navigate(MAIN_PATH);
-                }
+                dispatch(deleteCard())
+                navigate(MAIN_PATH);
               }} title="Детали ингредиента">
                 <IngredientDetails />
               </Modal>

@@ -24,7 +24,6 @@ export const ENDPOINT_FOR_RESET_PASSWORD = "password-reset/reset";
 
 type ThunkActionType = ThunkAction<void, RootState, unknown, Action>;
 
-
 const errorHandler = (dispatch: any, error: any = null) => {
     if (error) {
         console.log("Error", error);

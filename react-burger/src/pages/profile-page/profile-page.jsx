@@ -1,5 +1,5 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { ChangeEvent, FormEvent } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import cn from "classnames";
 import styles from "./profile-page.module.css"
@@ -80,9 +80,9 @@ const ProfilePage = () => {
           size="default"
           icon="EditIcon"
           onChange={handleChange}
-          value={values.name || user.name || ""}
-          required error={!!errors.name}
-          errorText={errors.name}
+          value={values?.name || user?.name || ""}
+          required error={!!errors?.name}
+          errorText={errors?.name}
           minLength={2}
           onFocus={() => {
             setFieldEditing({ name: true, email: false, password: false });
@@ -97,7 +97,7 @@ const ProfilePage = () => {
           type="email"
           icon="EditIcon"
           onChange={handleChange}
-          value={values.email || user.email || ""}
+          value={values?.email || user?.email || ""}
           required
           error={!!errors.name}
           errorText={errors.name}
@@ -110,8 +110,8 @@ const ProfilePage = () => {
           name="password"
           icon="EditIcon"
           onChange={handleChange}
-          value={values.password || user.password || ""}
-          required error={!!errors.password} errorText={errors.password}
+          value={values?.password || user?.password || ""}
+          required error={!!errors?.password} errorText={errors?.password}
           minLength={6}
           onFocus={() => {
             setFieldEditing({ name: true, email: false, password: false });
@@ -134,7 +134,7 @@ const ProfilePage = () => {
               type="primary"
               size="medium"
               extraClass="mt-6"
-              disabled={!isValid && (values.name || values.email || values.password)}
+              disabled={!isValid && (values?.name || values?.email || values?.password)}
               onClick={saveProfile}
             >
               Сохранить
