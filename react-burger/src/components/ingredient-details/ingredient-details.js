@@ -30,17 +30,16 @@ function IngredientDetails() {
             dispatch(asyncLoadIngredients());
         }
         if (!card) {
-            const obj = ingredients.find((item) => item._id === params.id);
-            if (obj) {
-                const dataForModal = {
-                    name: obj.name,
-                    calories: obj.calories,
-                    proteins: obj.proteins,
-                    fat: obj.fat,
-                    carbohydrates: obj.carbohydrates,
-                    image_large: obj.image_large,
-                };
-                dispatch(setCard(dataForModal));
+            const actualIngr = ingredients.find((item) => item._id === params.id);
+            if (actualIngr) {
+                dispatch(setCard({
+                    name: actualIngr.name,
+                    calories: actualIngr.calories,
+                    proteins: actualIngr.proteins,
+                    fat: actualIngr.fat,
+                    carbohydrates: actualIngr.carbohydrates,
+                    image_large: actualIngr.image_large,
+                }));
             }
         }
     }, [ingredients]);

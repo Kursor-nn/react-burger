@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { MAIN_PATH } from "../../components/utils/constants";
+
 //Styles
 import styles from "./not-found.module.css";
 import cn from "classnames";

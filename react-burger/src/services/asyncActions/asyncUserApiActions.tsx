@@ -30,6 +30,7 @@ const errorHandler = (dispatch: any, error: any = null) => {
         console.log("Error", error);
     }
     dispatch(setErrorMessage("У нас лапки."))
+    ErrorNotification("У нас лапки.");
 }
 
 const checkResponseIsSuccess = (res: any) => {
@@ -65,17 +66,19 @@ export const asyncLoadUser = () => {
                         saveTokens(data.refreshToken, data.accessToken);
                     }
                 } else {
-                    if (data.message == "jwt expired") {
+                    if (data.message === "jwt expired") {
                         dispatch(refreshToken())
                         dispatch(asyncLoadUser())
                     }
                 }
             })
             .catch((error) => {
-                error.then((errorResponse:any ) => {
+                error.then((errorResponse: any) => {
                     if (errorResponse.message === "jwt expired") {
                         dispatch(refreshToken())
                         dispatch(asyncLoadUser())
+                    } else {
+                        ErrorNotification("У нас лапки.");
                     }
                 })
             });
@@ -92,16 +95,18 @@ export const asyncLogin = (email: string, password: string, callback: any) => {
             .then(checkResponseIsSuccess)
             .then((data) => {
                 if (data.success) {
-                    //InfoNotification("Вы успешно авторизованы!");
                     dispatch(setUser(data.user));
                     saveTokens(data.refreshToken, data.accessToken);
                     callback()
+                    InfoNotification("Вы успешно авторизованы!");
                 } else {
-                    //ErrorNotification(data.message)
+                    ErrorNotification(data.message)
                 }
             })
             .catch((error: any) => {
-                console.log("catch", error)
+                error.then((data: any) => {
+                    ErrorNotification(data);
+                })
             });
     }
 }
@@ -120,9 +125,10 @@ export const asyncLogout = (callback: any): ThunkActionType => {
                 dispatch(setUser(null));
                 saveTokens("", "");
                 callback()
+                InfoNotification("ну и ладно. ни у не надо.");
             })
             .catch((error) => {
-                //errorHandler(dispatch, error)
+                errorHandler(dispatch, error)
             });
     }
 };
@@ -141,7 +147,9 @@ export const asyncRegister = (email: string, password: string, name: string, cal
                 callback()
             })
             .catch((error) => {
-                //errorHandler(dispatch, error)
+                error.then((errorData: any) => {
+                    ErrorNotification(errorData);
+                })
             });
     }
 }
@@ -156,7 +164,7 @@ export const imForgotPassword = (email: string, callback: any) => {
             .then(checkResponseIsSuccess)
             .then((data) => callback())
             .catch((error) => {
-                //errorHandler(dispatch, error)
+                errorHandler(dispatch, error)
             });
     }
 }
@@ -220,7 +228,6 @@ export const asyncSaveProfile = (name: string, email: string, password?: string)
         })
             .then(checkResponseIsSuccess)
             .then((data) => {
-                console.log(data)
             })
             .catch((error) => {
                 errorHandler(dispatch, error)

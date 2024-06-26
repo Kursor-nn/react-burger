@@ -6,10 +6,7 @@ import { Route, Routes, useLocation, useNavigate, useParams } from "react-router
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import { asyncLoadIngredients } from "../../services/asyncActions/asyncApiActions";
-
-import { getAccessToken, getCookie } from "../utils/cookies";
 import { ProtectedRoute } from "../../hoc/ProtectedRoute";
 //Pages
 import MainPage from "../../pages/main-page/main-page";
@@ -18,7 +15,6 @@ import LoginPage from "../../pages/login-page/login-page";
 import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
 import ResetPasswordPage from "../../pages/reset-password-page/reset-password-page";
 import ProfilePage from "../../pages/profile-page/profile-page";
-//import IngredientDetailsPage from "../ingredient-details/ingredient-details";
 import IngredientDetailsPage from "../../pages/ingredient-details-page/ingredient-details-page";
 import NotFoundPage from "../../pages/not-found-page/not-found-page";
 
@@ -47,6 +43,7 @@ function App() {
 
   return (
     <>
+      <ReactNotifications />
       <Routes location={background || location}>
         <Route path={MAIN_PATH} element={
           <ProtectedRoute>
@@ -94,10 +91,12 @@ function App() {
           <Route
             path={INGREDIENT_PATH}
             element={
-              <Modal onClose={() => { {
-                dispatch(deleteCard())
-                navigate(MAIN_PATH);
-              } }} title="Детали ингредиента">
+              <Modal onClose={() => {
+                {
+                  dispatch(deleteCard())
+                  navigate(MAIN_PATH);
+                }
+              }} title="Детали ингредиента">
                 <IngredientDetails />
               </Modal>
             }

@@ -1,29 +1,27 @@
+//Redux
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router";
+
+//DND
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
+//Components
 import BurgerIngredients from "../../components/burger-ingredients/ingredients";
 import BurgerConstructor from "../../components/burger-constructor/constructor";
-
-//import styles from "../../../components/app/app.module.css";
-import styles from "../../components/app/app.module.css"
-
 
 import Modal from "../../components/modal/modal";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import OrderDetails from "../../components/order-details/order-details";
 import ErrorDetails from "../../components/error-details/error-details";
 
-//Styles
-//import styles from './app.module.css';
-
 import { deleteCard } from "../../services/actions/cardActions";
 import { displayOrder, clearOrder } from "../../services/actions/orderActions";
-import { connect, ConnectedProps } from "react-redux";
-//Redux
-import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router";
 
 import { MAIN_PATH } from "../../components/utils/constants";
+
+//Styles
+import styles from "../../components/app/app.module.css"
 
 const mapStateToProps = (state: any) => ({
   showCardDetails: state.card.show,
@@ -50,7 +48,7 @@ const MainPage = (props: AppModalProps) => {
       </div>
       {
         showCardDetails && <Modal title="Детали ингредиента" onClose={() => {
-          dispatch(deleteCard()); 
+          dispatch(deleteCard());
           navigate(MAIN_PATH);
         }}>
           <IngredientDetails />

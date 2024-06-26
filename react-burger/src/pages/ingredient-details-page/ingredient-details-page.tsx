@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+//Styles
 import styles from "./ingredient-details-page.module.css"
 
 const IngredientDetailsPage = ({ children }: any) => {
