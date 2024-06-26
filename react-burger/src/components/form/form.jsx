@@ -7,19 +7,14 @@ import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
 import { FORGOT_PASSWORD_PATH, LOGIN_PATH, REGISTER_PATH, RESET_PASSWORD_PATH, } from "../utils/constants";
 
-export const Form = ({ title, buttonText }) => {
-
-  const { values, handleChange, errors, isValid } = useFormAndValidation();
+export const Form = ({ title, buttonText, values, handleSubmit, handleChange, errors, isValid }) => {
+  //const { values, handleChange, errors, isValid } = useFormAndValidation();
   const { pathname } = useLocation();
 
   const isRegisterPage = pathname === REGISTER_PATH;
   const isLoginPage = pathname === LOGIN_PATH;
-  const isFogotPasswordPage = pathname === FORGOT_PASSWORD_PATH;
+  const isForgotPasswordPage = pathname === FORGOT_PASSWORD_PATH;
   const isResetPasswordPage = pathname === RESET_PASSWORD_PATH;
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-  };
 
   return (
     <>
@@ -40,7 +35,7 @@ export const Form = ({ title, buttonText }) => {
             minLength={2}
           />
         )}
-        {isRegisterPage || isLoginPage || isFogotPasswordPage ? (
+        {isRegisterPage || isLoginPage || isForgotPasswordPage ? (
           <Input
             type="email"
             extraClass="mt-6"
@@ -124,7 +119,7 @@ export const Form = ({ title, buttonText }) => {
           </div>
         </>
       )}
-      {isFogotPasswordPage || isResetPasswordPage ? (
+      {isForgotPasswordPage || isResetPasswordPage ? (
         <div className={cn(styles.wrapper, "mt-20")}>
           <p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>
           <Link className={styles.link} to={LOGIN_PATH}>

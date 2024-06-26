@@ -18,3 +18,8 @@
         margin-right: 8px;
     }
 }
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}

@@ -11,6 +11,14 @@
   display: flex;
 }
 
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
 .list {
   list-style-type: none;
   display: flex;

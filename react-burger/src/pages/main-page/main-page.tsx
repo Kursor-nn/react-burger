@@ -21,6 +21,9 @@ import { displayOrder, clearOrder } from "../../services/actions/orderActions";
 import { connect, ConnectedProps } from "react-redux";
 //Redux
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router";
+
+import { MAIN_PATH } from "../../components/utils/constants";
 
 const mapStateToProps = (state: any) => ({
   showCardDetails: state.card.show,
@@ -28,15 +31,12 @@ const mapStateToProps = (state: any) => ({
   errorMessage: state.error.message
 });
 
-
-
-
-
 const connector = connect(mapStateToProps);
 type AppModalProps = {} & ConnectedProps<typeof connector>;
 
 const MainPage = (props: AppModalProps) => {
   const dispatch: any = useDispatch();
+  const navigate = useNavigate();
 
   const { showCardDetails, showOrderDetails, errorMessage } = props;
 
@@ -49,7 +49,10 @@ const MainPage = (props: AppModalProps) => {
         </DndProvider>
       </div>
       {
-        showCardDetails && <Modal title="Детали ингредиента" onClose={() => dispatch(deleteCard())}>
+        showCardDetails && <Modal title="Детали ингредиента" onClose={() => {
+          dispatch(deleteCard()); 
+          navigate(MAIN_PATH);
+        }}>
           <IngredientDetails />
         </Modal>
       }
