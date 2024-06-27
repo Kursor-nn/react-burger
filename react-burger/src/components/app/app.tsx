@@ -28,17 +28,23 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { deleteCard } from "../../services/actions/cardActions";
 
+import { useSelector } from "react-redux";
+import { getAccessToken } from "../utils/cookies";
+
 function App() {
   const dispatch: any = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
   const background = location.state && location.state.background;
+  const { userDataIsFilled } = useSelector((state: any) => state.user);
 
   useEffect(() => {
     dispatch(asyncLoadIngredients())
-    dispatch(asyncLoadUser());
-  });
+    if (getAccessToken()) {
+      dispatch(asyncLoadUser());
+    }
+  }, [userDataIsFilled]);
 
   return (
     <>
