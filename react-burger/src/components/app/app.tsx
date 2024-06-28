@@ -1,74 +1,114 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 //Components
-import BurgerConstructor from '../burger-constructor/constructor';
-import BurgerIngredients from '../burger-ingredients/ingredients';
-
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details'
-import ErrorDetails from '../error-details/error-details'
-
-//Styles
-import styles from './app.module.css';
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 
 //Redux
 import { useDispatch } from 'react-redux';
-import { deleteCard } from "../../services/actions/cardActions";
-import { displayOrder, clearOrder } from "../../services/actions/orderActions";
-import { connect, ConnectedProps } from "react-redux";
-
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { asyncLoadIngredients } from "../../services/asyncActions/asyncApiActions";
+import { ProtectedRoute } from "../../hoc/ProtectedRoute";
+//Pages
+import MainPage from "../../pages/main-page/main-page";
+import RegisterPage from "../../pages/register-page/register-page";
+import LoginPage from "../../pages/login-page/login-page";
+import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
+import ResetPasswordPage from "../../pages/reset-password-page/reset-password-page";
+import ProfilePage from "../../pages/profile-page/profile-page";
+import IngredientDetailsPage from "../../pages/ingredient-details-page/ingredient-details-page";
+import NotFoundPage from "../../pages/not-found-page/not-found-page";
 
-const mapStateToProps = (state: any) => ({
-  showCardDetails: state.card.show,
-  showOrderDetails: state.order.show,
-  errorMessage: state.error.message
-});
+import 'react-notifications-component/dist/theme.css'
+import { ReactNotifications } from "react-notifications-component";
 
-const connector = connect(mapStateToProps);
-type AppModalProps = {} & ConnectedProps<typeof connector>;
+import { ERROR_PATH, REGISTER_PATH, LOGIN_PATH, FORGOT_PASSWORD_PATH, RESET_PASSWORD_PATH, PROFILE_PATH, PROFILE_ORDERS_PATH, INGREDIENT_PATH, MAIN_PATH } from "../utils/constants";
+import { asyncLoadUser } from "../../services/asyncActions/asyncUserApiActions";
+import OrderPage from "../../pages/order-page/order-page";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import { deleteCard } from "../../services/actions/cardActions";
 
-function App(props: AppModalProps) {
-  const { showCardDetails, showOrderDetails, errorMessage } = props;
+import { useSelector } from "react-redux";
+import { getAccessToken } from "../utils/cookies";
+
+function App() {
   const dispatch: any = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const background = location.state && location.state.background;
+  const { userDataIsFilled } = useSelector((state: any) => state.user);
 
   useEffect(() => {
     dispatch(asyncLoadIngredients())
-  }, []);
+    if (getAccessToken()) {
+      dispatch(asyncLoadUser());
+    }
+  }, [userDataIsFilled]);
 
   return (
     <>
-      <div className={styles.main_columns}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
+      <ReactNotifications />
+      <Routes location={background || location}>
+        <Route path={MAIN_PATH} element={
+          <ProtectedRoute commonAccess>
+            <MainPage />
+          </ProtectedRoute>} />
+        <Route path={REGISTER_PATH} element={<RegisterPage />} />
+        <Route path={LOGIN_PATH} element={
+          <ProtectedRoute onlyUnAuth>
+            <LoginPage />
+          </ProtectedRoute>
+        } />
+        <Route path={FORGOT_PASSWORD_PATH} element={
+          <ProtectedRoute onlyUnAuth>
+            <ForgotPasswordPage />
+          </ProtectedRoute>
+        } />
+        <Route path={RESET_PASSWORD_PATH} element={
+          <ProtectedRoute onlyUnAuth>
+            <ResetPasswordPage />
+          </ProtectedRoute>
+        } />
+        <Route path={PROFILE_PATH}
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          } />
+        <Route path={PROFILE_ORDERS_PATH}
+          element={
+            <ProtectedRoute>
+              <OrderPage />
+            </ProtectedRoute>
+          } />
+        <Route path={INGREDIENT_PATH}
+          element={
+            <IngredientDetailsPage>
+              <IngredientDetails />
+            </IngredientDetailsPage>
+          } />
+        <Route path={ERROR_PATH} element={<NotFoundPage />} />
+      </Routes>
 
-        {
-          showCardDetails && <Modal title="Детали ингредиента" onClose={() => dispatch(deleteCard())}>
-            <IngredientDetails />
-          </Modal>
-        }
-        {
-          showOrderDetails && <Modal title="Детали заказа" onClose={() => {
-            dispatch(displayOrder(false));
-            dispatch(clearOrder());
-          }}>
-            <OrderDetails />
-          </Modal>
-        }
-        {
-          errorMessage && <Modal title="Ужасная ошибка." onClose={() => { }}>
-            <ErrorDetails message={errorMessage} />
-          </Modal>
-        }
-      </div>
+      {
+        background && <Routes >
+          <Route
+            path={INGREDIENT_PATH}
+            element={
+              <Modal onClose={() => {
+                dispatch(deleteCard())
+                navigate(MAIN_PATH);
+              }} title="Детали ингредиента">
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes >
+      }
+
     </>
   );
 }
 
-export default connector(App);
+export default App;

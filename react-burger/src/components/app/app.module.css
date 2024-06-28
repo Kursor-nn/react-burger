@@ -13,3 +13,7 @@
     display: flex;
     gap: 40px;
 }
+
+.main_columns > div {
+    display: Flex
+}
