@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { UIEventHandler, useRef } from 'react';
 
 //KIT Components 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,30 +11,31 @@ import ProductList from '../product-list/product-list';
 
 import { setTab } from '../../services/actions/ingredientsActions';
 import { BUN_TAB, MAIN_TAB, SAUCE_TAB } from '../utils/constants';
+import { useAppDispatch, useTypedSelector } from '../../hooks/useTypedSelector';
 
 function BurgerIngredients() {
-    const dispatch = useDispatch();
-    const currentTub = useSelector((state) => state.ingredients.tab);
+    const dispatch = useAppDispatch();
+    const currentTub = useTypedSelector((state) => state.ingredients.tab);
 
-    const bunRef = useRef(null);
-    const sauseRef = useRef(null);
-    const mainRef = useRef(null);
-    const containerRef = useRef(null);
+    const bunRef = useRef<HTMLHeadingElement>(null);
+    const sauseRef = useRef<HTMLHeadingElement>(null);
+    const mainRef = useRef<HTMLHeadingElement>(null);
+    const containerRef = useRef<HTMLHeadingElement>(null);
 
-    const scrollHandler = (onTabSwitch) => {
-        const bunDist = Math.abs(containerRef.current.getBoundingClientRect().top - bunRef.current.getBoundingClientRect().top)
-        const sauceDist = Math.abs(containerRef.current.getBoundingClientRect().top - sauseRef.current.getBoundingClientRect().top)
-        const mainDist = Math.abs(containerRef.current.getBoundingClientRect().top - mainRef.current.getBoundingClientRect().top)
+    const scrollHandler = (onTabSwitch: any) => {
+        const bunDist = Math.abs(containerRef.current!.getBoundingClientRect().top - bunRef.current!.getBoundingClientRect().top)
+        const sauceDist = Math.abs(containerRef.current!.getBoundingClientRect().top - sauseRef.current!.getBoundingClientRect().top)
+        const mainDist = Math.abs(containerRef.current!.getBoundingClientRect().top - mainRef.current!.getBoundingClientRect().top)
         const minDist = Math.min(bunDist, sauceDist, mainDist);
 
         const currentHeader = minDist === bunDist ? BUN_TAB : minDist === sauceDist ? SAUCE_TAB : MAIN_TAB;
 
-        if (currentTub != currentHeader) {
+        if (currentTub !== currentHeader) {
             dispatch(setTab(currentHeader))
         }
     }
 
-    const clickHandler = (refTitle, value) => {
+    const clickHandler = (refTitle: React.RefObject<any>, value: string) => {
         refTitle.current?.scrollIntoView({
             behavior: "smooth",
         });
