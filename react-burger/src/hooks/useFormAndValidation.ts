@@ -1,8 +1,15 @@
 import { useState, useCallback, ChangeEvent } from "react";
 
+export interface FormInfoType {
+  email?: string | null
+  password?: string | null
+  name?: string | null
+  code?: string | null
+}
+
 export function useFormAndValidation() {
-  const [values, setValues] = useState<any>({ email: "", password: "", name: "", code: "" });
-  const [errors, setErrors] = useState<any>({});
+  const [values, setValues] = useState<FormInfoType>({});
+  const [errors, setErrors] = useState<FormInfoType>({});
   const [isValid, setIsValid] = useState(false);
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {

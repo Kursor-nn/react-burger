@@ -3,8 +3,6 @@ import cn from "classnames";
 import styles from "./form.module.css";
 import { Link, useLocation } from "react-router-dom";
 
-import { useFormAndValidation } from "../../hooks/useFormAndValidation";
-
 import { FORGOT_PASSWORD_PATH, LOGIN_PATH, REGISTER_PATH, RESET_PASSWORD_PATH, } from "../utils/constants";
 
 export const Form = ({ title, buttonText, values, handleSubmit, handleChange, errors, isValid }) => {

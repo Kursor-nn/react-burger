@@ -11,10 +11,12 @@ import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 // API
 import { asyncRegister } from "../../services/asyncActions/asyncUserApiActions";
 import { MAIN_PATH } from "../../components/utils/constants";
+import { FormEvent } from "react";
+import { useAppDispatch } from "../../hooks/useTypedSelector";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { values, handleChange, errors, isValid } = useFormAndValidation();
 
@@ -22,8 +24,8 @@ const RegisterPage = () => {
     navigate(MAIN_PATH)
   }
 
-  const handleSubmit = (evt) => {
-    dispatch(asyncRegister(values.email, values.password, values.name, registrationCallback))
+  const handleSubmit = (evt: FormEvent) => {
+    dispatch(asyncRegister(values.email!, values.password!, values.name!, registrationCallback))
     evt.preventDefault();
   };
 

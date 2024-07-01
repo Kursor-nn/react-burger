@@ -1,4 +1,3 @@
-import React from "react";
 import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { MAIN_PATH } from "../../components/utils/constants";

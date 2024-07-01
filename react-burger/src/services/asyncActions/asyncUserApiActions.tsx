@@ -207,7 +207,7 @@ export const refreshToken = (): ThunkActionType => {
     }
 };
 
-export const asyncSaveProfile = (name: string, email: string, password?: string) => {
+export const asyncSaveProfile = (name: string | null | undefined, email: string | null | undefined, password?: string | null | undefined) => {
     return function (dispatch: any) {
         const headers: any = getAccessToken() ? {
             "Authorization": getAccessToken(),

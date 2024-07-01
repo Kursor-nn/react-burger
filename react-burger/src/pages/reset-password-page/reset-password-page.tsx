@@ -3,16 +3,17 @@ import Form from "../../components/form/form";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 import { resetPassword } from "../../services/asyncActions/asyncUserApiActions";
 import { LOGIN_PATH } from "../../components/utils/constants";
-import { useDispatch } from "react-redux";
+import { FormEvent } from "react";
+import { useAppDispatch } from "../../hooks/useTypedSelector";
 
 const ResetPasswordPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { values, handleChange, errors, isValid } = useFormAndValidation();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    dispatch(resetPassword(values.password, values.code, () => { navigate(LOGIN_PATH) }))
+    dispatch(resetPassword(values.password!, values.code!, () => { navigate(LOGIN_PATH) }))
   };
 
   return (
