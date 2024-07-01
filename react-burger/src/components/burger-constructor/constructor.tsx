@@ -12,26 +12,27 @@ import { asyncDoOrderFrom } from '../../services/asyncActions/asyncApiActions';
 // React
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { INGREDIENT_DND_TYPE, LOGIN_PATH } from '../utils/constants';
 
 import { setOrder, addIngredient, setBun } from '../../services/actions/orderActions';
 import ConstructorItem from './item';
 import { useNavigate } from 'react-router';
+import { useAppDispatch, useTypedSelector } from '../../hooks/useTypedSelector';
+import { IngredientType } from '../product-list/product-list';
 
 function BurgerConstructor() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const ingredients = useSelector((store) => store.ingredients.ingredients);
-    const orderIngredients = useSelector((store) => store.order.order);
-    const bun = useSelector((store) => store.order.bun);
-    const middleIngredients = orderIngredients.filter(item => item.type != 'bun')
+    const ingredients: IngredientType[] = useTypedSelector((store) => store.ingredients.ingredients);
+    const orderIngredients: IngredientType[] = useTypedSelector((store) => store.order.order);
+    const bun: IngredientType = useTypedSelector((store) => store.order.bun);
+    const middleIngredients: IngredientType[] = orderIngredients.filter(item => item.type !== 'bun')
 
-    const [{ _ }, dropTargerRef] = useDrop({
+    const [x, dropTargerRef] = useDrop({
         accept: INGREDIENT_DND_TYPE,
         collect: (monitor) => ({}),
-        drop(item) {
-            const newIngr = { ...ingredients.find(it => it._id == item.id) }
+        drop(item: any) {
+            const newIngr = { ...ingredients.find(it => it._id === item.id) }
             if (newIngr.type == 'bun') {
                 dispatch(setBun(newIngr))
             } else {
@@ -43,14 +44,14 @@ function BurgerConstructor() {
 
     const orderCost = orderIngredients.map(it => it.price).reduce((a, b) => a + b, 0) + (bun == null ? 0 : 2 * bun.price)
 
-    function buildRow(value, index, moveCard) {
+    function buildRow(value: IngredientType, index: number, moveCard: (dragIndex: number, hoverIndex: number) => void) {
         return (
             <ConstructorItem key={value.uniqueId} value={value} index={index} moveCard={moveCard} />
         )
     }
 
     const moveCard = useCallback(
-        (dragIndex, hoverIndex) => {
+        (dragIndex: number, hoverIndex: number) => {
             const dragCard = orderIngredients[dragIndex];
             const order = [...orderIngredients];
             order.splice(dragIndex, 1);
@@ -64,7 +65,7 @@ function BurgerConstructor() {
     return (
         <div className={`pt-20 ${styles.column}`}>
             {
-                (middleIngredients.lenght != 0) ?
+                (middleIngredients.length !== 0) ?
                     <>
                         <div className={styles.header_box} />
                         <div className="pl-6">

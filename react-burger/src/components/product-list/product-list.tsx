@@ -24,6 +24,8 @@ interface ProductListType {
 
 export interface IngredientType {
     _id: string,
+    index: number,
+    uniqueId: string,
     image: string,
     name: string,
     price: number,

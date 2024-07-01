@@ -15,7 +15,7 @@ import cn from "classnames";
 import { useLocation } from 'react-router-dom';
 
 
-interface ProductType {
+export interface ProductType {
     showDetails: () => void
     id: string
     count: number
