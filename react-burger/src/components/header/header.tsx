@@ -8,7 +8,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 //Styles
 import styles from "./header.module.css";
-import { MAIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from "../utils/constants";
+import { MAIN_PATH, PROFILE_PATH } from "../utils/constants";
 import cn from "classnames";
 
 function Header() {

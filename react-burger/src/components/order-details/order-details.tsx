@@ -3,10 +3,10 @@ import styles from "./order-details.module.css";
 import image from "../../images/done-logo.svg"
 
 //PropTypes
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 function OrderDetails() {
-    const orderNumber = useSelector(state => state.order.orderNumber)
+    const orderNumber: number = useTypedSelector(state => state.order.orderNumber)
 
     return (
         <div className={styles.container}>

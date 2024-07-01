@@ -1,22 +1,22 @@
 //React
 import { useNavigate } from "react-router";
-//Redux
-import { useDispatch, useSelector } from "react-redux";
 
 //Components
 import Form from "../../components/form/form";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 import { MAIN_PATH } from "../../components/utils/constants";
 import { asyncLogin } from "../../services/asyncActions/asyncUserApiActions";
+import { useAppDispatch } from "../../hooks/useTypedSelector";
+import { FormEvent } from "react";
 
 const LoginPage = () => {
   const { values, handleChange, errors, isValid } = useFormAndValidation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    dispatch(asyncLogin(values.email, values.password, () => { navigate(MAIN_PATH); }));
+    dispatch(asyncLogin(values.email!!, values.password!!, () => { navigate(MAIN_PATH); }));
   };
 
   return (

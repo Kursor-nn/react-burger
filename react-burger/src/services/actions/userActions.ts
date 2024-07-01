@@ -1,6 +1,11 @@
 export const SET_USER_DETAILS = "SET_USER_DETAILS";
 
-export function setUser(user) {
+export interface UserType{
+    name: string,
+    email: string
+}
+
+export function setUser(user: UserType | null) {
     return {
         type: SET_USER_DETAILS,
         payload: user
