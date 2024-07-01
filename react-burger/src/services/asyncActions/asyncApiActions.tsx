@@ -1,17 +1,16 @@
 import { fillIngredientList } from "../actions/ingredientsActions"
 import { setErrorMessage } from "../actions/errorActions"
 
-import { INGREDIENTS_URL, LOGIN_PATH, MAKE_ORDER_URL } from "../../components/utils/constants"
+import { INGREDIENTS_URL, MAKE_ORDER_URL } from "../../components/utils/constants"
 import { setOrderNumber, displayOrder, setOrderName } from "../actions/orderActions"
 import { ThunkAction } from "redux-thunk"
-import { Action } from "redux"
+import { UnknownAction } from "redux"
 import { RootState } from "../init"
 
 import { DEFAULT_HEADERS } from "../../components/utils/constants"
-import { useNavigate } from "react-router"
 import { getAccessToken } from "../../components/utils/cookies"
 
-type ThunkActionType = ThunkAction<void, RootState, unknown, Action>;
+export type ThunkActionType = ThunkAction<void, RootState, unknown, UnknownAction>;
 
 const errorHandler = (dispatch: any, error: any = null) => {
     if (error) {
@@ -51,7 +50,7 @@ export function asyncDoOrderFrom(orderIngred: any, accessCallback: any): ThunkAc
     }
 }
 
-export const asyncLoadIngredients = () => {
+export const asyncLoadIngredients = (): ThunkActionType => {
     return function (dispatch: any) {
         fetch(INGREDIENTS_URL)
             .then(checkResponseIsSuccess)

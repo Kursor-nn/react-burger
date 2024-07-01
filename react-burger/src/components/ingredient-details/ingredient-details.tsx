@@ -1,24 +1,29 @@
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 
 //Styles
 import styles from './ingredient-details.module.css'
 
 import { asyncLoadIngredients } from '../../services/asyncActions/asyncApiActions';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { setCard } from '../../services/actions/cardActions';
 
-import cn from "classnames"
+import { useAppDispatch, useTypedSelector } from '../../hooks/useTypedSelector';
+import { IngredientType } from '../product-list/product-list';
+
+export interface IngredientDetailsType {
+    title: string,
+    value: number
+}
 
 function IngredientDetails() {
     const params = useParams()
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    var card = useSelector((state) => state.card.currentCard);
-    const ingredients = useSelector((state) => state.ingredients.ingredients);
+    var card = useTypedSelector((state) => state.card.currentCard);
+    const ingredients: IngredientType[] = useTypedSelector((state) => state.ingredients.ingredients);
 
-    const info = [
+    const info: IngredientDetailsType[] = [
         { title: "Калории,ккал", value: card?.calories },
         { title: "Белки, г", value: card?.proteins },
         { title: "Жиры, г", value: card?.fat },
@@ -42,14 +47,14 @@ function IngredientDetails() {
                 }));
             }
         }
-    }, [ingredients]);
+    }, [ingredients, card, dispatch, params.id]);
 
-    function buildValue(item, index) {
+    function buildValue(title: string, value: number, index: number) {
         return (
             <li className={styles.item} key={index}>
-                <p className="text text_type_main-default text_color_inactive">{item.title}</p>
+                <p className="text text_type_main-default text_color_inactive">{title}</p>
                 <span className="text text_type_digits-default text_color_inactive">
-                    {item.value}
+                    {value}
                 </span>
             </li>
         );
@@ -64,7 +69,7 @@ function IngredientDetails() {
             />
             <p className={`text text_type_main-medium mt-4`}>{card?.name}</p>
             <ul className={styles.list}>
-                {info.map((item, index) => buildValue(item, index))}
+                {info.map((item, index) => buildValue(item.title, item.value, index))}
             </ul>
         </div>
     )

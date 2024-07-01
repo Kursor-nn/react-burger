@@ -22,15 +22,20 @@ interface ProductListType {
     refs: any
 }
 
-interface IngredientType {
+export interface IngredientType {
     _id: string,
     image: string,
     name: string,
     price: number,
     type: string
+    calories: number,
+    proteins: number,
+    fat: number,
+    carbohydrates: number,
+    image_large: string
 }
 
-interface OrderType {
+export interface OrderType {
     _id: string,
 }
 
