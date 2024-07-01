@@ -38,13 +38,19 @@ function IngredientDetails() {
             const actualIngr = ingredients.find((item) => item._id === params.id);
             if (actualIngr) {
                 dispatch(setCard({
+                    image: null,
+                    type: null,
+                    price: null,
+                    uniqueId: null,
+                    _id: null,
+                    index: null,
                     name: actualIngr.name,
                     calories: actualIngr.calories,
                     proteins: actualIngr.proteins,
                     fat: actualIngr.fat,
                     carbohydrates: actualIngr.carbohydrates,
                     image_large: actualIngr.image_large,
-                }));
+                } ));
             }
         }
     }, [ingredients, card, dispatch, params.id]);

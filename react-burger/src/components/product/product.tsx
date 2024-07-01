@@ -17,7 +17,7 @@ import { useLocation } from 'react-router-dom';
 
 export interface ProductType {
     showDetails: () => void
-    id: string
+    id: string | null | undefined
     count: number
     image: string
     name: string

@@ -69,7 +69,7 @@ const ConstructorItem = ({ value, index, moveCard }: ConstructorItemType) => {
     return (
         <div key={value.uniqueId} className={styles.ingredient} onDrop={preventDefault} ref={ref}>
             <DragIcon type="primary" />
-            <ConstructorElement key={value.uniqueId} text={value.name} price={value.price} thumbnail={value.image}
+            <ConstructorElement key={value.uniqueId} text={value.name!!} price={value.price!!} thumbnail={value.image!!}
                 handleClose={
                     () => {
                         dispatch(deleteIngredientByPosition(index))

@@ -1,4 +1,4 @@
-import { v4 as uuid4 } from 'uuid';
+import {IngredientType} from "../../components/product-list/product-list";
 
 export const SET_ORDER_INGREDIENTS = "SET_ORDER_INGREDIENTS";
 export const UPDATE_ORDER = "UPDATE_ORDER";
@@ -10,35 +10,31 @@ export const SET_BUN = "SET_BUN";
 export const DISPLAY_ORDER = "DISPLAY_ORDER";
 export const CLEAR_ORDER = "CLEAR_ORDER";
 
-export function setOrder(ingredients) {
+const { v4: uuid4 } = require('uuid');
+
+export function setOrder(ingredients: IngredientType[]) {
     return {
         type: SET_ORDER_INGREDIENTS,
         payload: ingredients
     }
 }
 
-export function updateOrder(ingredient) {
-    return {
-        type: UPDATE_ORDER,
-        payload: ingredient
-    }
-}
-
-export function setOrderNumber(orderNumber) {
+export function setOrderNumber(orderNumber: number) {
     return {
         type: SET_ORDER_NUMBER,
         payload: orderNumber
     }
 }
 
-export function setOrderName(orderName) {
+export function setOrderName(orderName: string) {
     return {
         type: SET_ORDER_NAME,
         payload: orderName
     }
 }
 
-export function addIngredient(ingredient) {
+export function addIngredient(ingredient: IngredientType) {
+
     return {
         type: ADD_INGREDIENT,
         payload: {
@@ -48,21 +44,21 @@ export function addIngredient(ingredient) {
     }
 }
 
-export function deleteIngredientByPosition(position) {
+export function deleteIngredientByPosition(position: number) {
     return {
         type: DELETE_INGREDIENT_BY_POSITION,
         payload: position
     }
 }
 
-export function setBun(bun) {
+export function setBun(bun: IngredientType) {
     return {
         type: SET_BUN,
         payload: bun
     }
 }
 
-export function displayOrder(state) {
+export function displayOrder(state: boolean) {
     return {
         type: DISPLAY_ORDER,
         state: state

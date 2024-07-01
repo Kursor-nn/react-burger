@@ -3,12 +3,14 @@ import { setErrorMessage } from "../actions/errorActions"
 
 import { INGREDIENTS_URL, MAKE_ORDER_URL } from "../../components/utils/constants"
 import { setOrderNumber, displayOrder, setOrderName } from "../actions/orderActions"
-import { ThunkAction } from "redux-thunk"
+import {ThunkAction, ThunkDispatch} from "redux-thunk"
 import { UnknownAction } from "redux"
 import { RootState } from "../init"
 
 import { DEFAULT_HEADERS } from "../../components/utils/constants"
 import { getAccessToken } from "../../components/utils/cookies"
+import {DispatchProp} from "react-redux";
+import {Dispatch} from "react";
 
 export type ThunkActionType = ThunkAction<void, RootState, unknown, UnknownAction>;
 
@@ -28,7 +30,7 @@ export function asyncDoOrderFrom(orderIngred: any, accessCallback: any): ThunkAc
         accessCallback()
     }
 
-    return (dispatch: any) => {
+    return (dispatch: ThunkDispatch<any, any, any>) => {
         return fetch(MAKE_ORDER_URL, {
             method: 'POST',
             headers: DEFAULT_HEADERS,
@@ -51,7 +53,7 @@ export function asyncDoOrderFrom(orderIngred: any, accessCallback: any): ThunkAc
 }
 
 export const asyncLoadIngredients = (): ThunkActionType => {
-    return function (dispatch: any) {
+    return function (dispatch: ThunkDispatch<any, any, any>) {
         fetch(INGREDIENTS_URL)
             .then(checkResponseIsSuccess)
             .then((data) => {

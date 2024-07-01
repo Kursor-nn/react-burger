@@ -23,13 +23,13 @@ interface ProductListType {
 }
 
 export interface IngredientType {
-    _id: string,
-    index: number,
-    uniqueId: string,
-    image: string,
-    name: string,
-    price: number,
-    type: string
+    _id: string | null | undefined
+    index: number | null | undefined
+    uniqueId: string | null | undefined
+    image: string | null | undefined,
+    name: string | null,
+    price: number | null,
+    type: string | null,
     calories: number,
     proteins: number,
     fat: number,
@@ -53,9 +53,9 @@ function ProductList({ listType, refs }: ProductListType) {
                 count={countOfIngr}
                 key={value._id}
                 id={value._id}
-                image={value.image}
-                name={value.name}
-                price={value.price}
+                image={value.image!!}
+                name={value.name!!}
+                price={value.price!!}
             />
         );
     }

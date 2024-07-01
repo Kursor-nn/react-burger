@@ -32,17 +32,21 @@ function BurgerConstructor() {
         accept: INGREDIENT_DND_TYPE,
         collect: (monitor) => ({}),
         drop(item: any) {
-            const newIngr = { ...ingredients.find(it => it._id === item.id) }
-            if (newIngr.type == 'bun') {
+            const newIngr = ingredients.find(it => it._id === item.id)
+            if (newIngr?.type == 'bun') {
                 dispatch(setBun(newIngr))
             } else {
-                newIngr.index = orderIngredients.length
-                dispatch(addIngredient(newIngr))
+                newIngr!.index = orderIngredients.length
+                dispatch(addIngredient(newIngr!))
             }
         },
     });
 
-    const orderCost = orderIngredients.map(it => it.price).reduce((a, b) => a + b, 0) + (bun == null ? 0 : 2 * bun.price)
+    const orderCost = orderIngredients
+        .filter(it => it.price != null)
+        .map(it => it.price!!)
+        .reduce((a, b) => a + b, 0) + (bun == null ? 0 : 2 * bun.price!!)
+
 
     function buildRow(value: IngredientType, index: number, moveCard: (dragIndex: number, hoverIndex: number) => void) {
         return (
@@ -69,14 +73,14 @@ function BurgerConstructor() {
                     <>
                         <div className={styles.header_box} />
                         <div className="pl-6">
-                            {bun && <ConstructorElement key={bun.uniqueId} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price} thumbnail={bun.image} />}
+                            {bun && <ConstructorElement key={bun.uniqueId} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price!!} thumbnail={bun.image!!} />}
                         </div>
                         <div className={styles.column_list} ref={dropTargerRef}>
                             {middleIngredients.map((itm, index) => buildRow(itm, index, moveCard))}
                         </div>
 
                         <div className="pl-6">
-                            {bun && <ConstructorElement key={bun.uniqueId} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />}
+                            {bun && <ConstructorElement key={bun.uniqueId} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price!!} thumbnail={bun.image!!} />}
                         </div>
                     </>
                     : <></>

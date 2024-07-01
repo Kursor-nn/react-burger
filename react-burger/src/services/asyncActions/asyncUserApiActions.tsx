@@ -18,7 +18,6 @@ export const ENDPOINT_FOR_REGISTER = "auth/register";
 export const ENDPOINT_FOR_USER = "auth/user";
 export const ENDPOINT_FOR_LOGOUT = "auth/logout";
 export const ENDPOINT_FOR_REFRESH_TOKEN = "auth/token";
-export const ENDPOINT_FOR_REFRESH_PASSWORD = "auth/token";
 export const ENDPOINT_FOR_FORGOT_PASSWORD = "password-reset";
 export const ENDPOINT_FOR_RESET_PASSWORD = "password-reset/reset";
 
