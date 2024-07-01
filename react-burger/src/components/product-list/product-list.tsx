@@ -2,27 +2,45 @@ import Product from "../product/product";
 import { setCard } from '../../services/actions/cardActions';
 
 //Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 //Style
 import styles from './product-list.module.css';
 
 // PropTypesß
 import PropTypes from 'prop-types';
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
-const parts = {
+const parts: { [id: string]: string } = {
     "bun": 'Булки',
     "sauce": 'Соусы',
     "main": 'Начинки'
 };
 
-function ProductList({ listType, refs }) {
-    const dispatch = useDispatch();
-    const ingredients = useSelector((state) => state.ingredients.ingredients)
-    const order = useSelector((state) => state.order.order)
+interface ProductListType {
+    listType: string,
+    refs: any
+}
 
-    function buildProduct(value, index) {
-        const countOfIngr = order.filter(it => it != null).filter(it => it._id === value._id).length
+interface IngredientType {
+    _id: string,
+    image: string,
+    name: string,
+    price: number,
+    type: string
+}
+
+interface OrderType {
+    _id: string,
+}
+
+function ProductList({ listType, refs }: ProductListType) {
+    const dispatch = useDispatch();
+    const ingredients: IngredientType[] = useTypedSelector<IngredientType[]>((state: any) => state.ingredients.ingredients)
+    const order: OrderType[] = useTypedSelector<OrderType[]>((state: any) => state.order.order)
+
+    function buildProduct(value: IngredientType, index: number) {
+        const countOfIngr = order!.filter(it => it != null).filter(it => it._id === value._id).length
         return (
             <Product showDetails={() => dispatch(setCard(value))}
                 count={countOfIngr}
@@ -35,7 +53,7 @@ function ProductList({ listType, refs }) {
         );
     }
 
-    const filteredIngredients = ingredients.filter((itm) => itm.type == listType)
+    const filteredIngredients = ingredients.filter((itm) => itm.type === listType)
     return (
         (filteredIngredients && filteredIngredients.length) ? <>
             <p className={`mt-6 text text_type_main-medium ${styles.title}`}>{parts[listType]}</p>
