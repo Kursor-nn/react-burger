@@ -74,25 +74,6 @@ const ProfilePage = () => {
       </div>
 
       <form className="ml-15" onSubmit={handleSubmit}>
-        <Input type="text"
-               placeholder="Имя"
-               name="name"
-               size="default"
-               icon="EditIcon"
-               onChange={handleChange}
-               value={values?.name || user?.name || ""}
-               required
-               error={!!errors?.name}
-               errorText={errors?.name!!}
-               minLength={2}
-               onFocus={() => {
-                 setFieldEditing({name: true, email: false, password: false});
-                 setButtonVisible((prev) => true);
-               }}
-               onPointerEnterCapture={undefined}
-               onPointerLeaveCapture={undefined}
-        />
-
         <Input
             type="text"
             placeholder="Имя"
@@ -108,7 +89,9 @@ const ProfilePage = () => {
             onFocus={() => {
               setFieldEditing({name: true, email: false, password: false});
               setButtonVisible((prev) => true);
-            }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
+            }}
+            onPointerEnterCapture={(evt: any) => {}}
+            onPointerLeaveCapture={(evt: any) => {}}
         />
 
         <Input extraClass="mt-6"
@@ -126,7 +109,10 @@ const ProfilePage = () => {
                onFocus={() => {
                  setFieldEditing({name: true, email: false, password: false});
                  setButtonVisible((prev) => true);
-               }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+               }}
+               onPointerEnterCapture={(evt: any) => {}}
+               onPointerLeaveCapture={(evt: any) => {}}
+        />
         <PasswordInput extraClass="mt-6"
           name="password"
           icon="EditIcon"

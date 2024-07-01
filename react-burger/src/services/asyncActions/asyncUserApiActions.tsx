@@ -61,7 +61,6 @@ export const asyncLoadUser = () => {
             .then(checkResponseIsSuccess)
             .then((data) => {
                 if (data.success) {
-                    console.log("asyncLoadUser: success", data);
                     if (data.user) {
                         dispatch(setUser(data.user));
                     }
@@ -69,7 +68,6 @@ export const asyncLoadUser = () => {
                         saveTokens(data.refreshToken, data.accessToken);
                     }
                 } else {
-                    console.log("asyncLoadUser: failed", data);
                     if (data.message === "jwt expired") {
                         dispatch(refreshToken())
                         dispatch(asyncLoadUser())

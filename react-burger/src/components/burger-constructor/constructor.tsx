@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router';
 import { useAppDispatch, useTypedSelector } from '../../hooks/useTypedSelector';
 import { IngredientType } from '../product-list/product-list';
 
-function BurgerConstructor() {
+const BurgerConstructor = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const ingredients: IngredientType[] = useTypedSelector((store) => store.ingredients.ingredients);
@@ -69,7 +69,7 @@ function BurgerConstructor() {
     return (
         <div className={`pt-20 ${styles.column}`}>
             {
-                (middleIngredients.length !== 0) ?
+                (middleIngredients) ?
                     <>
                         <div className={styles.header_box} />
                         <div className="pl-6">

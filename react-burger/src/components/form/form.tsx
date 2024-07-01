@@ -42,7 +42,7 @@ export const Form = ({ title, buttonText, values, handleSubmit, handleChange, er
               required
               error={!!errors.name}
               errorText={errors.name!!}
-              minLength={2} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}          />
+              minLength={2} onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}}          />
         )}
         {isRegisterPage || isLoginPage || isForgotPasswordPage ? (
           <Input
@@ -56,7 +56,7 @@ export const Form = ({ title, buttonText, values, handleSubmit, handleChange, er
               required
               error={!!errors.email}
               errorText={errors.email!!}
-              minLength={2} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}          />
+              minLength={2} onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}}          />
         ) : null}
         {isRegisterPage || isLoginPage || isResetPasswordPage ? (
           <Input
@@ -71,7 +71,7 @@ export const Form = ({ title, buttonText, values, handleSubmit, handleChange, er
               required
               error={!!errors.password}
               errorText={errors.password!!}
-              minLength={6} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}          />
+              minLength={6} onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}}          />
         ) : null}
         {isResetPasswordPage && (
           <Input
@@ -85,7 +85,7 @@ export const Form = ({ title, buttonText, values, handleSubmit, handleChange, er
               required
               error={!!errors.code}
               errorText={errors.code!!}
-              minLength={2} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}          />
+              minLength={2} onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}}          />
         )}
         <Button
           extraClass={cn(styles.button, "mt-6")}
