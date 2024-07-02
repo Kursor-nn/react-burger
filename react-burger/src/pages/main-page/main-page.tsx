@@ -1,5 +1,5 @@
 //Redux
-import { connect, ConnectedProps, useDispatch } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { useNavigate } from "react-router";
 
 //DND
@@ -23,6 +23,7 @@ import { MAIN_PATH } from "../../components/utils/constants";
 import styles from "../../components/app/app.module.css"
 import BurgerConstructor from '../../components/burger-constructor/constructor';
 import { RootState } from '../../services/init';
+import {useAppDispatch} from "../../hooks/useTypedSelector";
 
 const mapStateToProps = (state: RootState) => ({
   showCardDetails: state.card.show,
@@ -34,7 +35,7 @@ const connector = connect(mapStateToProps);
 type AppModalProps = {} & ConnectedProps<typeof connector>;
 
 const MainPage = (props: AppModalProps) => {
-  const dispatch: any = useDispatch();
+  const dispatch: any = useAppDispatch();
   const navigate = useNavigate();
 
   const { showCardDetails, showOrderDetails, errorMessage } = props;

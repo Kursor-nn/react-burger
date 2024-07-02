@@ -9,8 +9,6 @@ import { RootState } from "../init"
 
 import { DEFAULT_HEADERS } from "../../components/utils/constants"
 import { getAccessToken } from "../../components/utils/cookies"
-import {DispatchProp} from "react-redux";
-import {Dispatch} from "react";
 
 export type ThunkActionType = ThunkAction<void, RootState, unknown, UnknownAction>;
 

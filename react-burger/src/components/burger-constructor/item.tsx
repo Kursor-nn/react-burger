@@ -2,8 +2,7 @@ import { deleteIngredientByPosition } from "../../services/actions/orderActions"
 
 //React
 import { useDrag, useDrop } from "react-dnd";
-import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import {DragEventHandler, FormEvent, useRef} from "react";
 
 import { COMPONENT_DND_TYPE } from "../utils/constants";
 
@@ -13,6 +12,7 @@ import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burg
 // Styles
 import styles from './constructor.module.css';
 import { IngredientType } from "../product-list/product-list";
+import {useAppDispatch} from "../../hooks/useTypedSelector";
 
 export interface ConstructorItemType {
     value: IngredientType,
@@ -26,7 +26,7 @@ interface DnDValueType {
 }
 
 const ConstructorItem = ({ value, index, moveCard }: ConstructorItemType) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [x, drag] = useDrag({
         type: COMPONENT_DND_TYPE,
@@ -64,7 +64,7 @@ const ConstructorItem = ({ value, index, moveCard }: ConstructorItemType) => {
 
     drag(drop(ref));
 
-    const preventDefault = (e: any) => e.preventDefault();
+    const preventDefault = (e: FormEvent<HTMLDivElement>) => e.preventDefault();
 
     return (
         <div key={value.uniqueId} className={styles.ingredient} onDrop={preventDefault} ref={ref}>

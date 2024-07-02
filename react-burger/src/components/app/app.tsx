@@ -3,9 +3,6 @@ import { useEffect } from "react";
 //Components
 import { Route, Routes, useLocation, useNavigate } from "react-router";
 
-//Redux
-import { useDispatch } from 'react-redux';
-
 import { asyncLoadIngredients } from "../../services/asyncActions/asyncApiActions";
 import { ProtectedRoute } from "../../hoc/ProtectedRoute";
 //Pages
@@ -30,9 +27,10 @@ import { deleteCard } from "../../services/actions/cardActions";
 
 import { useSelector } from "react-redux";
 import { getAccessToken } from "../utils/cookies";
+import {useAppDispatch} from "../../hooks/useTypedSelector";
 
 function App() {
-  const dispatch: any = useDispatch();
+  const dispatch: any = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 

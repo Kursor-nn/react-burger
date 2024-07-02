@@ -1,4 +1,5 @@
 import {IngredientType} from "../../components/product-list/product-list";
+import { v4 as uuid4 } from "uuid"
 
 export const SET_ORDER_INGREDIENTS = "SET_ORDER_INGREDIENTS";
 export const UPDATE_ORDER = "UPDATE_ORDER";
@@ -9,8 +10,6 @@ export const DELETE_INGREDIENT_BY_POSITION = "DELETE_INGREDIENT_BY_POSITION";
 export const SET_BUN = "SET_BUN";
 export const DISPLAY_ORDER = "DISPLAY_ORDER";
 export const CLEAR_ORDER = "CLEAR_ORDER";
-
-const { v4: uuid4 } = require('uuid');
 
 export function setOrder(ingredients: IngredientType[]) {
     return {

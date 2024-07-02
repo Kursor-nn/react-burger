@@ -1,15 +1,12 @@
 import Product from "../product/product";
 import { setCard } from '../../services/actions/cardActions';
 
-//Redux
-import { useDispatch } from 'react-redux';
-
 //Style
 import styles from './product-list.module.css';
 
 // PropTypesß
 import PropTypes from 'prop-types';
-import { useTypedSelector } from "../../hooks/useTypedSelector";
+import {useAppDispatch, useTypedSelector} from "../../hooks/useTypedSelector";
 
 const parts: { [id: string]: string } = {
     "bun": 'Булки',
@@ -42,7 +39,7 @@ export interface OrderType {
 }
 
 function ProductList({ listType, refs }: ProductListType) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const ingredients: IngredientType[] = useTypedSelector<IngredientType[]>((state: any) => state.ingredients.ingredients)
     const order: OrderType[] = useTypedSelector<OrderType[]>((state: any) => state.order.order)
 

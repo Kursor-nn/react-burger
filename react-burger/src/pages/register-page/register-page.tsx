@@ -1,6 +1,3 @@
-// Redux 
-import { useDispatch } from "react-redux";
-
 //React
 import { useNavigate } from "react-router";
 
