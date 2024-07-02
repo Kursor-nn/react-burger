@@ -3,11 +3,21 @@ import cn from "classnames";
 import styles from "./form.module.css";
 import { Link, useLocation } from "react-router-dom";
 
-import { useFormAndValidation } from "../../hooks/useFormAndValidation";
-
 import { FORGOT_PASSWORD_PATH, LOGIN_PATH, REGISTER_PATH, RESET_PASSWORD_PATH, } from "../utils/constants";
+import {FormInfoType} from "../../hooks/useFormAndValidation";
+import {ChangeEvent, FormEvent} from "react";
 
-export const Form = ({ title, buttonText, values, handleSubmit, handleChange, errors, isValid }) => {
+export interface FormType {
+  title: string
+  buttonText: string
+  values: FormInfoType
+  handleSubmit: (evt: FormEvent) => void
+  handleChange: (evt: ChangeEvent<HTMLInputElement>) => void
+  errors: FormInfoType
+  isValid: boolean
+}
+
+export const Form = ({ title, buttonText, values, handleSubmit, handleChange, errors, isValid }: FormType) => {
   //const { values, handleChange, errors, isValid } = useFormAndValidation();
   const { pathname } = useLocation();
 
@@ -22,64 +32,60 @@ export const Form = ({ title, buttonText, values, handleSubmit, handleChange, er
         <h1 className={cn("text text_type_main-medium", styles.title)}>{title}</h1>
         {isRegisterPage && (
           <Input
-            type="text"
-            extraClass="mt-6"
-            placeholder="Имя"
-            name="name"
-            size="default"
-            onChange={handleChange}
-            value={values.name || ""}
-            required
-            error={!!errors.name}
-            errorText={errors.name}
-            minLength={2}
-          />
+              type="text"
+              extraClass="mt-6"
+              placeholder="Имя"
+              name="name"
+              size="default"
+              onChange={handleChange}
+              value={values.name || ""}
+              required
+              error={!!errors.name}
+              errorText={errors.name!!}
+              minLength={2} onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}}          />
         )}
         {isRegisterPage || isLoginPage || isForgotPasswordPage ? (
           <Input
-            type="email"
-            extraClass="mt-6"
-            placeholder={isRegisterPage || isLoginPage ? "E-mail" : "Укажите e-mail"}
-            name="email"
-            size="default"
-            onChange={handleChange}
-            value={values.email || ""}
-            required
-            error={!!errors.email}
-            errorText={errors.email}
-            minLength={2}
-          />
+              type="email"
+              extraClass="mt-6"
+              placeholder={isRegisterPage || isLoginPage ? "E-mail" : "Укажите e-mail"}
+              name="email"
+              size="default"
+              onChange={handleChange}
+              value={values.email || ""}
+              required
+              error={!!errors.email}
+              errorText={errors.email!!}
+              minLength={2} onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}}          />
         ) : null}
         {isRegisterPage || isLoginPage || isResetPasswordPage ? (
           <Input
-            type="password"
-            icon="ShowIcon"
-            extraClass="mt-6"
-            placeholder={isRegisterPage || isLoginPage ? "Пароль" : "Введите новый пароль"}
-            name="password"
-            size="default"
-            onChange={handleChange}
-            value={values.password || ""}
-            required
-            error={!!errors.password}
-            errorText={errors.password}
-            minLength={6}
-          />
+              type="password"
+              icon="ShowIcon"
+              extraClass="mt-6"
+              placeholder={isRegisterPage || isLoginPage ? "Пароль" : "Введите новый пароль"}
+              name="password"
+              size="default"
+              onChange={handleChange}
+              value={values.password || ""}
+              required
+              error={!!errors.password}
+              errorText={errors.password!!}
+              minLength={6} onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}}          />
         ) : null}
         {isResetPasswordPage && (
           <Input
-            extraClass="mt-6"
-            type="text"
-            placeholder="Введите код из письма"
-            name="code"
-            size={"default"}
-            onChange={handleChange}
-            value={values.code || ""}
-            required
-            error={!!errors.code}
-            errorText={errors.code}
-            minLength={2}
-          />
+              extraClass="mt-6"
+              type="text"
+              placeholder="Введите код из письма"
+              name="code"
+              size={"default"}
+              onChange={handleChange}
+              value={values.code || ""}
+              required
+              error={!!errors.code}
+              errorText={errors.code!!}
+              minLength={2} onPointerEnterCapture={() => {}} onPointerLeaveCapture={() => {}}          />
         )}
         <Button
           extraClass={cn(styles.button, "mt-6")}

@@ -7,7 +7,11 @@ import styles from "./error-details.module.css";
 //PropTypes
 import PropTypes from 'prop-types';
 
-function ErrorDetails({ message }) {
+export interface ErrorDetailsType {
+    message: string
+}
+
+function ErrorDetails({ message }: ErrorDetailsType) {
     return (
         <div className={styles.container}>
             <p className="text text_type_main-medium mt-9">{message}</p>

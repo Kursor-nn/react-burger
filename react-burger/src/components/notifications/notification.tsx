@@ -2,7 +2,11 @@
 import { Store } from "react-notifications-component";
 import styles from "./notifications.module.css";
 
-export const InfoContent = ({ message }: any) => {
+interface NotificationContentType {
+  message: string
+}
+
+export const InfoContent = ({ message }: NotificationContentType) => {
   return (
     <div className={styles.containerSuccess}>
       <p className={styles.title}>Информация:</p>
@@ -11,7 +15,7 @@ export const InfoContent = ({ message }: any) => {
   );
 };
 
-export const ErrorContent = ({ message }: any) => {
+export const ErrorContent = ({ message }: NotificationContentType) => {
   return (
     <div className={styles.containerError}>
       <p className={styles.title}>Ошибка!</p>

@@ -1,5 +1,5 @@
 //Redux
-import { connect, ConnectedProps, useDispatch } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { useNavigate } from "react-router";
 
 //DND
@@ -8,7 +8,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 //Components
 import BurgerIngredients from "../../components/burger-ingredients/ingredients";
-import BurgerConstructor from "../../components/burger-constructor/constructor";
 
 import Modal from "../../components/modal/modal";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
@@ -22,8 +21,11 @@ import { MAIN_PATH } from "../../components/utils/constants";
 
 //Styles
 import styles from "../../components/app/app.module.css"
+import BurgerConstructor from '../../components/burger-constructor/constructor';
+import { RootState } from '../../services/init';
+import {useAppDispatch} from "../../hooks/useTypedSelector";
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
   showCardDetails: state.card.show,
   showOrderDetails: state.order.show,
   errorMessage: state.error.message
@@ -33,7 +35,7 @@ const connector = connect(mapStateToProps);
 type AppModalProps = {} & ConnectedProps<typeof connector>;
 
 const MainPage = (props: AppModalProps) => {
-  const dispatch: any = useDispatch();
+  const dispatch: any = useAppDispatch();
   const navigate = useNavigate();
 
   const { showCardDetails, showOrderDetails, errorMessage } = props;

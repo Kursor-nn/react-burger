@@ -1,23 +1,22 @@
 //React
 import { useNavigate } from "react-router";
 
-//Redux
-import { useDispatch } from "react-redux";
-
 //Components
 import Form from "../../components/form/form";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 import { imForgotPassword } from "../../services/asyncActions/asyncUserApiActions";
 import { RESET_PASSWORD_PATH } from "../../components/utils/constants";
+import { useAppDispatch } from "../../hooks/useTypedSelector";
+import { FormEvent } from "react";
 
 const ForgotPasswordPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { values, handleChange, errors, isValid } = useFormAndValidation();
   const navigate = useNavigate();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    dispatch(imForgotPassword(values.email, () => { navigate(RESET_PASSWORD_PATH) }))
+    dispatch(imForgotPassword(values.email!!, () => { navigate(RESET_PASSWORD_PATH) }))
   };
 
   return (

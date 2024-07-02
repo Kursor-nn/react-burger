@@ -25,17 +25,18 @@ export function setCookie(name: string, value: string, props?: any) {
   document.cookie = updatedCookie;
 }
 
-export function getCookie(name: string) {
+export function getCookie(name: string): string | undefined {
   const matches = document.cookie.match(
     new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
   );
+
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function getAccessToken() {
+export function getAccessToken(): string | undefined {
   return getCookie(ACCESS_TOKEN_COOKIE)
 }
 
-export function clearAccessToken() {
-  return setCookie(ACCESS_TOKEN_COOKIE, "");
+export function clearAccessToken(): void {
+  setCookie(ACCESS_TOKEN_COOKIE, "");
 }

@@ -13,14 +13,13 @@ import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "../../components/util
 
 import { ErrorNotification, InfoNotification } from "../../components/notifications/notification"
 
-export const ENDPOINT_FOR_LOGIN = "auth/login";
-export const ENDPOINT_FOR_REGISTER = "auth/register";
-export const ENDPOINT_FOR_USER = "auth/user";
-export const ENDPOINT_FOR_LOGOUT = "auth/logout";
-export const ENDPOINT_FOR_REFRESH_TOKEN = "auth/token";
-export const ENDPOINT_FOR_REFRESH_PASSWORD = "auth/token";
-export const ENDPOINT_FOR_FORGOT_PASSWORD = "password-reset";
-export const ENDPOINT_FOR_RESET_PASSWORD = "password-reset/reset";
+export const ENDPOINT_FOR_LOGIN: string = "auth/login";
+export const ENDPOINT_FOR_REGISTER: string = "auth/register";
+export const ENDPOINT_FOR_USER: string = "auth/user";
+export const ENDPOINT_FOR_LOGOUT: string = "auth/logout";
+export const ENDPOINT_FOR_REFRESH_TOKEN: string = "auth/token";
+export const ENDPOINT_FOR_FORGOT_PASSWORD: string = "password-reset";
+export const ENDPOINT_FOR_RESET_PASSWORD: string = "password-reset/reset";
 
 type ThunkActionType = ThunkAction<void, RootState, unknown, Action>;
 
@@ -62,7 +61,6 @@ export const asyncLoadUser = () => {
             .then(checkResponseIsSuccess)
             .then((data) => {
                 if (data.success) {
-                    console.log("asyncLoadUser: success", data);
                     if (data.user) {
                         dispatch(setUser(data.user));
                     }
@@ -70,7 +68,6 @@ export const asyncLoadUser = () => {
                         saveTokens(data.refreshToken, data.accessToken);
                     }
                 } else {
-                    console.log("asyncLoadUser: failed", data);
                     if (data.message === "jwt expired") {
                         dispatch(refreshToken())
                         dispatch(asyncLoadUser())
@@ -207,7 +204,7 @@ export const refreshToken = (): ThunkActionType => {
     }
 };
 
-export const asyncSaveProfile = (name: string, email: string, password?: string) => {
+export const asyncSaveProfile = (name: string | null | undefined, email: string | null | undefined, password?: string | null | undefined) => {
     return function (dispatch: any) {
         const headers: any = getAccessToken() ? {
             "Authorization": getAccessToken(),
