@@ -1,15 +1,15 @@
 import {IngredientType} from "../../components/product-list/product-list";
 import { v4 as uuid4 } from "uuid"
 
-export const SET_ORDER_INGREDIENTS = "SET_ORDER_INGREDIENTS";
-export const UPDATE_ORDER = "UPDATE_ORDER";
-export const SET_ORDER_NUMBER = "SET_ORDER_NUMBER";
-export const SET_ORDER_NAME = "SET_ORDER_NAME";
-export const ADD_INGREDIENT = "ADD_INGREDIENT";
-export const DELETE_INGREDIENT_BY_POSITION = "DELETE_INGREDIENT_BY_POSITION";
-export const SET_BUN = "SET_BUN";
-export const DISPLAY_ORDER = "DISPLAY_ORDER";
-export const CLEAR_ORDER = "CLEAR_ORDER";
+export const SET_ORDER_INGREDIENTS: string = "SET_ORDER_INGREDIENTS";
+export const UPDATE_ORDER: string = "UPDATE_ORDER";
+export const SET_ORDER_NUMBER: string = "SET_ORDER_NUMBER";
+export const SET_ORDER_NAME: string = "SET_ORDER_NAME";
+export const ADD_INGREDIENT: string = "ADD_INGREDIENT";
+export const DELETE_INGREDIENT_BY_POSITION: string = "DELETE_INGREDIENT_BY_POSITION";
+export const SET_BUN: string = "SET_BUN";
+export const DISPLAY_ORDER: string = "DISPLAY_ORDER";
+export const CLEAR_ORDER: string = "CLEAR_ORDER";
 
 export function setOrder(ingredients: IngredientType[]) {
     return {

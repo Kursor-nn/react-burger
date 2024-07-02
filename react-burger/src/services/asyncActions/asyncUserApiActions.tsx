@@ -13,13 +13,13 @@ import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "../../components/util
 
 import { ErrorNotification, InfoNotification } from "../../components/notifications/notification"
 
-export const ENDPOINT_FOR_LOGIN = "auth/login";
-export const ENDPOINT_FOR_REGISTER = "auth/register";
-export const ENDPOINT_FOR_USER = "auth/user";
-export const ENDPOINT_FOR_LOGOUT = "auth/logout";
-export const ENDPOINT_FOR_REFRESH_TOKEN = "auth/token";
-export const ENDPOINT_FOR_FORGOT_PASSWORD = "password-reset";
-export const ENDPOINT_FOR_RESET_PASSWORD = "password-reset/reset";
+export const ENDPOINT_FOR_LOGIN: string = "auth/login";
+export const ENDPOINT_FOR_REGISTER: string = "auth/register";
+export const ENDPOINT_FOR_USER: string = "auth/user";
+export const ENDPOINT_FOR_LOGOUT: string = "auth/logout";
+export const ENDPOINT_FOR_REFRESH_TOKEN: string = "auth/token";
+export const ENDPOINT_FOR_FORGOT_PASSWORD: string = "password-reset";
+export const ENDPOINT_FOR_RESET_PASSWORD: string = "password-reset/reset";
 
 type ThunkActionType = ThunkAction<void, RootState, unknown, Action>;
 

@@ -1,7 +1,7 @@
 import {IngredientType} from "../../components/product-list/product-list";
 
-export const FILL_INGREDIENTS = "FILL_INGREDIENTS";
-export const SET_TAB = "SET_TAB";
+export const FILL_INGREDIENTS: string = "FILL_INGREDIENTS";
+export const SET_TAB: string = "SET_TAB";
 
 export function fillIngredientList(ingredients: IngredientType[]) {
     return {

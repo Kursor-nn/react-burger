@@ -62,7 +62,7 @@ const ProfilePage = () => {
         </nav>
         <button className={cn(styles.button, "text text_type_main-medium text_color_inactive")}
           type="button"
-          onClick={(env) => {
+          onClick={(env: FormEvent) => {
             env.preventDefault()
             dispatch(asyncLogout(() => { navigate(MAIN_PATH) }))
           }}>
