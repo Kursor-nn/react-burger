@@ -1,14 +1,15 @@
 import {
-    SET_ORDER_INGREDIENTS,
-    UPDATE_ORDER,
-    SET_ORDER_NUMBER,
-    SET_ORDER_NAME,
     ADD_INGREDIENT,
+    CLEAR_ORDER,
     DELETE_INGREDIENT_BY_POSITION,
-    SET_BUN,
     DISPLAY_ORDER,
-    CLEAR_ORDER
+    SET_BUN,
+    SET_ORDER_INGREDIENTS,
+    SET_ORDER_NAME,
+    SET_ORDER_NUMBER,
+    UPDATE_ORDER
 } from "../actions/orderActions";
+import {OrderActionType} from "../types";
 
 const initialState = {
     order: [],
@@ -18,7 +19,7 @@ const initialState = {
     orderName: null
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: OrderActionType<string, object>) => {
     switch (action.type) {
         case UPDATE_ORDER: {
             return {
@@ -30,24 +31,22 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 ...state, order: order
             };
-        };
+        }
         case SET_BUN: {
             return {
                 ...state, bun: action.payload
             };
-        };
-
+        }
         case SET_ORDER_INGREDIENTS: {
             return {
                 ...state, order: action.payload.filter(it => it != null)
             };
-        };
-
+        }
         case DELETE_INGREDIENT_BY_POSITION: {
             return {
-                ...state, order: [...state.order.slice(0, action.payload), ...state.order.slice(action.payload + 1, state.order.length)]
+                ...state, order: [...state.order.slice(0, action.position), ...state.order.slice(action.position + 1, state.order.length)]
             };
-        };
+        }
         case CLEAR_ORDER: {
             return {
                 ...state, order: [], bun: null, orderName: null, orderNumber: null

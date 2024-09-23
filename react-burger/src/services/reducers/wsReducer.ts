@@ -1,4 +1,4 @@
-import {TWSActions, wsActionTypes, WsDataType} from "../wsTypes";
+import {TWSActions, wsActionTypes, WsDataType} from "../types";
 
 interface WsStateType {
     wsConnected: boolean;

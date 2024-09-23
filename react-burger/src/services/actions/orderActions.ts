@@ -46,7 +46,7 @@ export function addIngredient(ingredient: IngredientType) {
 export function deleteIngredientByPosition(position: number) {
     return {
         type: DELETE_INGREDIENT_BY_POSITION,
-        payload: position
+        position: position
     }
 }
 

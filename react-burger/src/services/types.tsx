@@ -99,3 +99,22 @@ export type WsStoreActions = {
     onOrders: wsActionTypes.GET_ORDERS;
     wsClose: wsActionTypes.CLOSE;
 };
+
+export type ActionType<TYPE, PAYLOAD> = {
+    type: TYPE,
+    payload: PAYLOAD
+}
+
+export type IngredientActionType<TYPE, PAYLOAD> = {
+    type: TYPE,
+    ingredients: [PAYLOAD],
+    tab: string,
+}
+
+export type OrderActionType<TYPE, PAYLOAD> = {
+    type: TYPE,
+    payload: [PAYLOAD],
+    state: boolean
+    position: number
+}
+

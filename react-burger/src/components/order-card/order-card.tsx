@@ -7,7 +7,7 @@ import {useAppDispatch, useTypedSelector} from "../../hooks/useTypedSelector";
 import {IngredientType} from "../product-list/product-list";
 import {getOrderItem} from "../../services/actions/wsActions";
 import {date2string, filterIngredientsByIds} from "../utils/functions";
-import {WsNewOrderType} from "../../services/wsTypes";
+import {WsNewOrderType} from "../../services/types";
 
 interface OrderCardInterface {
     item: WsNewOrderType,

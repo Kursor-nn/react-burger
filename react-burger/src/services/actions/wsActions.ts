@@ -1,4 +1,4 @@
-import {orderItemActionTypes, wsActionTypes} from "../wsTypes";
+import {orderItemActionTypes, wsActionTypes} from "../types";
 import {getAccessToken} from "../../components/utils/cookies";
 import {IngredientType} from "../../components/product-list/product-list";
 

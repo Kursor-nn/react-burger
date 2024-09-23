@@ -1,5 +1,5 @@
 import type {AnyAction, Middleware, MiddlewareAPI} from "redux";
-import {WsStoreActions} from "../wsTypes";
+import {WsStoreActions} from "../types";
 import {AppDispatch} from "../../hooks/useTypedSelector";
 import {RootState} from "../init";
 

@@ -8,7 +8,7 @@ import { userReducer } from './reducers/userReducer';
 
 import { thunk } from "redux-thunk";
 import {socketMiddleware} from "./middleware/socket";
-import {WsStoreActions, wsActionTypes} from "./wsTypes";
+import {WsStoreActions, wsActionTypes} from "./types";
 import {WS_URL} from "../components/utils/constants";
 import {wsReducer} from "./reducers/wsReducer";
 
