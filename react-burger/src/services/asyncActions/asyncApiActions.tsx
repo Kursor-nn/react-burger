@@ -1,14 +1,13 @@
-import { fillIngredientList } from "../actions/ingredientsActions"
-import { setErrorMessage } from "../actions/errorActions"
+import {fillIngredientList} from "../actions/ingredientsActions"
+import {setErrorMessage} from "../actions/errorActions"
 
-import { INGREDIENTS_URL, MAKE_ORDER_URL } from "../../components/utils/constants"
-import { setOrderNumber, displayOrder, setOrderName } from "../actions/orderActions"
+import {INGREDIENTS_URL, MAKE_ORDER_URL} from "../../components/utils/constants"
+import {setOrderNumber, displayOrder, setOrderName} from "../actions/orderActions"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
-import { UnknownAction } from "redux"
-import { RootState } from "../init"
+import {UnknownAction} from "redux"
+import {RootState} from "../init"
 
-import { DEFAULT_HEADERS } from "../../components/utils/constants"
-import { getAccessToken } from "../../components/utils/cookies"
+import {getAccessToken} from "../../components/utils/cookies"
 
 export type ThunkActionType = ThunkAction<void, RootState, unknown, UnknownAction>;
 
@@ -31,8 +30,13 @@ export function asyncDoOrderFrom(orderIngred: any, accessCallback: any): ThunkAc
     return (dispatch: ThunkDispatch<any, any, any>) => {
         return fetch(MAKE_ORDER_URL, {
             method: 'POST',
-            headers: DEFAULT_HEADERS,
-            body: JSON.stringify({ "ingredients": orderIngred })
+            // @ts-ignore
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=utf-8",
+                Authorization: (getAccessToken() ? getAccessToken() : ""),
+            },
+            body: JSON.stringify({"ingredients": orderIngred})
         })
             .then(checkResponseIsSuccess)
             .then((data) => {

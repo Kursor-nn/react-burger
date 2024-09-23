@@ -20,9 +20,10 @@ interface ProductListType {
 }
 
 export interface IngredientType {
-    _id: string | null | undefined
-    index: number | null | undefined
-    uniqueId: string | null | undefined
+    _id: string | null | undefined,
+    count: number | null | undefined,
+    index: number | null | undefined,
+    uniqueId: string | null | undefined,
     image: string | null | undefined,
     name: string | null,
     price: number | null,

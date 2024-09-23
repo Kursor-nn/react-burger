@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 //Components
 import { Route, Routes, useLocation, useNavigate } from "react-router";
@@ -18,7 +18,18 @@ import NotFoundPage from "../../pages/not-found-page/not-found-page";
 import 'react-notifications-component/dist/theme.css'
 import { ReactNotifications } from "react-notifications-component";
 
-import { ERROR_PATH, REGISTER_PATH, LOGIN_PATH, FORGOT_PASSWORD_PATH, RESET_PASSWORD_PATH, PROFILE_PATH, PROFILE_ORDERS_PATH, INGREDIENT_PATH, MAIN_PATH } from "../utils/constants";
+import {
+  ERROR_PATH,
+  REGISTER_PATH,
+  LOGIN_PATH,
+  FORGOT_PASSWORD_PATH,
+  RESET_PASSWORD_PATH,
+  PROFILE_PATH,
+  PROFILE_ORDERS_PATH,
+  INGREDIENT_PATH,
+  MAIN_PATH,
+  FEED_PATH, FEED_ITEM_PATH, PROFILE_ORDER_PATH
+} from "../utils/constants";
 import { asyncLoadUser } from "../../services/asyncActions/asyncUserApiActions";
 import OrderPage from "../../pages/order-page/order-page";
 import Modal from "../modal/modal";
@@ -28,6 +39,10 @@ import { deleteCard } from "../../services/actions/cardActions";
 import { useSelector } from "react-redux";
 import { getAccessToken } from "../utils/cookies";
 import {useAppDispatch} from "../../hooks/useTypedSelector";
+import FeedItemPage from "../../pages/feed-item-page/feed-item-page";
+import FeedPage from "../../pages/feed-page/feed-page";
+import HistoryPage from "../../pages/history-page/history-page";
+import OrderFullInfo from "../order-info/order-full-info";
 
 function App() {
   const dispatch: any = useAppDispatch();
@@ -76,8 +91,8 @@ function App() {
           } />
         <Route path={PROFILE_ORDERS_PATH}
           element={
-            <ProtectedRoute>
-              <OrderPage />
+            <ProtectedRoute background={background}>
+              <HistoryPage />
             </ProtectedRoute>
           } />
         <Route path={INGREDIENT_PATH}
@@ -87,6 +102,15 @@ function App() {
             </IngredientDetailsPage>
           } />
         <Route path={ERROR_PATH} element={<NotFoundPage />} />
+        <Route path={FEED_PATH} element={<FeedPage />} />
+        <Route path={FEED_ITEM_PATH} element={<FeedItemPage />} />
+        <Route path={PROFILE_ORDER_PATH}
+            element={
+              <ProtectedRoute>
+                <OrderFullInfo />
+              </ProtectedRoute>
+            }
+        />
       </Routes>
 
       {
@@ -104,6 +128,36 @@ function App() {
           />
         </Routes >
       }
+      {background && (
+          <Routes>
+            <Route
+                path={FEED_ITEM_PATH}
+                element={
+                  <Modal onClose={() => {
+                    dispatch(deleteCard())
+                    navigate(-1);
+                  }} title="">
+                    <FeedItemPage />
+                  </Modal>
+                }
+            />
+          </Routes>
+      )}
+      {background && (
+          <Routes>
+            <Route
+                path={PROFILE_ORDER_PATH}
+                element={
+                  <Modal onClose={() => {
+                    //dispatch(deleteCard())
+                    navigate(-1);
+                  }} title="Детали заказа">
+                    <OrderFullInfo />
+                  </Modal>
+                }
+            />
+          </Routes>
+      )}
 
     </>
   );

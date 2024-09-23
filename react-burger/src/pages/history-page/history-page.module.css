@@ -1,0 +1,72 @@
+.wrapper {
+    display: flex;
+    margin-top: 40px;
+    gap: 60px;
+}
+
+.historyCardsWrapper {
+    width: 100%;
+}
+
+.historyCardContainer {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+    gap: 25px;
+}
+
+.container::-webkit-scrollbar {
+    height: 300px;
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.wrapper {
+    margin-top: 120px;
+    display: flex;
+}
+
+.container {
+    max-width: 320px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.selected {
+    color: #F5F6F7;
+}
+
+.button {
+    display: flex;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.text {
+    opacity: .4;
+}
+
+
+.form {
+    max-width: 480px;
+}

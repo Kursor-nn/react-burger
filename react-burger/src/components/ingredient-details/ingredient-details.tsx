@@ -39,6 +39,7 @@ function IngredientDetails() {
             if (actualIngr) {
                 dispatch(setCard({
                     image: null,
+                    count: 0,
                     type: null,
                     price: null,
                     uniqueId: null,
