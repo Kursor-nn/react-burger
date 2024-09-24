@@ -22,7 +22,7 @@ function BurgerIngredients() {
     const mainRef = useRef<HTMLHeadingElement>(null);
     const containerRef = useRef<HTMLHeadingElement>(null);
 
-    const scrollHandler = (onTabSwitch: any) => {
+    const scrollHandler = () => {
         const bunDist = Math.abs(containerRef.current!.getBoundingClientRect().top - bunRef.current!.getBoundingClientRect().top)
         const sauceDist = Math.abs(containerRef.current!.getBoundingClientRect().top - sauseRef.current!.getBoundingClientRect().top)
         const mainDist = Math.abs(containerRef.current!.getBoundingClientRect().top - mainRef.current!.getBoundingClientRect().top)

@@ -202,11 +202,12 @@ export const refreshToken = (): ThunkActionType => {
 
 export const asyncSaveProfile = (name: string | null | undefined, email: string | null | undefined, password?: string | null | undefined) => {
     return function (dispatch: any) {
-        const headers: any = getAccessToken() ? {
-            "Authorization": getAccessToken(),
-            "Accept": 'application/json',
-            "Content-Type": 'application/json'
-        } : new Headers(DEFAULT_HEADERS)
+        const headers: any = getAccessToken() ? new Headers({
+                "Authorization": getAccessToken() ? getAccessToken()! : "",
+                "Accept": 'application/json',
+                "Content-Type": 'application/json'
+            })
+            : new Headers(DEFAULT_HEADERS)
 
         var body: any = {}
         if (name) {

@@ -18,7 +18,7 @@ const errorHandler = (dispatch: any, error: any = null) => {
     dispatch(setErrorMessage("У нас лапки."))
 }
 
-const checkResponseIsSuccess = (res: any) => {
+const checkResponseIsSuccess = (res: Response) => {
     return (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`)
 }
 
