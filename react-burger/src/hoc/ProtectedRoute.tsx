@@ -2,8 +2,16 @@ import {Navigate, useLocation} from "react-router-dom";
 import {LOGIN_PATH, MAIN_PATH} from "../components/utils/constants";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {RootState} from "../services/init";
+import {ReactNode} from "react";
 
-export const ProtectedRoute = ({commonAccess = false, onlyUnAuth = false, children}: any) => {
+export interface ProtectedRouteType {
+    commonAccess?: boolean
+    onlyUnAuth?: boolean
+    background?: boolean | undefined
+    children?: ReactNode | undefined
+}
+
+export const ProtectedRoute = ({commonAccess = false, onlyUnAuth = false, children} : any) => {
     const location = useLocation();
     const user = useTypedSelector((state: RootState) => state.user.user);
 

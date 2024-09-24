@@ -112,14 +112,15 @@ export type IngredientActionType<TYPE, PAYLOAD> = {
     tab: string,
 }
 
-export type OrderActionType<TYPE, PAYLOAD> = {
-    type: TYPE,
-    payload: [PAYLOAD],
-    state: boolean
-    position: number,
+export type OrderActionType<TYPE> = {
+    type: TYPE | null,
+    order: IngredientType[]
+    state: boolean | null
+    position: number | null,
     orderNumber: number | null
     orderName: string | null
     ingredients: IngredientType[]
-    ingredient: IngredientType
+    ingredient: IngredientType | null
     bun: IngredientType | null
+    show: boolean | null
 }

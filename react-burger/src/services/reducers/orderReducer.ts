@@ -10,15 +10,20 @@ import {
 } from "../actions/orderActions";
 import {OrderActionType} from "../types";
 
-const initialState = {
+const initialState: OrderActionType<string> = {
+    type: null,
     order: [],
-    bun: null,
-    show: false,
+    state: null,
+    position: null,
     orderNumber: null,
-    orderName: null
+    orderName: null,
+    ingredients: [],
+    ingredient: null,
+    bun: null,
+    show: false
 }
 
-export const orderReducer = (state = initialState, action: OrderActionType<string, object>) => {
+export const orderReducer = (state = initialState, action: OrderActionType<string>) => {
     switch (action.type) {
         case ADD_INGREDIENT: {
             const order = [...state.order, action.ingredient].filter(it => it != null)
@@ -38,7 +43,7 @@ export const orderReducer = (state = initialState, action: OrderActionType<strin
         }
         case DELETE_INGREDIENT_BY_POSITION: {
             return {
-                ...state, order: [...state.order.slice(0, action.position), ...state.order.slice(action.position + 1, state.order.length)]
+                ...state, order: [...state.order.slice(0, action.position!), ...state.order.slice(action.position! + 1, state.order.length)]
             };
         }
         case CLEAR_ORDER: {
@@ -58,7 +63,7 @@ export const orderReducer = (state = initialState, action: OrderActionType<strin
         }
         case SET_ORDER_NAME: {
             return {
-                ...state, orderName: action.payload
+                ...state, orderName: action.orderName
             };
         }
         default: {

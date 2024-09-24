@@ -43,10 +43,10 @@ export interface OrderType {
 function ProductList({ listType, refs }: ProductListType) {
     const dispatch = useAppDispatch();
     const ingredients: IngredientType[] = useTypedSelector<IngredientType[]>((state: RootState) => state.ingredients.ingredients)
-    const order: OrderType[] = useTypedSelector<OrderType[]>((state: any) => state.order.order)
+    const order = useTypedSelector((state: RootState) => state.order.order)
 
     function buildProduct(value: IngredientType, index: number) {
-        const countOfIngr = order!.filter(it => it != null).filter(it => it._id === value._id).length
+        const countOfIngr = order!.filter(it => it != null).filter(it => it!._id === value._id).length
         return (
             <Product showDetails={() => dispatch(setCard(value))}
                 count={countOfIngr}

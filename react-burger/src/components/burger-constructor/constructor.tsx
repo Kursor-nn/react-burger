@@ -26,7 +26,7 @@ const BurgerConstructor = () => {
     const ingredients = useTypedSelector((store) => store.ingredients.ingredients);
     const orderIngredients = useTypedSelector((store) => store.order.order);
     const bun = useTypedSelector((store) => store.order.bun);
-    const middleIngredients = orderIngredients.filter(item => item.type !== 'bun')
+    const middleIngredients = orderIngredients.filter(item => item!.type !== 'bun')
 
     const [x, dropTargerRef] = useDrop({
         accept: INGREDIENT_DND_TYPE,
@@ -43,8 +43,8 @@ const BurgerConstructor = () => {
     });
 
     const orderCost = orderIngredients
-        .filter(it => it.price !== null)
-        .map(it => it.price!!)
+        .filter(it => it!.price !== null)
+        .map(it => it!.price!!)
         .reduce((a, b) => a + b, 0) + (bun === null ? 0 : 2 * bun.price!!)
 
 
@@ -77,7 +77,7 @@ const BurgerConstructor = () => {
                                                         price={bun.price!!} thumbnail={bun.image!!}/>}
                         </div>
                         <div className={styles.column_list} ref={dropTargerRef}>
-                            {middleIngredients.map((itm, index) => buildRow(itm, index, moveCard))}
+                            {middleIngredients.map((itm, index) => buildRow(itm!, index, moveCard))}
                         </div>
 
                         <div className="pl-6">
@@ -93,7 +93,7 @@ const BurgerConstructor = () => {
                 <CurrencyIcon type="primary"/>
                 <Button htmlType="button" type="primary" size="medium" onClick={() => {
                     if (bun && orderIngredients && orderIngredients.length !== 0) {
-                        const orderList = [bun._id, ...orderIngredients.map(it => it._id), bun._id];
+                        const orderList = [bun._id, ...orderIngredients.map(it => it!._id), bun._id];
                         dispatch(asyncDoOrderFrom(orderList, () => {
                             navigate(LOGIN_PATH)
                         }))

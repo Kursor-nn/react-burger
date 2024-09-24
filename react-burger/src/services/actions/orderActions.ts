@@ -10,7 +10,7 @@ export const SET_BUN: string = "SET_BUN";
 export const DISPLAY_ORDER: string = "DISPLAY_ORDER";
 export const CLEAR_ORDER: string = "CLEAR_ORDER";
 
-export function setOrder(ingredients: IngredientType[]) {
+export function setOrder(ingredients: (IngredientType | null)[]) {
     return {
         type: SET_ORDER_INGREDIENTS,
         ingredients: ingredients
