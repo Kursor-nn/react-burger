@@ -43,7 +43,6 @@ import FeedItemPage from "../../pages/feed-item-page/feed-item-page";
 import FeedPage from "../../pages/feed-page/feed-page";
 import HistoryPage from "../../pages/history-page/history-page";
 import OrderFullInfo from "../order-info/order-full-info";
-import {UserType} from "../../services/actions/userActions";
 
 function App() {
     const dispatch = useAppDispatch();

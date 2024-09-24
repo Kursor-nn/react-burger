@@ -33,7 +33,7 @@ const BurgerConstructor = () => {
         collect: (monitor) => ({}),
         drop(item: any) {
             const newIngr = ingredients.find(it => it._id === item.id)
-            if (newIngr?.type == 'bun') {
+            if (newIngr?.type === 'bun') {
                 dispatch(setBun(newIngr))
             } else {
                 newIngr!.index = orderIngredients.length
@@ -43,9 +43,9 @@ const BurgerConstructor = () => {
     });
 
     const orderCost = orderIngredients
-        .filter(it => it.price != null)
+        .filter(it => it.price !== null)
         .map(it => it.price!!)
-        .reduce((a, b) => a + b, 0) + (bun == null ? 0 : 2 * bun.price!!)
+        .reduce((a, b) => a + b, 0) + (bun === null ? 0 : 2 * bun.price!!)
 
 
     function buildRow(value: IngredientType, index: number, moveCard: (dragIndex: number, hoverIndex: number) => void) {
@@ -90,7 +90,7 @@ const BurgerConstructor = () => {
                 <p className="text text_type_digits-medium">{orderCost}</p>
                 <CurrencyIcon type="primary" />
                 <Button htmlType="button" type="primary" size="medium" onClick={() => {
-                    if (bun && orderIngredients && orderIngredients.length != 0) {
+                    if (bun && orderIngredients && orderIngredients.length !== 0) {
                         const orderList = [bun._id, ...orderIngredients.map(it => it._id), bun._id];
                         dispatch(asyncDoOrderFrom(orderList, () => {
                             navigate(LOGIN_PATH)
