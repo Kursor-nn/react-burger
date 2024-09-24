@@ -1,6 +1,6 @@
 export const SET_USER_DETAILS: string = "SET_USER_DETAILS";
 
-export interface UserType{
+export interface UserType {
     name: string,
     email: string,
     password: string | null

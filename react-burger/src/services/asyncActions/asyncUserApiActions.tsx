@@ -4,7 +4,7 @@ import {ThunkAction} from "redux-thunk"
 import {Action} from "redux"
 import {RootState} from "../init"
 import {BASE_URL, DEFAULT_HEADERS} from "../../components/utils/constants"
-import {setUser} from "../actions/userActions";
+import {setUser, UserType} from "../actions/userActions";
 import {ACCESS_TOKEN_COOKIE, getAccessToken, REFRESH_TOKEN_COOKIE, setCookie} from "../../components/utils/cookies"
 
 import {ErrorNotification, InfoNotification} from "../../components/notifications/notification"
@@ -209,15 +209,10 @@ export const asyncSaveProfile = (name: string | null | undefined, email: string 
             })
             : new Headers(DEFAULT_HEADERS)
 
-        var body: any = {}
-        if (name) {
-            body["name"] = name;
-        }
-        if (email) {
-            body["email"] = email;
-        }
-        if (password) {
-            body["password"] = password;
+        var body: UserType = {
+            "name": name ? name : "",
+            "email": email ? email : "",
+            "password": password ? password : ""
         }
 
         return fetch(`${BASE_URL}${ENDPOINT_FOR_USER}`, {
