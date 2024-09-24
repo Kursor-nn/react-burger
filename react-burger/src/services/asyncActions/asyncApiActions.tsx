@@ -2,7 +2,7 @@ import {fillIngredientList} from "../actions/ingredientsActions"
 import {setErrorMessage} from "../actions/errorActions"
 
 import {INGREDIENTS_URL, MAKE_ORDER_URL} from "../../components/utils/constants"
-import {setOrderNumber, displayOrder, setOrderName} from "../actions/orderActions"
+import {displayOrder, setOrderName, setOrderNumber} from "../actions/orderActions"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
 import {UnknownAction} from "redux"
 import {RootState} from "../init"
@@ -11,7 +11,7 @@ import {getAccessToken} from "../../components/utils/cookies"
 
 export type ThunkActionType = ThunkAction<void, RootState, unknown, UnknownAction>;
 
-const errorHandler = (dispatch: any, error: any = null) => {
+const errorHandler = (dispatch: any, error = null) => {
     if (error) {
         console.log("Error", error);
     }
@@ -22,7 +22,7 @@ const checkResponseIsSuccess = (res: Response) => {
     return (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`)
 }
 
-export function asyncDoOrderFrom(orderIngred: any, accessCallback: any): ThunkActionType {
+export function asyncDoOrderFrom(orderIngred: (string | null | undefined) [], accessCallback: () => void): ThunkActionType {
     if (!getAccessToken() || getAccessToken() === "") {
         accessCallback()
     }
