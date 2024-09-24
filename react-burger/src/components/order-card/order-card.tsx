@@ -7,14 +7,14 @@ import {useAppDispatch, useTypedSelector} from "../../hooks/useTypedSelector";
 import {IngredientType} from "../product-list/product-list";
 import {getOrderItem} from "../../services/actions/wsActions";
 import {date2string, filterIngredientsByIds} from "../utils/functions";
-import {WsNewOrderType} from "../../services/types";
+import {WsNewOrderType, WsOrderType} from "../../services/types";
 
 interface OrderCardInterface {
-    item: WsNewOrderType,
-    status: boolean
+    item: WsOrderType,
+    status?: boolean | null
 }
 
-const OrderCard = ({item, status}: any) => {
+const OrderCard = ({item, status = null}: OrderCardInterface) => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const ingredients = useTypedSelector((state) => state.ingredients.ingredients);
