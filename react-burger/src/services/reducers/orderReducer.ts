@@ -6,8 +6,7 @@ import {
     SET_BUN,
     SET_ORDER_INGREDIENTS,
     SET_ORDER_NAME,
-    SET_ORDER_NUMBER,
-    UPDATE_ORDER
+    SET_ORDER_NUMBER
 } from "../actions/orderActions";
 import {OrderActionType} from "../types";
 
@@ -21,25 +20,20 @@ const initialState = {
 
 export const orderReducer = (state = initialState, action: OrderActionType<string, object>) => {
     switch (action.type) {
-        case UPDATE_ORDER: {
-            return {
-                ...state, order: action.payload.filter(it => it != null)
-            };
-        }
         case ADD_INGREDIENT: {
-            const order = [...state.order, action.payload].filter(it => it != null)
+            const order = [...state.order, action.ingredient].filter(it => it != null)
             return {
                 ...state, order: order
             };
         }
         case SET_BUN: {
             return {
-                ...state, bun: action.payload
+                ...state, bun: action.bun
             };
         }
         case SET_ORDER_INGREDIENTS: {
             return {
-                ...state, order: action.payload.filter(it => it != null)
+                ...state, order: action.ingredients.filter(it => it != null)
             };
         }
         case DELETE_INGREDIENT_BY_POSITION: {
@@ -59,7 +53,7 @@ export const orderReducer = (state = initialState, action: OrderActionType<strin
         }
         case SET_ORDER_NUMBER: {
             return {
-                ...state, orderNumber: action.payload
+                ...state, orderNumber: action.orderNumber
             };
         }
         case SET_ORDER_NAME: {

@@ -102,7 +102,8 @@ export type WsStoreActions = {
 
 export type ActionType<TYPE, PAYLOAD> = {
     type: TYPE,
-    payload: PAYLOAD
+    payload: PAYLOAD,
+    card: IngredientType | null
 }
 
 export type IngredientActionType<TYPE, PAYLOAD> = {
@@ -115,6 +116,10 @@ export type OrderActionType<TYPE, PAYLOAD> = {
     type: TYPE,
     payload: [PAYLOAD],
     state: boolean
-    position: number
+    position: number,
+    orderNumber: number | null
+    orderName: string | null
+    ingredients: IngredientType[]
+    ingredient: IngredientType
+    bun: IngredientType | null
 }
-

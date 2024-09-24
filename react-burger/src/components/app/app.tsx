@@ -51,7 +51,7 @@ function App() {
     const navigate = useNavigate();
 
     const background = location.state && location.state.background;
-    const userDataIsFilled: UserType = useTypedSelector((state) => state.user.user);
+    const userDataIsFilled = useTypedSelector((state) => state.user.user);
 
     useEffect(() => {
         dispatch(asyncLoadIngredients())

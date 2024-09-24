@@ -23,10 +23,10 @@ import { IngredientType } from '../product-list/product-list';
 const BurgerConstructor = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const ingredients: IngredientType[] = useTypedSelector((store) => store.ingredients.ingredients);
-    const orderIngredients: IngredientType[] = useTypedSelector((store) => store.order.order);
-    const bun: IngredientType = useTypedSelector((store) => store.order.bun);
-    const middleIngredients: IngredientType[] = orderIngredients.filter(item => item.type !== 'bun')
+    const ingredients = useTypedSelector((store) => store.ingredients.ingredients);
+    const orderIngredients = useTypedSelector((store) => store.order.order);
+    const bun = useTypedSelector((store) => store.order.bun);
+    const middleIngredients = orderIngredients.filter(item => item.type !== 'bun')
 
     const [x, dropTargerRef] = useDrop({
         accept: INGREDIENT_DND_TYPE,

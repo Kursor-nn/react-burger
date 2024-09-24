@@ -6,7 +6,7 @@ import image from "../../images/done-logo.svg"
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 function OrderDetails() {
-    const orderNumber: number = useTypedSelector(state => state.order.orderNumber)
+    const orderNumber = useTypedSelector(state => state.order.orderNumber)
 
     return (
         <div className={styles.container}>

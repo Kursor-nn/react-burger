@@ -22,6 +22,7 @@ const OrderFullInfo = () => {
     const selectedOrderItem = orders?.filter((item) => {
         return item._id === id;
     })[0];
+
     const newOrders = filterIngredientsByIds(selectedOrderItem?.ingredients, ingredients);
     const obj = getCount(newOrders);
     const newIngredients = getIngredientsWithCount(obj, ingredients);

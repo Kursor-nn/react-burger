@@ -10,7 +10,7 @@ export const currentCardReducer = (state = initialState, action: ActionType<stri
     switch (action.type) {
         case SET_CARD: {
             return {
-                ...state, currentCard: action.payload, show: true
+                ...state, currentCard: action.card, show: true
             };
         }
         case DELETE_CARD: {
@@ -22,7 +22,4 @@ export const currentCardReducer = (state = initialState, action: ActionType<stri
             return state;
         }
     }
-
 }
-
-export default currentCardReducer;
