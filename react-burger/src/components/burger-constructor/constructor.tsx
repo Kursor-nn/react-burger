@@ -1,24 +1,24 @@
-// KIT Components 
-import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+// KIT Components
+import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 // Styles
 import styles from './constructor.module.css';
 
 // Mock Data
 //import data from '../../mock/mock-data.json';
-
-import { asyncDoOrderFrom } from '../../services/asyncActions/asyncApiActions';
+import {asyncDoOrderFrom} from '../../services/asyncActions/asyncApiActions';
 
 // React
-import { useDrop } from 'react-dnd';
-import { useCallback } from 'react';
-import { INGREDIENT_DND_TYPE, LOGIN_PATH } from '../utils/constants';
+import {DropTargetMonitor, useDrop} from 'react-dnd';
+import {useCallback} from 'react';
+import {INGREDIENT_DND_TYPE, LOGIN_PATH} from '../utils/constants';
 
-import { setOrder, addIngredient, setBun } from '../../services/actions/orderActions';
+import {addIngredient, setBun, setOrder} from '../../services/actions/orderActions';
 import ConstructorItem from './item';
-import { useNavigate } from 'react-router';
-import { useAppDispatch, useTypedSelector } from '../../hooks/useTypedSelector';
-import { IngredientType } from '../product-list/product-list';
+import {useNavigate} from 'react-router';
+import {useAppDispatch, useTypedSelector} from '../../hooks/useTypedSelector';
+import {IngredientType} from '../product-list/product-list';
+import {ProductType} from "../product/product";
 
 const BurgerConstructor = () => {
     const dispatch = useAppDispatch();
@@ -30,8 +30,8 @@ const BurgerConstructor = () => {
 
     const [x, dropTargerRef] = useDrop({
         accept: INGREDIENT_DND_TYPE,
-        collect: (monitor) => ({}),
-        drop(item: any) {
+        collect: (monitor: DropTargetMonitor<unknown, unknown>) => ({}),
+        drop(item: ProductType) {
             const newIngr = ingredients.find(it => it._id === item.id)
             if (newIngr?.type === 'bun') {
                 dispatch(setBun(newIngr))
@@ -50,7 +50,7 @@ const BurgerConstructor = () => {
 
     function buildRow(value: IngredientType, index: number, moveCard: (dragIndex: number, hoverIndex: number) => void) {
         return (
-            <ConstructorItem key={value.uniqueId} value={value} index={index} moveCard={moveCard} />
+            <ConstructorItem key={value.uniqueId} value={value} index={index} moveCard={moveCard}/>
         )
     }
 
@@ -71,16 +71,18 @@ const BurgerConstructor = () => {
             {
                 (middleIngredients) ?
                     <>
-                        <div className={styles.header_box} />
+                        <div className={styles.header_box}/>
                         <div className="pl-6">
-                            {bun && <ConstructorElement key={bun.uniqueId} type="top" isLocked={true} text={bun.name + " (верх)"} price={bun.price!!} thumbnail={bun.image!!} />}
+                            {bun && <ConstructorElement key={bun.uniqueId} type="top" isLocked={true} text={bun.name + " (верх)"}
+                                                        price={bun.price!!} thumbnail={bun.image!!}/>}
                         </div>
                         <div className={styles.column_list} ref={dropTargerRef}>
                             {middleIngredients.map((itm, index) => buildRow(itm, index, moveCard))}
                         </div>
 
                         <div className="pl-6">
-                            {bun && <ConstructorElement key={bun.uniqueId} type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price!!} thumbnail={bun.image!!} />}
+                            {bun && <ConstructorElement key={bun.uniqueId} type="bottom" isLocked={true} text={bun.name + " (низ)"}
+                                                        price={bun.price!!} thumbnail={bun.image!!}/>}
                         </div>
                     </>
                     : <></>
@@ -88,7 +90,7 @@ const BurgerConstructor = () => {
 
             <div className={styles.total}>
                 <p className="text text_type_digits-medium">{orderCost}</p>
-                <CurrencyIcon type="primary" />
+                <CurrencyIcon type="primary"/>
                 <Button htmlType="button" type="primary" size="medium" onClick={() => {
                     if (bun && orderIngredients && orderIngredients.length !== 0) {
                         const orderList = [bun._id, ...orderIngredients.map(it => it._id), bun._id];
