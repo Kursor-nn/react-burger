@@ -152,7 +152,7 @@ export const asyncRegister = (email: string, password: string, name: string, cal
     }
 }
 
-export const imForgotPassword = (email: string, callback: any) => {
+export const imForgotPassword = (email: string, callback: () => void) => {
     return function (dispatch: any) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_FORGOT_PASSWORD}`, {
             method: "POST",
