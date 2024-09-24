@@ -17,7 +17,7 @@ const parts: { [id: string]: string } = {
 
 interface ProductListType {
     listType: string,
-    refs: any
+    refs: React.RefObject<HTMLHeadingElement>
 }
 
 export interface IngredientType {
