@@ -35,7 +35,7 @@ function BurgerIngredients() {
         }
     }
 
-    const clickHandler = (refTitle: React.RefObject<any>, value: string) => {
+    const clickHandler = (refTitle: React.RefObject<HTMLHeadingElement>, value: string) => {
         refTitle.current?.scrollIntoView({
             behavior: "smooth",
         });

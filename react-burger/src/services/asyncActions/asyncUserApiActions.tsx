@@ -19,7 +19,11 @@ export const ENDPOINT_FOR_RESET_PASSWORD: string = "password-reset/reset";
 
 type ThunkActionType = ThunkAction<void, RootState, unknown, Action>;
 
-const errorHandler = (dispatch: any, error: any = null) => {
+export interface ErrorResponseType {
+    message: string | null | number
+}
+
+const errorHandler = (dispatch: any, error = null) => {
     if (error) {
         console.log("Error", error);
     }
@@ -27,7 +31,7 @@ const errorHandler = (dispatch: any, error: any = null) => {
     ErrorNotification("У нас лапки.");
 }
 
-const checkResponseIsSuccess = (res: any) => {
+const checkResponseIsSuccess = (res: Response) => {
     return (res.ok) ? res.json() : Promise.reject(res.json())
 }
 
@@ -43,11 +47,11 @@ export const asyncLoadUser = () => {
         if (!accessTokenIsExists) return;
 
 
-        const headers: any = accessTokenIsExists ? {
-            "Authorization": getAccessToken(),
+        const headers: Headers = accessTokenIsExists ? new Headers({
+            "Authorization": (getAccessToken() ? getAccessToken()! : ""),
             "Accept": 'application/json',
             "Content-Type": 'application/json'
-        } : new Headers(DEFAULT_HEADERS)
+        }) : new Headers(DEFAULT_HEADERS)
 
         return fetch(`${BASE_URL}${ENDPOINT_FOR_USER}`,
             {
@@ -71,7 +75,7 @@ export const asyncLoadUser = () => {
                 }
             })
             .catch((error) => {
-                error.then((errorResponse: any) => {
+                error.then((errorResponse: ErrorResponseType) => {
                     if (errorResponse.message === "jwt expired") {
                         dispatch(refreshToken())
                         dispatch(asyncLoadUser())
@@ -83,7 +87,7 @@ export const asyncLoadUser = () => {
     }
 };
 
-export const asyncLogin = (email: string, password: string, callback: any) => {
+export const asyncLogin = (email: string, password: string, callback: () => void) => {
     return function (dispatch: any) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_LOGIN}`, {
             method: "POST",
@@ -101,15 +105,15 @@ export const asyncLogin = (email: string, password: string, callback: any) => {
                     ErrorNotification(data.message)
                 }
             })
-            .catch((error: any) => {
-                error.then((data: any) => {
+            .catch((error: Promise<string>) => {
+                error.then((data: string) => {
                     ErrorNotification(data);
                 })
             });
     }
 }
 
-export const asyncLogout = (callback: any): ThunkActionType => {
+export const asyncLogout = (callback: () => void): ThunkActionType => {
     return function (dispatch: any) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_LOGOUT}`, {
             method: "POST",
@@ -131,7 +135,7 @@ export const asyncLogout = (callback: any): ThunkActionType => {
     }
 };
 
-export const asyncRegister = (email: string, password: string, name: string, callback: any) => {
+export const asyncRegister = (email: string, password: string, name: string, callback: () => void) => {
     return function (dispatch: any) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_REGISTER}`, {
             method: "POST",
@@ -145,7 +149,7 @@ export const asyncRegister = (email: string, password: string, name: string, cal
                 callback()
             })
             .catch((error) => {
-                error.then((errorData: any) => {
+                error.then((errorData: string) => {
                     ErrorNotification(errorData);
                 })
             });
@@ -167,7 +171,7 @@ export const imForgotPassword = (email: string, callback: () => void) => {
     }
 }
 
-export const resetPassword = (password: string, token: string, callback: any) => {
+export const resetPassword = (password: string, token: string, callback: () => void) => {
     return function (dispatch: any) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_RESET_PASSWORD}`, {
             method: "POST",
@@ -202,7 +206,7 @@ export const refreshToken = (): ThunkActionType => {
 
 export const asyncSaveProfile = (name: string | null | undefined, email: string | null | undefined, password?: string | null | undefined) => {
     return function (dispatch: any) {
-        const headers: any = getAccessToken() ? new Headers({
+        const headers: Headers = getAccessToken() ? new Headers({
                 "Authorization": getAccessToken() ? getAccessToken()! : "",
                 "Accept": 'application/json',
                 "Content-Type": 'application/json'
