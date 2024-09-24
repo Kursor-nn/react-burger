@@ -43,7 +43,7 @@ function Modal({children, onClose, title}: ModalType) {
                 </div>
                 {children}
             </div>
-            <ModalOverlay onClick={(evt: KeyboardEvent | React.KeyboardEvent) => {
+            <ModalOverlay onClick={(evt: React.MouseEvent) => {
                 onClose();
             }}/>
         </>,
