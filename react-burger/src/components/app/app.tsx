@@ -46,7 +46,7 @@ import OrderFullInfo from "../order-info/order-full-info";
 import {UserType} from "../../services/actions/userActions";
 
 function App() {
-    const dispatch: any = useAppDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 

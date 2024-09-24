@@ -7,6 +7,7 @@ import styles from './product-list.module.css';
 // PropTypesß
 import PropTypes from 'prop-types';
 import {useAppDispatch, useTypedSelector} from "../../hooks/useTypedSelector";
+import {RootState} from "../../services/init";
 
 const parts: { [id: string]: string } = {
     "bun": 'Булки',
@@ -41,7 +42,7 @@ export interface OrderType {
 
 function ProductList({ listType, refs }: ProductListType) {
     const dispatch = useAppDispatch();
-    const ingredients: IngredientType[] = useTypedSelector<IngredientType[]>((state: any) => state.ingredients.ingredients)
+    const ingredients: IngredientType[] = useTypedSelector<IngredientType[]>((state: RootState) => state.ingredients.ingredients)
     const order: OrderType[] = useTypedSelector<OrderType[]>((state: any) => state.order.order)
 
     function buildProduct(value: IngredientType, index: number) {
