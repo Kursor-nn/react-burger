@@ -2,7 +2,7 @@ import {setErrorMessage} from "../actions/errorActions"
 
 import {ThunkAction} from "redux-thunk"
 import {Action} from "redux"
-import {RootState} from "../init"
+import {AppDispatch, RootState} from "../init"
 import {BASE_URL, DEFAULT_HEADERS} from "../../components/utils/constants"
 import {setUser, UserType} from "../actions/userActions";
 import {ACCESS_TOKEN_COOKIE, getAccessToken, REFRESH_TOKEN_COOKIE, setCookie} from "../../components/utils/cookies"
@@ -23,7 +23,7 @@ export interface ErrorResponseType {
     message: string | null | number
 }
 
-const errorHandler = (dispatch: any, error = null) => {
+const errorHandler = (dispatch: AppDispatch, error = null) => {
     if (error) {
         console.log("Error", error);
     }
@@ -42,7 +42,7 @@ export const saveTokens = (refreshToken: string, accessToken: string) => {
 
 
 export const asyncLoadUser = () => {
-    return function (dispatch: any) {
+    return function (dispatch: AppDispatch) {
         const accessTokenIsExists = (getAccessToken() && getAccessToken() !== "")
         if (!accessTokenIsExists) return;
 
@@ -88,7 +88,7 @@ export const asyncLoadUser = () => {
 };
 
 export const asyncLogin = (email: string, password: string, callback: () => void) => {
-    return function (dispatch: any) {
+    return function (dispatch: AppDispatch) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_LOGIN}`, {
             method: "POST",
             headers: DEFAULT_HEADERS,
@@ -114,7 +114,7 @@ export const asyncLogin = (email: string, password: string, callback: () => void
 }
 
 export const asyncLogout = (callback: () => void): ThunkActionType => {
-    return function (dispatch: any) {
+    return function (dispatch: AppDispatch) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_LOGOUT}`, {
             method: "POST",
             headers: DEFAULT_HEADERS,
@@ -136,7 +136,7 @@ export const asyncLogout = (callback: () => void): ThunkActionType => {
 };
 
 export const asyncRegister = (email: string, password: string, name: string, callback: () => void) => {
-    return function (dispatch: any) {
+    return function (dispatch: AppDispatch) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_REGISTER}`, {
             method: "POST",
             headers: DEFAULT_HEADERS,
@@ -157,7 +157,7 @@ export const asyncRegister = (email: string, password: string, name: string, cal
 }
 
 export const imForgotPassword = (email: string, callback: () => void) => {
-    return function (dispatch: any) {
+    return function (dispatch: AppDispatch) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_FORGOT_PASSWORD}`, {
             method: "POST",
             headers: DEFAULT_HEADERS,
@@ -172,7 +172,7 @@ export const imForgotPassword = (email: string, callback: () => void) => {
 }
 
 export const resetPassword = (password: string, token: string, callback: () => void) => {
-    return function (dispatch: any) {
+    return function (dispatch: AppDispatch) {
         return fetch(`${BASE_URL}${ENDPOINT_FOR_RESET_PASSWORD}`, {
             method: "POST",
             headers: DEFAULT_HEADERS,
@@ -205,7 +205,7 @@ export const refreshToken = (): ThunkActionType => {
 };
 
 export const asyncSaveProfile = (name: string | null | undefined, email: string | null | undefined, password?: string | null | undefined) => {
-    return function (dispatch: any) {
+    return function (dispatch: AppDispatch) {
         const headers: Headers = getAccessToken() ? new Headers({
                 "Authorization": getAccessToken() ? getAccessToken()! : "",
                 "Accept": 'application/json',

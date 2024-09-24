@@ -5,16 +5,17 @@ import {INGREDIENTS_URL, MAKE_ORDER_URL} from "../../components/utils/constants"
 import {displayOrder, setOrderName, setOrderNumber} from "../actions/orderActions"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
 import {UnknownAction} from "redux"
-import {RootState} from "../init"
+import {AppDispatch, RootState} from "../init"
 
 import {getAccessToken} from "../../components/utils/cookies"
 
 export type ThunkActionType = ThunkAction<void, RootState, unknown, UnknownAction>;
 
-const errorHandler = (dispatch: any, error = null) => {
+const errorHandler = (dispatch: AppDispatch, error = null) => {
     if (error) {
         console.log("Error", error);
     }
+
     dispatch(setErrorMessage("У нас лапки."))
 }
 
