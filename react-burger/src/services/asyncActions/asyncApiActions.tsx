@@ -1,29 +1,29 @@
-import { fillIngredientList } from "../actions/ingredientsActions"
-import { setErrorMessage } from "../actions/errorActions"
+import {fillIngredientList} from "../actions/ingredientsActions"
+import {setErrorMessage} from "../actions/errorActions"
 
-import { INGREDIENTS_URL, MAKE_ORDER_URL } from "../../components/utils/constants"
-import { setOrderNumber, displayOrder, setOrderName } from "../actions/orderActions"
+import {INGREDIENTS_URL, MAKE_ORDER_URL} from "../../components/utils/constants"
+import {displayOrder, setOrderName, setOrderNumber} from "../actions/orderActions"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
-import { UnknownAction } from "redux"
-import { RootState } from "../init"
+import {UnknownAction} from "redux"
+import {AppDispatch, RootState} from "../init"
 
-import { DEFAULT_HEADERS } from "../../components/utils/constants"
-import { getAccessToken } from "../../components/utils/cookies"
+import {getAccessToken} from "../../components/utils/cookies"
 
 export type ThunkActionType = ThunkAction<void, RootState, unknown, UnknownAction>;
 
-const errorHandler = (dispatch: any, error: any = null) => {
+const errorHandler = (dispatch: AppDispatch, error = null) => {
     if (error) {
         console.log("Error", error);
     }
+
     dispatch(setErrorMessage("У нас лапки."))
 }
 
-const checkResponseIsSuccess = (res: any) => {
+const checkResponseIsSuccess = (res: Response) => {
     return (res.ok) ? res.json() : Promise.reject(`Ошибка ${res.status}`)
 }
 
-export function asyncDoOrderFrom(orderIngred: any, accessCallback: any): ThunkActionType {
+export function asyncDoOrderFrom(orderIngred: (string | null | undefined) [], accessCallback: () => void): ThunkActionType {
     if (!getAccessToken() || getAccessToken() === "") {
         accessCallback()
     }
@@ -31,8 +31,13 @@ export function asyncDoOrderFrom(orderIngred: any, accessCallback: any): ThunkAc
     return (dispatch: ThunkDispatch<any, any, any>) => {
         return fetch(MAKE_ORDER_URL, {
             method: 'POST',
-            headers: DEFAULT_HEADERS,
-            body: JSON.stringify({ "ingredients": orderIngred })
+            // @ts-ignore
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=utf-8",
+                Authorization: (getAccessToken() ? getAccessToken() : ""),
+            },
+            body: JSON.stringify({"ingredients": orderIngred})
         })
             .then(checkResponseIsSuccess)
             .then((data) => {

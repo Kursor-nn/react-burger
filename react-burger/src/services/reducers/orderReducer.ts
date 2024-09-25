@@ -1,53 +1,51 @@
 import {
-    SET_ORDER_INGREDIENTS,
-    UPDATE_ORDER,
-    SET_ORDER_NUMBER,
-    SET_ORDER_NAME,
     ADD_INGREDIENT,
+    CLEAR_ORDER,
     DELETE_INGREDIENT_BY_POSITION,
-    SET_BUN,
     DISPLAY_ORDER,
-    CLEAR_ORDER
+    SET_BUN,
+    SET_ORDER_INGREDIENTS,
+    SET_ORDER_NAME,
+    SET_ORDER_NUMBER
 } from "../actions/orderActions";
+import {OrderActionType} from "../types";
 
-const initialState = {
+const initialState: OrderActionType<string> = {
+    type: null,
     order: [],
-    bun: null,
-    show: false,
+    state: null,
+    position: null,
     orderNumber: null,
-    orderName: null
+    orderName: null,
+    ingredients: [],
+    ingredient: null,
+    bun: null,
+    show: false
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: OrderActionType<string>) => {
     switch (action.type) {
-        case UPDATE_ORDER: {
-            return {
-                ...state, order: action.payload.filter(it => it != null)
-            };
-        }
         case ADD_INGREDIENT: {
-            const order = [...state.order, action.payload].filter(it => it != null)
+            const order = [...state.order, action.ingredient].filter(it => it != null)
             return {
                 ...state, order: order
             };
-        };
+        }
         case SET_BUN: {
             return {
-                ...state, bun: action.payload
+                ...state, bun: action.bun
             };
-        };
-
+        }
         case SET_ORDER_INGREDIENTS: {
             return {
-                ...state, order: action.payload.filter(it => it != null)
+                ...state, order: action.ingredients.filter(it => it != null)
             };
-        };
-
+        }
         case DELETE_INGREDIENT_BY_POSITION: {
             return {
-                ...state, order: [...state.order.slice(0, action.payload), ...state.order.slice(action.payload + 1, state.order.length)]
+                ...state, order: [...state.order.slice(0, action.position!), ...state.order.slice(action.position! + 1, state.order.length)]
             };
-        };
+        }
         case CLEAR_ORDER: {
             return {
                 ...state, order: [], bun: null, orderName: null, orderNumber: null
@@ -60,12 +58,12 @@ export const orderReducer = (state = initialState, action) => {
         }
         case SET_ORDER_NUMBER: {
             return {
-                ...state, orderNumber: action.payload
+                ...state, orderNumber: action.orderNumber
             };
         }
         case SET_ORDER_NAME: {
             return {
-                ...state, orderName: action.payload
+                ...state, orderName: action.orderName
             };
         }
         default: {

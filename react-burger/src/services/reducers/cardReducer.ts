@@ -1,15 +1,16 @@
-import { SET_CARD, DELETE_CARD } from "../actions/cardActions";
+import {DELETE_CARD, SET_CARD} from "../actions/cardActions";
+import {ActionType} from "../types";
 
 const initialState = {
     currentCard: null,
     show: false
 }
 
-export const currentCardReducer = (state = initialState, action) => {
+export const currentCardReducer = (state = initialState, action: ActionType<string, object>) => {
     switch (action.type) {
         case SET_CARD: {
             return {
-                ...state, currentCard: action.payload, show: true
+                ...state, currentCard: action.card, show: true
             };
         }
         case DELETE_CARD: {
@@ -21,7 +22,4 @@ export const currentCardReducer = (state = initialState, action) => {
             return state;
         }
     }
-
 }
-
-export default currentCardReducer;

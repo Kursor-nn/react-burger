@@ -7,6 +7,7 @@ import styles from './product-list.module.css';
 // PropTypesß
 import PropTypes from 'prop-types';
 import {useAppDispatch, useTypedSelector} from "../../hooks/useTypedSelector";
+import {RootState} from "../../services/init";
 
 const parts: { [id: string]: string } = {
     "bun": 'Булки',
@@ -16,13 +17,14 @@ const parts: { [id: string]: string } = {
 
 interface ProductListType {
     listType: string,
-    refs: any
+    refs: React.RefObject<HTMLHeadingElement>
 }
 
 export interface IngredientType {
-    _id: string | null | undefined
-    index: number | null | undefined
-    uniqueId: string | null | undefined
+    _id: string | null | undefined,
+    count: number | null | undefined,
+    index: number | null | undefined,
+    uniqueId: string | null | undefined,
     image: string | null | undefined,
     name: string | null,
     price: number | null,
@@ -40,11 +42,11 @@ export interface OrderType {
 
 function ProductList({ listType, refs }: ProductListType) {
     const dispatch = useAppDispatch();
-    const ingredients: IngredientType[] = useTypedSelector<IngredientType[]>((state: any) => state.ingredients.ingredients)
-    const order: OrderType[] = useTypedSelector<OrderType[]>((state: any) => state.order.order)
+    const ingredients: IngredientType[] = useTypedSelector<IngredientType[]>((state: RootState) => state.ingredients.ingredients)
+    const order = useTypedSelector((state: RootState) => state.order.order)
 
     function buildProduct(value: IngredientType, index: number) {
-        const countOfIngr = order!.filter(it => it != null).filter(it => it._id === value._id).length
+        const countOfIngr = order!.filter(it => it != null).filter(it => it!._id === value._id).length
         return (
             <Product showDetails={() => dispatch(setCard(value))}
                 count={countOfIngr}

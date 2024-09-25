@@ -1,5 +1,7 @@
 export const BASE_URL = "https://norma.nomoreparties.space/api/";
 
+export const WS_URL = "wss://norma.nomoreparties.space/orders";
+
 export const INGREDIENTS_URL: string = BASE_URL + "ingredients";
 export const MAKE_ORDER_URL: string = BASE_URL + "orders";
 
@@ -23,6 +25,9 @@ export const FORGOT_PASSWORD_PATH: string = "/forgot-password"
 export const RESET_PASSWORD_PATH: string = "/reset-password"
 export const PROFILE_PATH: string = "/profile"
 export const PROFILE_ORDERS_PATH: string = "/profile/orders"
+export const PROFILE_ORDER_PATH: string = "/profile/orders/:id"
 export const ORDERS_PATH: string = "/orders"
 export const INGREDIENT_PATH: string = "/ingredients/:id"
 export const ERROR_PATH: string = "*"
+export const FEED_PATH = "/feed";
+export const FEED_ITEM_PATH = "/feed/:id";

@@ -8,7 +8,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 //Styles
 import styles from "./header.module.css";
-import { MAIN_PATH, PROFILE_PATH } from "../utils/constants";
+import {FEED_PATH, MAIN_PATH, PROFILE_PATH} from "../utils/constants";
 import cn from "classnames";
 
 function Header() {
@@ -35,8 +35,16 @@ function Header() {
             </li>
             <li>
               <div className={styles.list_item}>
-                <ListIcon type="secondary" />
-                <span className="text text_type_main-default text_color_inactive">Лента заказов</span>
+                <Link className={styles.link} to={FEED_PATH}>
+                  <ListIcon type={location.pathname === FEED_PATH ? "primary" : "secondary"} />
+                  <p
+                      className={cn("text text_type_main-default text_color_inactive", {
+                        [styles.active]: location.pathname === FEED_PATH,
+                      })}
+                  >
+                    Лента заказов
+                  </p>
+                </Link>
               </div>
             </li>
           </ul>

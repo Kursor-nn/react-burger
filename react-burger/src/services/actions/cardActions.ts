@@ -7,7 +7,7 @@ export const GET_DATA: string = "GET_DATA";
 export function setCard(card: IngredientType) {
     return {
         type: SET_CARD,
-        payload: card
+        card: card
     }
 }
 

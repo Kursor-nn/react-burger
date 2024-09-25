@@ -24,10 +24,10 @@ function IngredientDetails() {
     const ingredients: IngredientType[] = useTypedSelector((state) => state.ingredients.ingredients);
 
     const info: IngredientDetailsType[] = [
-        { title: "Калории,ккал", value: card?.calories },
-        { title: "Белки, г", value: card?.proteins },
-        { title: "Жиры, г", value: card?.fat },
-        { title: "Углеводы, г", value: card?.carbohydrates },
+        { title: "Калории,ккал", value: card?.calories ? card?.calories : 0 },
+        { title: "Белки, г", value: card?.proteins ? card?.proteins : 0 },
+        { title: "Жиры, г", value: card?.fat ? card?.fat : 0 },
+        { title: "Углеводы, г", value: card?.carbohydrates ? card?.carbohydrates : 0 },
     ];
 
     useEffect(() => {
@@ -39,6 +39,7 @@ function IngredientDetails() {
             if (actualIngr) {
                 dispatch(setCard({
                     image: null,
+                    count: 0,
                     type: null,
                     price: null,
                     uniqueId: null,
@@ -70,10 +71,10 @@ function IngredientDetails() {
         <div className={styles.wrapper}>
             <img
                 src={card?.image_large}
-                alt={card?.name}
+                alt={card?.name ? card?.name : ""}
                 className={`ml-5 mr-5 ${styles.image}`}
             />
-            <p className={`text text_type_main-medium mt-4`}>{card?.name}</p>
+            <p className={`text text_type_main-medium mt-4`}>{card?.name ? card?.name : ""}</p>
             <ul className={styles.list}>
                 {info.map((item, index) => buildValue(item.title, item.value, index))}
             </ul>

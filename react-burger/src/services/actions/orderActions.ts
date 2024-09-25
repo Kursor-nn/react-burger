@@ -2,7 +2,6 @@ import {IngredientType} from "../../components/product-list/product-list";
 import { v4 as uuid4 } from "uuid"
 
 export const SET_ORDER_INGREDIENTS: string = "SET_ORDER_INGREDIENTS";
-export const UPDATE_ORDER: string = "UPDATE_ORDER";
 export const SET_ORDER_NUMBER: string = "SET_ORDER_NUMBER";
 export const SET_ORDER_NAME: string = "SET_ORDER_NAME";
 export const ADD_INGREDIENT: string = "ADD_INGREDIENT";
@@ -11,24 +10,24 @@ export const SET_BUN: string = "SET_BUN";
 export const DISPLAY_ORDER: string = "DISPLAY_ORDER";
 export const CLEAR_ORDER: string = "CLEAR_ORDER";
 
-export function setOrder(ingredients: IngredientType[]) {
+export function setOrder(ingredients: (IngredientType | null)[]) {
     return {
         type: SET_ORDER_INGREDIENTS,
-        payload: ingredients
+        ingredients: ingredients
     }
 }
 
 export function setOrderNumber(orderNumber: number) {
     return {
         type: SET_ORDER_NUMBER,
-        payload: orderNumber
+        orderNumber: orderNumber
     }
 }
 
 export function setOrderName(orderName: string) {
     return {
         type: SET_ORDER_NAME,
-        payload: orderName
+        orderName: orderName
     }
 }
 
@@ -46,14 +45,14 @@ export function addIngredient(ingredient: IngredientType) {
 export function deleteIngredientByPosition(position: number) {
     return {
         type: DELETE_INGREDIENT_BY_POSITION,
-        payload: position
+        position: position
     }
 }
 
 export function setBun(bun: IngredientType) {
     return {
         type: SET_BUN,
-        payload: bun
+        bun: bun
     }
 }
 

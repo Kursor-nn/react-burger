@@ -35,7 +35,7 @@ const connector = connect(mapStateToProps);
 type AppModalProps = {} & ConnectedProps<typeof connector>;
 
 const MainPage = (props: AppModalProps) => {
-  const dispatch: any = useAppDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { showCardDetails, showOrderDetails, errorMessage } = props;

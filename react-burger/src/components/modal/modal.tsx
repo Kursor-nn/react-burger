@@ -1,9 +1,8 @@
-import { useEffect } from "react";
-import { ReactElement } from "react";
+import {ReactElement, useEffect} from "react";
 
 // KIT Components
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { createPortal } from "react-dom";
+import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {createPortal} from "react-dom";
 
 // Components
 import ModalOverlay from "../modal-overlay/modal-overlay";
@@ -18,8 +17,8 @@ interface ModalType {
 }
 
 
-function Modal({ children, onClose, title }: ModalType) {
-    const modals: any = document.getElementById("modal-overlay");
+function Modal({children, onClose, title}: ModalType) {
+    const modals: HTMLElement = document.getElementById("modal-overlay") as HTMLElement;
 
     const closeByEsc = (evt: KeyboardEvent | React.KeyboardEvent) => {
         if (evt.key === "Escape") {
@@ -40,11 +39,13 @@ function Modal({ children, onClose, title }: ModalType) {
             <div className={styles.container}>
                 <div className={styles.content}>
                     <h2 className={`text text_type_main-large mt-0 mb-0`}>{title}</h2>
-                    <CloseIcon onClick={onClose} type="primary" />
+                    <CloseIcon onClick={onClose} type="primary"/>
                 </div>
                 {children}
             </div>
-            <ModalOverlay onClick={(evt: KeyboardEvent | React.KeyboardEvent) => { onClose(); }} />
+            <ModalOverlay onClick={(evt: React.MouseEvent) => {
+                onClose();
+            }}/>
         </>,
         modals
     );
