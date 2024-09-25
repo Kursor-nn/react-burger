@@ -1,8 +1,0 @@
-.list {
-    display: flex;
-    flex-flow: row wrap;
-}
-
-.title {
-    font-family: 'Jet Brains Mono';
-}
