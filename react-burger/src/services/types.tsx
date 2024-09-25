@@ -108,7 +108,7 @@ export type ActionType<TYPE, PAYLOAD> = {
 
 export type IngredientActionType<TYPE, PAYLOAD> = {
     type: TYPE,
-    ingredients: [PAYLOAD],
+    ingredients: PAYLOAD[],
     tab: string,
 }
 
