@@ -6,7 +6,7 @@ export interface ErrorStateType {
     show: boolean
 }
 
-const initialState: ErrorStateType = {
+export const initialState: ErrorStateType = {
     message: null,
     show: false
 }
