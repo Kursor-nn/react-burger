@@ -3,10 +3,10 @@ import {TWSActions, wsActionTypes, WsDataType} from "../types";
 interface WsStateType {
     wsConnected: boolean;
     data: WsDataType[];
-    error?: Event;
+    error?: Event | null;
 }
 
-const initialState: WsStateType = {
+export const initialState: WsStateType = {
     wsConnected: false,
     data: [],
 };

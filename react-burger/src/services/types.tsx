@@ -53,7 +53,7 @@ export interface WsConnectionSuccessActionType {
 
 export interface WsConnectionErrorActionType {
     readonly type: wsActionTypes.CONNECTION_ERROR;
-    readonly payload: Event;
+    readonly payload: Event | null;
 }
 
 export interface WsConnectionClosedActionType {
