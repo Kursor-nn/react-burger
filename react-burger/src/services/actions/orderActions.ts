@@ -1,5 +1,5 @@
 import {IngredientType} from "../../components/product-list/product-list";
-import { v4 as uuid4 } from "uuid"
+import {v4 as uuid4} from "uuid"
 
 export const SET_ORDER_INGREDIENTS: string = "SET_ORDER_INGREDIENTS";
 export const SET_ORDER_NUMBER: string = "SET_ORDER_NUMBER";
