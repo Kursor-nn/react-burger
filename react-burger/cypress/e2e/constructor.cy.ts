@@ -10,9 +10,26 @@ import "@4tw/cypress-drag-drop";
  * [v] Все тесты проходят и не падают.
  */
 
+const TIMEOUT: number = 30_000;
+const TEST_LOGIN = "a.p.kozachuk@yandex.ru";
+const TEST_PASSWORD = "testtest";
+
+const PRODUCT_LINK_SELECTOR = "[class^=product_link__]";
+
+const BUN_0_SELECTOR = "[data-qa-id='bun-0']";
+const SAUCE_0_SELECTOR = "[data-qa-id='sauce-0']";
+const SAUCE_1_SELECTOR = "[data-qa-id='sauce-1']";
+const MAIN_0_SELECTOR = "[data-qa-id='main-0']";
+const MAIN_1_SELECTOR = "[data-qa-id='main-1']";
+const BUN_CONSTRUCTOR_SELECTOR = "[data-qa-id='bun-constructor']";
+const MODAL_CONTAINER_SELECTOR = "[class^=modal_container__]";
+const CONSTRUCTOR_INGREDIENT_SELECTOR = "*[class^='constructor_ingredient__']";
+const OPEN_PRIVATE_PAGE_SELECTOR = "[data-qa-id='open-private-space']";
+const INGREDIENT_DETAILS_ITEM_SELECTOR = "[class^='ingredient-details_item__']";
+
 describe('service is available', function () {
     beforeEach(() => {
-        cy.visit("http://localhost:3000");
+        cy.visit("/");
     });
 
     it("should contains 'Соберите бургер' topic", () => {
@@ -20,24 +37,24 @@ describe('service is available', function () {
     });
 
     it("open ingredient card", () => {
-        cy.get("[class^=product_link__]").first().as("card");
+        cy.get(PRODUCT_LINK_SELECTOR, {timeout: TIMEOUT}).first().as("card");
         cy.get("@card").click();
-        cy.get("[class^=modal_container__]").as("modal");
+        cy.get(MODAL_CONTAINER_SELECTOR).as("modal");
         cy.get("@modal").find("h2").contains("Детали ингредиента");
 
-        cy.get("@modal").find("[class^='ingredient-details_item__']").first().contains("Калории,ккал");
-        cy.get("@modal").find("[class^='ingredient-details_item__']").next().contains("Белки, г");
-        cy.get("@modal").find("[class^='ingredient-details_item__']").next().contains("Жиры, г");
-        cy.get("@modal").find("[class^='ingredient-details_item__']").next().contains("Углеводы, г");
+        cy.get("@modal").find(INGREDIENT_DETAILS_ITEM_SELECTOR).first().contains("Калории,ккал");
+        cy.get("@modal").find(INGREDIENT_DETAILS_ITEM_SELECTOR).next().contains("Белки, г");
+        cy.get("@modal").find(INGREDIENT_DETAILS_ITEM_SELECTOR).next().contains("Жиры, г");
+        cy.get("@modal").find(INGREDIENT_DETAILS_ITEM_SELECTOR).next().contains("Углеводы, г");
     });
 
     it("check order creation without access token", () => {
-        cy.get("[data-qa-id='bun-0']").as("bunCard");
-        cy.get("[data-qa-id='sauce-0']").as("sauceCard0");
-        cy.get("[data-qa-id='sauce-1']").as("sauceCard1");
-        cy.get("[data-qa-id='main-0']").as("mainCard0");
-        cy.get("[data-qa-id='main-1']").as("mainCard1");
-        cy.get("[data-qa-id='bun-constructor']").as("container");
+        cy.get(BUN_0_SELECTOR).as("bunCard");
+        cy.get(SAUCE_0_SELECTOR).as("sauceCard0");
+        cy.get(SAUCE_1_SELECTOR).as("sauceCard1");
+        cy.get(MAIN_0_SELECTOR).as("mainCard0");
+        cy.get(MAIN_1_SELECTOR).as("mainCard1");
+        cy.get(BUN_CONSTRUCTOR_SELECTOR).as("container");
 
         cy.get("@bunCard").drag("@container");
         cy.get("@sauceCard1").drag("@container");
@@ -46,60 +63,60 @@ describe('service is available', function () {
         cy.get('[data-qa-id="make-order"]').contains("Оформить заказ").click();
 
         cy.get('input[type="email"]')
-            .type("a.p.kozachuk@yandex.ru")
-            .should("have.value", "a.p.kozachuk@yandex.ru");
+            .type(TEST_LOGIN)
+            .should("have.value", TEST_LOGIN);
 
-        cy.get('input[type="password"]').type("testtest").should("have.value", "testtest");
+        cy.get('input[type="password"]').type(TEST_PASSWORD).should("have.value", TEST_PASSWORD);
 
         cy.get("form").find("button").contains("Войти").as("loginButton");
         cy.get("@loginButton").click();
 
-        cy.get("[class^=modal_container__]").as("modal");
+        cy.get(MODAL_CONTAINER_SELECTOR).as("modal");
         cy.get("@modal").find("p").contains("Ваш заказ начали готовить");
     });
 
 
     it("drag and drop items in constructor", () => {
-        cy.get("[data-qa-id='open-private-space']").as("private-page");
-        cy.get("[data-qa-id='bun-0']").as("bunCard");
-        cy.get("[data-qa-id='sauce-0']").as("sauceCard0");
-        cy.get("[data-qa-id='sauce-1']").as("sauceCard1");
-        cy.get("[data-qa-id='main-0']").as("mainCard0");
-        cy.get("[data-qa-id='main-1']").as("mainCard1");
-        cy.get("[data-qa-id='bun-constructor']").as("container");
+        cy.get(OPEN_PRIVATE_PAGE_SELECTOR).as("private-page");
+        cy.get(BUN_0_SELECTOR).as("bunCard");
+        cy.get(SAUCE_0_SELECTOR).as("sauceCard0");
+        cy.get(SAUCE_1_SELECTOR).as("sauceCard1");
+        cy.get(MAIN_0_SELECTOR).as("mainCard0");
+        cy.get(MAIN_1_SELECTOR).as("mainCard1");
+        cy.get(BUN_CONSTRUCTOR_SELECTOR).as("container");
 
-        cy.get("@bunCard", {timeout: 30_000}).drag("@container");
-        cy.get("@sauceCard1", {timeout: 30_000}).drag("@container");
-        cy.get("@mainCard0", {timeout: 30_000}).drag("@container");
+        cy.get("@bunCard", {timeout: TIMEOUT}).drag("@container");
+        cy.get("@sauceCard1", {timeout: TIMEOUT}).drag("@container");
+        cy.get("@mainCard0", {timeout: TIMEOUT}).drag("@container");
 
-        cy.get("*[class^='constructor_ingredient__']").find('div').should('have.length', 2)
+        cy.get(CONSTRUCTOR_INGREDIENT_SELECTOR).find('div').should('have.length', 2)
     });
 
 
     it("check removing item from constructor", () => {
-        cy.get("[data-qa-id='open-private-space']").as("private-page");
-        cy.get("[data-qa-id='bun-0']").as("bunCard");
-        cy.get("[data-qa-id='sauce-0']").as("sauceCard0");
-        cy.get("[data-qa-id='sauce-1']").as("sauceCard1");
-        cy.get("[data-qa-id='main-0']").as("mainCard0");
-        cy.get("[data-qa-id='main-1']").as("mainCard1");
-        cy.get("[data-qa-id='bun-constructor']").as("container");
+        cy.get(OPEN_PRIVATE_PAGE_SELECTOR).as("private-page");
+        cy.get(BUN_0_SELECTOR).as("bunCard");
+        cy.get(SAUCE_0_SELECTOR).as("sauceCard0");
+        cy.get(SAUCE_1_SELECTOR).as("sauceCard1");
+        cy.get(MAIN_0_SELECTOR).as("mainCard0");
+        cy.get(MAIN_1_SELECTOR).as("mainCard1");
+        cy.get(BUN_CONSTRUCTOR_SELECTOR).as("container");
 
-        cy.get("@bunCard", {timeout: 30_000}).drag("@container");
-        cy.get("@sauceCard1", {timeout: 30_000}).drag("@container");
-        cy.get("@mainCard0", {timeout: 30_000}).drag("@container");
+        cy.get("@bunCard", {timeout: TIMEOUT}).drag("@container");
+        cy.get("@sauceCard1", {timeout: TIMEOUT}).drag("@container");
+        cy.get("@mainCard0", {timeout: TIMEOUT}).drag("@container");
 
-        cy.get("*[class^='constructor_ingredient__']").find('div').should('have.length', 2)
+        cy.get(CONSTRUCTOR_INGREDIENT_SELECTOR).find('div').should('have.length', 2)
 
         cy.get("@container").find("[class^='constructor-element__action']").first().click();
 
-        cy.get("*[class^='constructor_ingredient__']").find('div').should('have.length', 1)
+        cy.get(CONSTRUCTOR_INGREDIENT_SELECTOR).find('div').should('have.length', 1)
     });
 
     it("close modal ingredient card", () => {
-        cy.get("[class^=product_link__]").first().as("card");
+        cy.get(PRODUCT_LINK_SELECTOR).first().as("card");
         cy.get("@card").click();
-        cy.get("[class^=modal_container__]").as("modal");
+        cy.get(MODAL_CONTAINER_SELECTOR).as("modal");
         cy.get("@modal").find("h2").contains("Детали ингредиента");
         cy.get("@modal").find("svg").last().click();
     });
