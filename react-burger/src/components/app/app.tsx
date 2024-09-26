@@ -57,7 +57,7 @@ function App() {
         if (getAccessToken()) {
             dispatch(asyncLoadUser());
         }
-    }, [userDataIsFilled]);
+    }, []);
 
     return (
         <>

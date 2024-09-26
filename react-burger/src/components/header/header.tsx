@@ -21,7 +21,7 @@ function Header() {
           <ul className={styles.list}>
             <li>
               <div className={styles.list_item} >
-                <Link className={styles.link} to={MAIN_PATH}>
+                <Link data-qa-id="constructor-page" className={styles.link} to={MAIN_PATH}>
                   <BurgerIcon type={location.pathname === MAIN_PATH || location === undefined ? "primary" : "secondary"} />
                   <p
                     className={cn("text text_type_main-default text_color_inactive", {
@@ -55,7 +55,7 @@ function Header() {
       </div>
       <div className={styles.profile_link}>
         <ProfileIcon type={location.pathname === PROFILE_PATH ? "primary" : "secondary"} />
-        <Link className={"text text_type_main-default"} to={PROFILE_PATH}>
+        <Link data-qa-id="open-private-space" className={"text text_type_main-default"} to={PROFILE_PATH}>
           <span className={cn("text text_type_main-default text_color_inactive", {
             [styles.active]: location.pathname === PROFILE_PATH,
           })}>Личный кабинет</span>

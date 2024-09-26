@@ -35,7 +35,7 @@ export function addIngredient(ingredient: IngredientType) {
 
     return {
         type: ADD_INGREDIENT,
-        payload: {
+        ingredient: {
             ...ingredient,
             uniqueId: uuid4()
         }

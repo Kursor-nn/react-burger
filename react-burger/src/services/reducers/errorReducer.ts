@@ -14,8 +14,9 @@ export const initialState: ErrorStateType = {
 export const errorReducer = (state = initialState, action: ActionType<string, ErrorStateType>) => {
     switch (action.type) {
         case SET_ERROR_MESSAGE: {
+            console.log("action> ", action)
             return {
-                ...state, message: action.payload.message, show: true
+                ...state, message: (action.payload.message || "something happens"), show: true
             };
         }
         case CLEAR_ERROR_MESSAGE: {

@@ -44,7 +44,7 @@ function BurgerIngredients() {
 
     return (
         <div className={`pl-5 pt-20 ${styles.column}`} ref={containerRef}>
-            <p className="text text_type_main-large">Соберите бургер</p>
+            <p data-qa-id="topic-build-burger" className="text text_type_main-large">Соберите бургер</p>
             <div className={styles.source_head}>
                 <Tab value="bun" active={currentTub === BUN_TAB} onClick={(value) => (clickHandler(bunRef, value))}>Булки</Tab>
                 <Tab value="sauce" active={currentTub === SAUCE_TAB} onClick={(value) => (clickHandler(sauseRef, value))}>Соусы</Tab>
