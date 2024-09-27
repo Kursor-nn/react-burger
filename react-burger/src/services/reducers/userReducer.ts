@@ -1,7 +1,7 @@
 import {SET_USER_DETAILS, UserType} from "../actions/userActions";
 import {ActionType} from "../types";
 
-const initState = {
+export const initState = {
     user: null
 }
 

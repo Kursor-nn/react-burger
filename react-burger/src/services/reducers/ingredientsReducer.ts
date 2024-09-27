@@ -8,7 +8,7 @@ export interface IngrStateType {
     tab: string | null
 }
 
-const initialState = {
+export const initialState = {
     ingredients: [],
     tab: BUN_TAB
 }

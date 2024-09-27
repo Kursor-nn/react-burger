@@ -10,7 +10,7 @@ import {
 } from "../actions/orderActions";
 import {OrderActionType} from "../types";
 
-const initialState: OrderActionType<string> = {
+export const initialState: OrderActionType<string> = {
     type: null,
     order: [],
     state: null,

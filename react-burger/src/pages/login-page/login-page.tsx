@@ -21,7 +21,7 @@ const LoginPage = () => {
 
   return (
     <main>
-      <Form title="Вход" buttonText="Войти" handleSubmit={handleSubmit} handleChange={handleChange} values={values} isValid={isValid} errors={errors} />
+      <Form data-qa-id="login-button" title="Вход" buttonText="Войти" handleSubmit={handleSubmit} handleChange={handleChange} values={values} isValid={isValid} errors={errors} />
     </main>
   );
 };

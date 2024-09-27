@@ -55,6 +55,8 @@ function ProductList({ listType, refs }: ProductListType) {
                 image={value.image!!}
                 name={value.name!!}
                 price={value.price!!}
+                ingType={value.type}
+                position={index}
             />
         );
     }

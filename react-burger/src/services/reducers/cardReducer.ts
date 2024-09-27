@@ -1,7 +1,13 @@
 import {DELETE_CARD, SET_CARD} from "../actions/cardActions";
 import {ActionType} from "../types";
+import {IngredientType} from "../../components/product-list/product-list";
 
-const initialState = {
+export type CardReducerType = {
+    currentCard: IngredientType | null,
+    show: boolean
+}
+
+export const initialState: CardReducerType = {
     currentCard: null,
     show: false
 }

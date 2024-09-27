@@ -53,7 +53,7 @@ export interface WsConnectionSuccessActionType {
 
 export interface WsConnectionErrorActionType {
     readonly type: wsActionTypes.CONNECTION_ERROR;
-    readonly payload: Event;
+    readonly payload: Event | null;
 }
 
 export interface WsConnectionClosedActionType {
@@ -108,7 +108,7 @@ export type ActionType<TYPE, PAYLOAD> = {
 
 export type IngredientActionType<TYPE, PAYLOAD> = {
     type: TYPE,
-    ingredients: [PAYLOAD],
+    ingredients: PAYLOAD[],
     tab: string,
 }
 

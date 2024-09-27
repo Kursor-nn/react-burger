@@ -101,7 +101,7 @@ export const Form = ({ title, buttonText, values, handleSubmit, handleChange, er
       {isRegisterPage && (
         <div className={cn(styles.wrapper, "mt-20")}>
           <p className="text text_type_main-default text_color_inactive">Уже зарегистрированы?</p>
-          <Link className={styles.link} to={LOGIN_PATH}>
+          <Link data-qa-id="login-button" className={styles.link} to={LOGIN_PATH}>
             Войти
           </Link>
         </div>
@@ -128,7 +128,7 @@ export const Form = ({ title, buttonText, values, handleSubmit, handleChange, er
       {isForgotPasswordPage || isResetPasswordPage ? (
         <div className={cn(styles.wrapper, "mt-20")}>
           <p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>
-          <Link className={styles.link} to={LOGIN_PATH}>
+          <Link data-qa-id="login-button" className={styles.link} to={LOGIN_PATH}>
             Войти
           </Link>
         </div>

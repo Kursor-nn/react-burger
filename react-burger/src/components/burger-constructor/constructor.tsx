@@ -76,7 +76,7 @@ const BurgerConstructor = () => {
                             {bun && <ConstructorElement key={bun.uniqueId} type="top" isLocked={true} text={bun.name + " (верх)"}
                                                         price={bun.price!!} thumbnail={bun.image!!}/>}
                         </div>
-                        <div className={styles.column_list} ref={dropTargerRef}>
+                        <div data-qa-id="bun-constructor" className={styles.column_list} ref={dropTargerRef}>
                             {middleIngredients.map((itm, index) => buildRow(itm!, index, moveCard))}
                         </div>
 
@@ -91,7 +91,7 @@ const BurgerConstructor = () => {
             <div className={styles.total}>
                 <p className="text text_type_digits-medium">{orderCost}</p>
                 <CurrencyIcon type="primary"/>
-                <Button htmlType="button" type="primary" size="medium" onClick={() => {
+                <Button data-qa-id="make-order" htmlType="button" type="primary" size="medium" onClick={() => {
                     if (bun && orderIngredients && orderIngredients.length !== 0) {
                         const orderList = [bun._id, ...orderIngredients.map(it => it!._id), bun._id];
                         dispatch(asyncDoOrderFrom(orderList, () => {
